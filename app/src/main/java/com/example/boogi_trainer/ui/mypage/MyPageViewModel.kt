@@ -10,4 +10,6 @@ class MyPageViewModel : ViewModel() {
         value = "This is exercise Fragment"
     }
     val text: LiveData<String> = _text
+
+
 }
