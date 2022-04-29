@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">BoogiTrainer</string>
+
+    <string name="tfe_pe_request_permission">This app needs camera permission.</string>
+    <string name="tfe_pe_tv_fps">Fps: %d</string>
+    <string name="tfe_pe_tv_classification_value">- %s</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">홈</string>
+    <string name="title_food">식단관리</string>
+    <string name="title_exercise">운동</string>
+    <string name="title_myPage">마이페이지</string>
+
+    <!-- food fragment -->
+    <string name="todays_weight">오늘 나의 몸무게는?</string>
+    <string name="total_kcal">총 섭취량</string>
+    <string name="protein">단백질</string>
+    <string name="carbohydrate">탄수화물</string>
+    <string name="fat">지방</string>
+    <string name="kcal">kcal</string>
+    <string name="kcal_kr">칼로리</string>
+    <string name="gram">g</string>
+    <string name="breakfast">아침</string>
+    <string name="lunch">점심</string>
+    <string name="dinner">저녁</string>
+    <string name="take_photo">사진 촬영</string>
+    <string name="choose_photo">사진 선택</string>
+    <string name="search_food">음식 검색</string>
+    <string name="add_food">음식 추가</string>
+    <string name="unit">단위(중: 100g)</string>
+    <string name="small">소</string>
+    <string name="medium">중</string>
+    <string name="large">대</string>
+    <string name="amount">분량</string>
+    <string name="complete">입력 완료</string>
+    <string name="write_food_name">음식명을 입력하세요</string>
+    <string name="hint_manufacturer">ex) 해태</string>
+    <string name="search_food_name">메뉴를 검색하세요 (ex 김밥)</string>
+</resources>

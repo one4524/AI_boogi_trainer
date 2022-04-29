@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:context=".ui.food.FoodFragment">
+
+    <ScrollView
+        android:id="@+id/foodScroll"
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:id="@+id/todaysWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/todays_weight" />
+
+                <EditText
+                    android:id="@+id/editWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="number"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="171dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/white"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:id="@+id/goalCarbohydrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1234"
+                    app:layout_constraintStart_toEndOf="@+id/textView21"
+                    app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+                <TextView
+                    android:id="@+id/carbohydrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="128dp"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/carbohydrate"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/totalKcal" />
+
+                <TextView
+                    android:id="@+id/myCarbohydrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="128dp"
+                    android:layout_marginTop="8dp"
+                    android:text="600"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/carbohydrateBar" />
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/"
+                    app:layout_constraintStart_toEndOf="@+id/myCarbohydrate"
+                    app:layout_constraintTop_toTopOf="@+id/myProtein" />
+
+                <TextView
+                    android:id="@+id/gram2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gram"
+                    app:layout_constraintStart_toEndOf="@+id/goalCarbohydrate"
+                    app:layout_constraintTop_toTopOf="@+id/goalProtein" />
+
+                <TextView
+                    android:id="@+id/goalFat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1234"
+                    app:layout_constraintStart_toEndOf="@+id/textView26"
+                    app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+                <TextView
+                    android:id="@+id/fat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="256dp"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/fat"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/totalKcal" />
+
+                <TextView
+                    android:id="@+id/myFat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="256dp"
+                    android:layout_marginTop="8dp"
+                    android:text="600"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fatBar" />
+
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/"
+                    app:layout_constraintStart_toEndOf="@+id/myFat"
+                    app:layout_constraintTop_toTopOf="@+id/myProtein" />
+
+                <TextView
+                    android:id="@+id/gram3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gram"
+                    app:layout_constraintStart_toEndOf="@+id/goalFat"
+                    app:layout_constraintTop_toTopOf="@+id/goalProtein" />
+
+                <TextView
+                    android:id="@+id/totalKcal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/total_kcal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/myTotalKcal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="600"
+                    app:layout_constraintStart_toEndOf="@+id/totalKcal"
+                    app:layout_constraintTop_toTopOf="@+id/totalKcal" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:text="/"
+                    app:layout_constraintStart_toEndOf="@+id/myTotalKcal"
+                    app:layout_constraintTop_toTopOf="@+id/myTotalKcal" />
+
+                <TextView
+                    android:id="@+id/goalTotalKcal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:text="1234"
+                    app:layout_constraintStart_toEndOf="@+id/textView10"
+                    app:layout_constraintTop_toTopOf="@+id/textView10" />
+
+                <TextView
+                    android:id="@+id/kcal1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kcal"
+                    app:layout_constraintStart_toEndOf="@+id/goalTotalKcal"
+                    app:layout_constraintTop_toTopOf="@+id/goalTotalKcal" />
+
+                <TextView
+                    android:id="@+id/protein"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/protein"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/totalKcal" />
+
+                <TextView
+                    android:id="@+id/myProtein"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="600"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/proteinBar" />
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:text="/"
+                    app:layout_constraintStart_toEndOf="@+id/myProtein"
+                    app:layout_constraintTop_toTopOf="@+id/myProtein" />
+
+                <TextView
+                    android:id="@+id/goalProtein"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:text="1234"
+                    app:layout_constraintStart_toEndOf="@+id/textView16"
+                    app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+                <TextView
+                    android:id="@+id/gram1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gram"
+                    app:layout_constraintStart_toEndOf="@+id/goalProtein"
+                    app:layout_constraintTop_toTopOf="@+id/goalProtein" />
+
+                <ProgressBar
+                    android:id="@+id/totalKcalBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="32dp"
+                    android:progressDrawable="@drawable/progressbar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/totalKcal" />
+
+                <ProgressBar
+                    android:id="@+id/proteinBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="32dp"
+                    android:progressDrawable="@drawable/progressbar"
+                    app:layout_constraintEnd_toStartOf="@+id/carbohydrateBar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/protein" />
+
+                <ProgressBar
+                    android:id="@+id/carbohydrateBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="32dp"
+                    android:progressDrawable="@drawable/progressbar"
+                    app:layout_constraintEnd_toStartOf="@+id/fatBar"
+                    app:layout_constraintStart_toStartOf="@+id/carbohydrate"
+                    app:layout_constraintTop_toBottomOf="@+id/carbohydrate" />
+
+                <ProgressBar
+                    android:id="@+id/fatBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="32dp"
+                    android:progressDrawable="@drawable/progressbar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/fat"
+                    app:layout_constraintTop_toBottomOf="@+id/fat" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="305dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/white"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:id="@+id/breakfast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="19dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/breakfast"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/breakfastKcal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="0"
+                    app:layout_constraintStart_toEndOf="@+id/breakfast"
+                    app:layout_constraintTop_toTopOf="@+id/breakfast" />
+
+                <TextView
+                    android:id="@+id/kcal2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kcal"
+                    app:layout_constraintStart_toEndOf="@+id/breakfastKcal"
+                    app:layout_constraintTop_toTopOf="@+id/breakfastKcal" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/protein"
+                    app:layout_constraintEnd_toStartOf="@+id/breakfastProtein"
+                    app:layout_constraintTop_toTopOf="@+id/breakfastProtein" />
+
+                <TextView
+                    android:id="@+id/gram4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/gram"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                    app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/carbohydrate"
+                    app:layout_constraintEnd_toStartOf="@+id/breakfastCarbohydrate"
+                    app:layout_constraintTop_toTopOf="@+id/breakfastCarbohydrate" />
+
+                <TextView
+                    android:id="@+id/breakfastCarbohydrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    app:layout_constraintEnd_toStartOf="@+id/gram5"
+                    app:layout_constraintTop_toTopOf="@+id/gram5" />
+
+                <TextView
+                    android:id="@+id/gram5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/gram"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView4"
+                    app:layout_constraintTop_toTopOf="@+id/imageView4" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/fat"
+                    app:layout_constraintEnd_toStartOf="@+id/breakfastFat"
+                    app:layout_constraintTop_toTopOf="@+id/breakfastFat" />
+
+                <TextView
+                    android:id="@+id/breakfastFat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    app:layout_constraintEnd_toStartOf="@+id/gram6"
+                    app:layout_constraintTop_toTopOf="@+id/gram6" />
+
+                <TextView
+                    android:id="@+id/gram6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/gram"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/breakfastProtein"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    app:layout_constraintEnd_toStartOf="@+id/gram4"
+                    app:layout_constraintTop_toTopOf="@+id/gram4" />
+
+                <ImageView
+                    android:id="@+id/breakfastImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/food_button"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="305dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/white"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:id="@+id/lunch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="19dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/lunch"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/lunchKcal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="0"
+                    app:layout_constraintStart_toEndOf="@+id/lunch"
+                    app:layout_constraintTop_toTopOf="@+id/lunch" />
+
+                <TextView
+                    android:id="@+id/kcal3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kcal"
+                    app:layout_constraintStart_toEndOf="@+id/lunchKcal"
+                    app:layout_constraintTop_toTopOf="@+id/lunchKcal" />
+
+                <TextView
+                    android:id="@+id/gram7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/gram"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/lunchFat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    app:layout_constraintEnd_toStartOf="@+id/gram7"
+                    app:layout_constraintTop_toTopOf="@+id/gram7" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/fat"
+                    app:layout_constraintEnd_toStartOf="@+id/lunchFat"
+                    app:layout_constraintTop_toTopOf="@+id/lunchFat" />
+
+                <TextView
+                    android:id="@+id/gram8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/gram"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView"
+                    app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+                <TextView
+                    android:id="@+id/lunchCarbohydrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    app:layout_constraintEnd_toStartOf="@+id/gram8"
+                    app:layout_constraintTop_toTopOf="@+id/gram8" />
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/carbohydrate"
+                    app:layout_constraintEnd_toStartOf="@+id/lunchCarbohydrate"
+                    app:layout_constraintTop_toTopOf="@+id/lunchCarbohydrate" />
+
+                <TextView
+                    android:id="@+id/gram9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/gram"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView6"
+                    app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+                <TextView
+                    android:id="@+id/lunchProtein"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    app:layout_constraintEnd_toStartOf="@+id/gram9"
+                    app:layout_constraintTop_toTopOf="@+id/gram9" />
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/protein"
+                    app:layout_constraintEnd_toStartOf="@+id/lunchProtein"
+                    app:layout_constraintTop_toTopOf="@+id/lunchProtein" />
+
+                <ImageView
+                    android:id="@+id/lunchImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/food_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="305dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/white"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:id="@+id/dinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="19dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/dinner"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/dinnerKcal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="0"
+                    app:layout_constraintStart_toEndOf="@+id/dinner"
+                    app:layout_constraintTop_toTopOf="@+id/dinner" />
+
+                <TextView
+                    android:id="@+id/kcal4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kcal"
+                    app:layout_constraintStart_toEndOf="@+id/dinnerKcal"
+                    app:layout_constraintTop_toTopOf="@+id/dinnerKcal" />
+
+                <TextView
+                    android:id="@+id/gram10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/gram"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/dinnerFat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    app:layout_constraintEnd_toStartOf="@+id/gram10"
+                    app:layout_constraintTop_toTopOf="@+id/gram10" />
+
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/fat"
+                    app:layout_constraintEnd_toStartOf="@+id/dinnerFat"
+                    app:layout_constraintTop_toTopOf="@+id/dinnerFat" />
+
+                <TextView
+                    android:id="@+id/gram11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/gram"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView9"
+                    app:layout_constraintTop_toTopOf="@+id/imageView9" />
+
+                <TextView
+                    android:id="@+id/dinnerCarbohydrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    app:layout_constraintEnd_toStartOf="@+id/gram11"
+                    app:layout_constraintTop_toTopOf="@+id/gram11" />
+
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/carbohydrate"
+                    app:layout_constraintEnd_toStartOf="@+id/dinnerCarbohydrate"
+                    app:layout_constraintTop_toTopOf="@+id/dinnerCarbohydrate" />
+
+                <TextView
+                    android:id="@+id/gram12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/gram"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView10"
+                    app:layout_constraintTop_toTopOf="@+id/imageView10" />
+
+                <TextView
+                    android:id="@+id/dinnerProtein"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    app:layout_constraintEnd_toStartOf="@+id/gram12"
+                    app:layout_constraintTop_toTopOf="@+id/gram12" />
+
+                <ImageView
+                    android:id="@+id/imageView11"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/protein"
+                    app:layout_constraintEnd_toStartOf="@+id/dinnerProtein"
+                    app:layout_constraintTop_toTopOf="@+id/dinnerProtein" />
+
+                <ImageView
+                    android:id="@+id/dinnerImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/food_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView9" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

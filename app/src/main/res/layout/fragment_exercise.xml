@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.exercise.ExerciseFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/black"
+            android:text="운동 추천"
+            android:textSize="23dp"
+             />
+
+        <Button
+            android:id="@+id/start_exercise"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:textSize="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="30dp"
+            android:text="오늘의 추천 운동 하기"/>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/black"
+            android:text="부위별 운동"
+            android:textSize="23dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp">
+
+            <Button
+                android:id="@+id/start_body"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:text="전신"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/start_down"
+                app:layout_constraintEnd_toStartOf="@+id/start_up"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/start_up"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:text="상체"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/start_arm"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/start_body"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/start_down"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:text="하체"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/start_arm"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/start_body" />
+
+            <Button
+                android:id="@+id/start_arm"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:text="팔"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/start_down"
+                app:layout_constraintTop_toBottomOf="@+id/start_up" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/black"
+            android:text="자세별 운동"
+            android:textSize="23dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_view"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation ="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp"
+            tools:listitem="@layout/recycleview_item"/>
+
+    </LinearLayout>
+</ScrollView>
