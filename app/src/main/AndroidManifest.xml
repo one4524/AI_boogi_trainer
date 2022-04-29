@@ -18,8 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Pose">
+
         <activity
-            android:name="com.example.boogi_trainer.MainActivity"
+            android:name="com.example.boogi_trainer.LoginActivity"
             android:exported="true"
             android:label="@string/title_activity_main">
             <intent-filter>
@@ -27,6 +28,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity">
+
         </activity>
         <activity
             android:name="com.example.boogi_trainer.PoseActivity"
@@ -37,6 +41,7 @@
             android:name="com.example.boogi_trainer.ui.food.FoodCameraActivity"
             >
         </activity>
+
     </application>
 
 </manifest>
