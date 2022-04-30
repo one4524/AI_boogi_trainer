@@ -1,6 +1,7 @@
 package com.example.boogi_trainer.ui.food
 
 import android.Manifest
+import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,6 +12,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
@@ -29,6 +31,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class FoodCameraActivity : AppCompatActivity() {
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var viewBinding: ActivityFoodCameraBinding
 
     private var imageCapture: ImageCapture? = null
@@ -54,6 +57,8 @@ class FoodCameraActivity : AppCompatActivity() {
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
+        init()
+
         // 갤러리에서 이미지 가져옴
         viewBinding.galleryButton.setOnClickListener {
             openGallery()
@@ -64,10 +69,23 @@ class FoodCameraActivity : AppCompatActivity() {
         }
     }
 
+    private fun init() {
+        // activityResultLauncher init
+        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // 갤러리에서 이미지 받아서 이미지뷰에 표시
+                result.data?.data?.let { uri ->
+                    viewBinding.imageView.setImageURI(uri)
+                    showDetail()
+                }
+            }
+        }
+    }
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = MediaStore.Images.Media.CONTENT_TYPE
-        startActivityForResult(intent, REQ_GAllERY)
+        //startActivityForResult(intent, REQ_GAllERY)
+        activityResultLauncher.launch(intent)
     }
 
     private fun takePhoto() {
@@ -188,20 +206,6 @@ class FoodCameraActivity : AppCompatActivity() {
                     add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 }
             }.toTypedArray()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            when(requestCode) {
-                REQ_GAllERY -> {
-                    data?.data?.let { uri ->  
-                        viewBinding.imageView.setImageURI(uri)
-                        showDetail()
-                    }
-                }
-            }
-        }
     }
 
     private fun showDetail() {
