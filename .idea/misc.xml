@@ -4,8 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_food_camera.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_food_detail.xml" value="0.21851851851851853" />
         <entry key="app/src/main/res/layout/fragment_food.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_food_dialog.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_food_dialog_add_food.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_food_tab1.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_food_tab2.xml" value="0.21089736275050958" />
       </map>
     </option>
   </component>

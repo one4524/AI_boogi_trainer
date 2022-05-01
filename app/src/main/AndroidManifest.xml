@@ -46,6 +46,10 @@
             android:name="com.example.boogi_trainer.ui.food.FoodCameraActivity"
             >
         </activity>
+        <activity
+            android:name="com.example.boogi_trainer.ui.food.FoodDetailActivity"
+            >
+        </activity>
 
     </application>
 

@@ -13,6 +13,10 @@ import com.example.boogi_trainer.databinding.FragmentFoodBinding
 
 class FoodFragment : Fragment() {
 
+    private val breakfast = "아침"
+    private val launch = "점심"
+    private val dinner = "저녁"
+
     private var _binding: FragmentFoodBinding? = null
 
     // This property is only valid between onCreateView and
@@ -62,13 +66,13 @@ class FoodFragment : Fragment() {
         // 식단 이미지 부분을 클릭했을 때 사진 촬영
         binding.breakfastImage.setOnClickListener {
             //FoodFragmentDialog().show(childFragmentManager, "dialog is working")
-            startFoodCamera()
+            startFoodCamera(breakfast)
         }
         binding.lunchImage.setOnClickListener {
-            startFoodCamera()
+            startFoodCamera(launch)
         }
         binding.dinnerImage.setOnClickListener {
-            startFoodCamera()
+            startFoodCamera(dinner)
         }
     }
 
@@ -77,8 +81,9 @@ class FoodFragment : Fragment() {
         _binding = null
     }
 
-    private fun startFoodCamera() {
+    private fun startFoodCamera(mealTime: String) {
         val intent = Intent (getActivity(), FoodCameraActivity::class.java)
+        intent.putExtra("mealTime", mealTime)
         getActivity()?.startActivity(intent)
     }
 }

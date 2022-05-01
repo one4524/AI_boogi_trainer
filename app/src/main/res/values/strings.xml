@@ -10,7 +10,7 @@
     <string name="title_exercise">운동</string>
     <string name="title_myPage">마이페이지</string>
 
-    <!-- food fragment -->
+    <!-- food -->
     <string name="todays_weight">오늘 나의 몸무게는?</string>
     <string name="total_kcal">총 섭취량</string>
     <string name="protein">단백질</string>

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -39,10 +40,18 @@ class FoodCameraActivity : AppCompatActivity() {
 
     private val REQ_GAllERY = 12
 
+    // 아침, 점심, 저녁 언제인지 받을 변수
+    private var mealTime = "0"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityFoodCameraBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+        // FoodFragment에서 넘어온 데이터
+        val intent = getIntent()
+        mealTime = intent.getStringExtra("mealTime").toString()
+        // FoodDetailActivity에 같이 보낼거
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -75,8 +84,8 @@ class FoodCameraActivity : AppCompatActivity() {
             if (result.resultCode == Activity.RESULT_OK) {
                 // 갤러리에서 이미지 받아서 이미지뷰에 표시
                 result.data?.data?.let { uri ->
-                    viewBinding.imageView.setImageURI(uri)
-                    showDetail()
+//                    viewBinding.imageView.setImageURI(uri)
+                    showDetail(uri)
                 }
             }
         }
@@ -126,12 +135,12 @@ class FoodCameraActivity : AppCompatActivity() {
                     // Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     // Log.d(TAG, msg)
 
-                    viewBinding.imageView.setImageURI(null)
-                    viewBinding.imageView.setImageURI(output.savedUri)
+//                    viewBinding.imageView.setImageURI(null)
+//                    viewBinding.imageView.setImageURI(output.savedUri)
+                    showDetail(output.savedUri!!)//상세 페이지로 넘기기
                 }
             }
         )
-        showDetail()//상세 페이지로 넘기기
     }
 
     private fun startCamera() {
@@ -208,9 +217,11 @@ class FoodCameraActivity : AppCompatActivity() {
             }.toTypedArray()
     }
 
-    private fun showDetail() {
+    private fun showDetail(uri: Uri) {
         //상세 페이지로 넘기기
-        viewBinding.behindBox.visibility = View.VISIBLE
-        viewBinding.frontBox.visibility = View.INVISIBLE
+        val intent = Intent(this, FoodDetailActivity::class.java)
+        intent.putExtra("imageUri", uri)
+        intent.putExtra("mealTime", mealTime)
+        activityResultLauncher.launch(intent)
     }
 }
