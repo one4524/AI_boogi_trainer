@@ -41,4 +41,14 @@
         app:srcCompat="@android:drawable/ic_input_add"
         tools:ignore="SpeakableTextPresentCheck" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_foodName"
+        android:layout_width="409dp"
+        android:layout_height="545dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchFoodName" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

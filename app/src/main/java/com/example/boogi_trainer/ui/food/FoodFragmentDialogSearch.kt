@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.boogi_trainer.R
 import com.example.boogi_trainer.databinding.FragmentFoodDialogSearchBinding
 
@@ -17,6 +18,9 @@ class FoodFragmentDialogSearch : DialogFragment() {
     }
 
     private lateinit var binding: FragmentFoodDialogSearchBinding
+    // 리사이클러뷰가 가져올 음식 데이터 목록
+    private var adapter: FoodSearchAdapter? = null
+    private val data:MutableList<FoodSearchData> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,5 +38,22 @@ class FoodFragmentDialogSearch : DialogFragment() {
             FoodFragmentDialogAddFood().show(childFragmentManager, "dialog is working")
         }
 
+        initialize()// 음식 검색 목록
+        refreshRecyclerView()
+
+    }
+
+    private fun initialize() {
+        with(data) {
+            add(FoodSearchData("food1"))
+            add(FoodSearchData("food2"))
+            add(FoodSearchData("food3"))
+        }
+    }
+    private fun refreshRecyclerView() {
+        adapter = FoodSearchAdapter()
+        adapter!!.foodData = data
+        binding.rvFoodName.adapter = adapter
+        binding.rvFoodName.layoutManager = LinearLayoutManager(requireContext())
     }
 }

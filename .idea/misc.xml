@@ -5,13 +5,17 @@
       <map>
         <entry key="app/src/main/res/drawable/bt_corner.xml" value="0.196" />
         <entry key="app/src/main/res/drawable/bt_highlight.xml" value="0.196" />
+        <entry key="app/src/main/res/drawable/underline.xml" value="0.101" />
         <entry key="app/src/main/res/layout/activity_food_camera.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_food_detail.xml" value="0.21851851851851853" />
         <entry key="app/src/main/res/layout/fragment_food.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_food_dialog.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_food_dialog_add_food.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_food_dialog_search.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/fragment_food_tab1.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_food_tab2.xml" value="0.21089736275050958" />
+        <entry key="app/src/main/res/layout/recyclerview_food_search_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/recycleview_item.xml" value="0.21467391304347827" />
       </map>
     </option>
   </component>
