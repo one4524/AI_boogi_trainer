@@ -14,7 +14,7 @@ import com.example.boogi_trainer.databinding.FragmentFoodBinding
 class FoodFragment : Fragment() {
 
     private val breakfast = "아침"
-    private val launch = "점심"
+    private val lunch = "점심"
     private val dinner = "저녁"
 
     private var _binding: FragmentFoodBinding? = null
@@ -65,11 +65,10 @@ class FoodFragment : Fragment() {
 
         // 식단 이미지 부분을 클릭했을 때 사진 촬영
         binding.breakfastImage.setOnClickListener {
-            //FoodFragmentDialog().show(childFragmentManager, "dialog is working")
             startFoodCamera(breakfast)
         }
         binding.lunchImage.setOnClickListener {
-            startFoodCamera(launch)
+            startFoodCamera(lunch)
         }
         binding.dinnerImage.setOnClickListener {
             startFoodCamera(dinner)

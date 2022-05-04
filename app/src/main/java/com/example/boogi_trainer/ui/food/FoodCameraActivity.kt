@@ -38,7 +38,6 @@ class FoodCameraActivity : AppCompatActivity() {
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
 
-    private val REQ_GAllERY = 12
 
     // 아침, 점심, 저녁 언제인지 받을 변수
     private var mealTime = "0"
@@ -84,7 +83,6 @@ class FoodCameraActivity : AppCompatActivity() {
             if (result.resultCode == Activity.RESULT_OK) {
                 // 갤러리에서 이미지 받아서 이미지뷰에 표시
                 result.data?.data?.let { uri ->
-//                    viewBinding.imageView.setImageURI(uri)
                     showDetail(uri)
                 }
             }
@@ -135,8 +133,6 @@ class FoodCameraActivity : AppCompatActivity() {
                     // Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     // Log.d(TAG, msg)
 
-//                    viewBinding.imageView.setImageURI(null)
-//                    viewBinding.imageView.setImageURI(output.savedUri)
                     showDetail(output.savedUri!!)//상세 페이지로 넘기기
                 }
             }

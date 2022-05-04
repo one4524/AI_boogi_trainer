@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/white"
+            android:background="@drawable/bt_highlight"
             android:text="중 (100g)"
             android:textAllCaps="false"
             tools:ignore="MissingClass" />

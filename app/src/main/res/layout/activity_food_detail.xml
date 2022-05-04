@@ -78,7 +78,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/floatingActionButton2"
+                    android:id="@+id/buttonAddFood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -93,8 +93,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/add_food"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/floatingActionButton2"
-                    app:layout_constraintStart_toStartOf="@+id/floatingActionButton2" />
+                    app:layout_constraintEnd_toEndOf="@+id/buttonAddFood"
+                    app:layout_constraintStart_toStartOf="@+id/buttonAddFood" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
