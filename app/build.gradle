@@ -1,8 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android-extensions'
 }
-
 android {
     compileSdk 32
 
@@ -70,4 +70,9 @@ dependencies {
     implementation group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.4.0'
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
     implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
+
+//    RESTAPI
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+
 }
