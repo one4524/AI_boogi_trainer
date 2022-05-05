@@ -96,6 +96,39 @@
                     app:layout_constraintEnd_toEndOf="@+id/buttonAddFood"
                     app:layout_constraintStart_toStartOf="@+id/buttonAddFood" />
 
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="2dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@color/login_color_gray"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView13"
+                    app:layout_constraintStart_toEndOf="@+id/buttonAddFood"
+                    app:layout_constraintTop_toTopOf="@+id/buttonAddFood" />
+
+                <LinearLayout
+                    android:layout_width="272dp"
+                    android:layout_height="89dp"
+                    android:layout_marginStart="16dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView13"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/view"
+                    app:layout_constraintTop_toTopOf="@+id/buttonAddFood">
+
+                    <androidx.core.widget.NestedScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_foodList"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"/>
+                    </androidx.core.widget.NestedScrollView>
+                </LinearLayout>
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout

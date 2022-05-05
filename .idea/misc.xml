@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/layout/fragment_food_dialog_search.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/fragment_food_tab1.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/fragment_food_tab2.xml" value="0.21089736275050958" />
+        <entry key="app/src/main/res/layout/recyclerview_food_list_item.xml" value="0.21467391304347827" />
         <entry key="app/src/main/res/layout/recyclerview_food_search_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/recycleview_item.xml" value="0.21467391304347827" />
       </map>

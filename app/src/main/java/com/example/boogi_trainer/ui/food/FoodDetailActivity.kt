@@ -3,6 +3,9 @@ package com.example.boogi_trainer.ui.food
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.boogi_trainer.databinding.ActivityFoodDetailBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -13,6 +16,8 @@ class FoodDetailActivity : AppCompatActivity() {
         "간편 입력",
         "상세 입력"
     )
+    // 리사이클러뷰가 불러올 목록
+    private val data: MutableList<FoodDetailData> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +51,26 @@ class FoodDetailActivity : AppCompatActivity() {
         }.attach()
         // 탭 레이아웃 연결
 
+        // 리사이클러뷰 연결
+        initialize() // 리사이클러뷰에 아이템 추가
+        refreshRecyclerView()
+        // 리사이클러뷰 연결
 
+
+    }
+
+    private fun initialize() {
+        with(data) {
+            add(FoodDetailData("food1"))
+            add(FoodDetailData("food2"))
+            add(FoodDetailData("food3"))
+        }
+    }
+
+    private fun refreshRecyclerView() {
+        val adapter = FoodDetailAdapter()
+        adapter!!.foodData = data
+        binding.rvFoodList.adapter = adapter
+        binding.rvFoodList.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
     }
 }
