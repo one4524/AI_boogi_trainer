@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -39,12 +40,12 @@ class itemAdapter(val context: Context, val items: ArrayList<exersiceData>) : Re
 
     // 각 항목에 필요한 기능을 구현
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        private val name : TextView = v.findViewById(R.id.item_name)
-        private val img : ImageView = v.findViewById(R.id.item_view)
+        //private val name : TextView = v.findViewById(R.id.pose_item)
+        private val img : ImageButton = v.findViewById(R.id.pose_item)
         var view : View = v
 
         fun bind(listener: View.OnClickListener, item: exersiceData) {
-            name.text = item.name
+            //name.text = item.name
             img.setImageResource(item.img)
             view.setOnClickListener(listener)
 
