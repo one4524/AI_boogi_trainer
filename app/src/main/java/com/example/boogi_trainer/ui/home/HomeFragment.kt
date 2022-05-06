@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.boogi_trainer.databinding.FragmentHomeBinding
+import com.example.boogi_trainer.repository.APIManager
 
 class HomeFragment : Fragment() {
 
@@ -28,6 +29,8 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        _binding!!.userName.text = APIManager.user.name
 
         return root
     }
