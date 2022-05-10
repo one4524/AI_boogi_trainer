@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Process
+import android.os.SystemClock
 import android.view.SurfaceView
 import android.view.View
 import android.view.WindowManager
@@ -24,7 +25,10 @@ import com.example.boogi_trainer.ml.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import android.util.Log
-
+import android.widget.Chronometer
+import kotlin.math.acos
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 class PoseActivity : AppCompatActivity() {
     companion object {
@@ -44,13 +48,16 @@ class PoseActivity : AppCompatActivity() {
 
     /*sdadsad */
     private var exerciseNum : Int = 0
-    private var exerciseName : String = ""
+    private var exerciseName : String = "운동"
     private var checkNumberTmp = 0
+    private var explain : String = ""
 
     /** Default device is CPU */
     private var device = Device.CPU
 
-
+    private lateinit var counter: TextView
+    private lateinit var name: TextView
+    private lateinit var time: Chronometer
     private lateinit var pushUp: Button
     private lateinit var kneeUp: Button
     private lateinit var squat: Button
@@ -106,21 +113,25 @@ class PoseActivity : AppCompatActivity() {
         // keep screen on while app is running
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-
         surfaceView = findViewById(R.id.surfaceView)
 
-        tvFPS = findViewById(R.id.tvFps)
-        tvClassificationValue1 = findViewById(R.id.tvClassificationValue1)
-        tvClassificationValue2 = findViewById(R.id.tvClassificationValue2)
-        tvClassificationValue3 = findViewById(R.id.tvClassificationValue3)
+        //tvFPS = findViewById(R.id.tvFps)
+        //tvClassificationValue1 = findViewById(R.id.tvClassificationValue1)
+        //tvClassificationValue2 = findViewById(R.id.tvClassificationValue2)
+        //tvClassificationValue3 = findViewById(R.id.tvClassificationValue3)
 
-        pushUp = findViewById(R.id.pushUP)
-        kneeUp = findViewById(R.id.kneeUP)
-        squat = findViewById(R.id.squat)
+        //pushUp = findViewById(R.id.pushUP)
+        //kneeUp = findViewById(R.id.kneeUP)
+        //squat = findViewById(R.id.squat)
+        counter = findViewById(R.id.counter)
+        name = findViewById(R.id.exercise_name)
+        time = findViewById(R.id.exercise_time)
 
-        pushUp.setOnClickListener { changePose(0) }
-        kneeUp.setOnClickListener { changePose(1) }
-        squat.setOnClickListener { changePose(2) }
+        //pushUp.setOnClickListener { changePose(0) }
+        //kneeUp.setOnClickListener { changePose(1) }
+        //squat.setOnClickListener { changePose(2) }
+
+        SystemClock.elapsedRealtime()
 
         if (!isCameraPermissionGranted()) {
             requestPermission()
@@ -138,12 +149,19 @@ class PoseActivity : AppCompatActivity() {
 
     // open camera
     private fun openCamera() {
+        val dm = applicationContext.resources.displayMetrics
+        val width = dm.widthPixels
+        val height = dm.heightPixels
+        Log.d("w,h", "$width   $height")
+
+        startTime()
+
         if (isCameraPermissionGranted()) {
             if (cameraSource == null) {
                 cameraSource =
-                    CameraSource(surfaceView, object : CameraSource.CameraSourceListener {
+                    CameraSource(surfaceView, width, height, object : CameraSource.CameraSourceListener {
                         override fun onFPSListener(fps: Int) {
-                           tvFPS.text = getString(R.string.tfe_pe_tv_fps, fps)
+                            //tvFPS.text = getString(R.string.tfe_pe_tv_fps, fps)
                         }
 
                         override fun onDetectedInfo(
@@ -152,6 +170,7 @@ class PoseActivity : AppCompatActivity() {
                             person: Person?
                         ) {
                             poseLabels?.sortedByDescending { it.second }?.let {
+                                """
                                 tvClassificationValue1.text = getString(
                                     R.string.tfe_pe_tv_classification_value,
                                     convertPoseLabels(if (it.isNotEmpty()) it[0] else null)
@@ -164,6 +183,7 @@ class PoseActivity : AppCompatActivity() {
                                     R.string.tfe_pe_tv_classification_value,
                                     convertPoseLabels(if (it.size >= 3) it[2] else null)
                                 )
+                                """
                             }
                             // 체크 포인트 확인
                             checkPose(person, poseLabels)
@@ -186,6 +206,16 @@ class PoseActivity : AppCompatActivity() {
         }
     }
 
+    private fun startTime(){
+        time.base = SystemClock.elapsedRealtime()
+        time.start()
+    }
+
+    private fun endTime(){
+        time.stop()
+        time.endBatchEdit()
+    }
+
     // 자세 분류 2차 확인 함수
     private fun checkPose(person: Person?, pair: List<Pair<String, Float>>?) {
         val inputVector_x = FloatArray(17)
@@ -194,15 +224,166 @@ class PoseActivity : AppCompatActivity() {
         // 사람 좌표 값 벡터 저장
         person?.keyPoints?.forEachIndexed { index, keyPoint ->
             inputVector_x[index] = keyPoint.coordinate.y
-            Log.d("key_point x = $index -", (keyPoint.coordinate.x).toString())
+            Log.d("key_point x = $index -", (keyPoint.coordinate.y).toString())
             inputVector_y[index] = keyPoint.coordinate.x
-            Log.d("key_point y = $index -", (keyPoint.coordinate.y).toString())
+            Log.d("key_point y = $index -", (keyPoint.coordinate.x).toString())
         }
 
+        var boolean = true
         //자세 확인
         when (model) {
+            //푸쉬업 자세
             "pushup_classifier.tflite" -> {
-                exerciseName = "pushup"
+                exerciseName = "푸쉬업"
+                val pushupList1 = listOf(5, 7, 6, 8, 11, 12, 5, 6)
+                val pushupList2 = listOf(9, 9, 10, 10, 15, 16, 15, 16)
+
+                for(i in 0 until pushupList1.size){
+                    if(inputVector_y[pushupList1[i]] >= inputVector_y[pushupList2[i]]){
+                        boolean = false
+                    }
+                }
+
+                if (boolean){
+                    pair?.sortedByDescending { it.second }?.let {
+                        Log.d("it[0].first", it[0].first)
+
+                        // 어깨와 팔꿈치
+                        var d1L = sqrt( (inputVector_x[6]-inputVector_x[8]).pow(2) + (inputVector_y[6]-inputVector_y[8]).pow(2) )
+
+                        //팔꿈치와 손목
+                        var d2L = sqrt( (inputVector_x[8]-inputVector_x[10]).pow(2) + (inputVector_y[8]-inputVector_y[10]).pow(2) )
+
+                        //어깨와 손목
+                        var d3L = sqrt( (inputVector_x[6]-inputVector_x[10]).pow(2) + (inputVector_y[6]-inputVector_y[10]).pow(2) )
+
+                        var a_left =
+                            Math.toDegrees(acos((d1L.pow(2) + d2L.pow(2) - d3L.pow(2)) / (2 * d1L * d2L)).toDouble())
+
+
+                        Log.d("pushup-left", a_left.toString())
+
+                        // 어깨와 팔꿈치
+                        var d1 = sqrt( (inputVector_x[5]-inputVector_x[7]).pow(2) + (inputVector_y[5]-inputVector_y[7]).pow(2) )
+
+                        //팔꿈치와 손목
+                        var d2 = sqrt( (inputVector_x[7]-inputVector_x[9]).pow(2) + (inputVector_y[7]-inputVector_y[9]).pow(2) )
+
+                        //어깨와 손목
+                        var d3 = sqrt( (inputVector_x[5]-inputVector_x[9]).pow(2) + (inputVector_y[5]-inputVector_y[9]).pow(2) )
+
+                        var a_right =
+                            Math.toDegrees(acos((d1.pow(2) + d2.pow(2) - d3.pow(2)) / (2 * d1 * d2)).toDouble())
+
+
+                        //Log.d("pushup-right", a1.toString())
+
+
+                        when(it[0].first){
+                            "fail_1_left" ->  {
+                                when (checkNumberTmp) {
+                                    1 -> {checkNumberTmp = 2}
+                                    else -> {}
+                                }
+                            }
+                            "fail_1_right" -> {
+                                when (checkNumberTmp) {
+                                    1 -> {checkNumberTmp = 2}
+                                    else -> {}
+                                }
+                            }
+                            "fail_2_left" -> {
+                                if(a_left<=100){
+                                    explain = "perfect"
+                                    when (checkNumberTmp) {
+                                        1 -> {checkNumberTmp = 2}
+                                        else -> {}
+                                    }
+                                }
+                                else{explain = "too up"}
+                            }
+                            "fail_2_right" -> {
+                                if(a_right<=100){
+                                    explain = "perfect"
+                                    when (checkNumberTmp) {
+                                        1 -> {checkNumberTmp = 2}
+                                        else -> {}
+                                    }
+                                }
+                                else{explain = "too up"}
+                            }
+                            "fail_3_left" -> {
+                                when (checkNumberTmp) {
+                                    1 -> {checkNumberTmp = 2}
+                                    else -> {}
+                                }
+                            }
+                            "fail_3_right" -> {
+                                when (checkNumberTmp) {
+                                    1 -> {checkNumberTmp = 2}
+                                    else -> {}
+                                }
+                            }
+                            "set_left" -> {
+                                if(a_left>140) {
+                                    when (checkNumberTmp) {
+                                        0 -> {
+                                            checkNumberTmp = 1
+                                        }
+                                        2 -> {
+                                            checkNumberTmp = 0
+                                            exerciseNum++
+                                        }
+                                        else -> {
+                                        }
+                                    }
+                                }else{explain = "wrong"}
+                            }
+                            "set_right" -> {
+                                if(a_right>140) {
+                                    when (checkNumberTmp) {
+                                        0 -> {
+                                            checkNumberTmp = 1
+                                        }
+                                        2 -> {
+                                            checkNumberTmp = 0
+                                            exerciseNum++
+                                        }
+                                        else -> {
+                                        }
+                                    }
+                                }else{explain = "wrong"}
+                            }
+                            "success_left" -> {
+                                if(a_left<=100){
+                                    explain = "perfect"
+                                    when (checkNumberTmp) {
+                                        1 -> {checkNumberTmp = 2}
+                                        else -> {}
+                                    }
+                                }
+                                else{explain = "too up"}
+
+                            }
+                            "success_right" -> {
+                                if(a_right<=100) {
+                                    explain = "perfect"
+                                    when (checkNumberTmp) {
+                                        1 -> {
+                                            checkNumberTmp = 2
+                                        }
+                                        else -> {
+                                        }
+                                    }
+                                }
+                                else{explain = "too up"}
+                            }
+                            else -> {}
+                        }
+
+                    }
+                }else{}
+
 
             } // 푸쉬업 끝
 
@@ -212,56 +393,97 @@ class PoseActivity : AppCompatActivity() {
             }   // 니업 끝
 
             "squat_classifier.tflite" -> {
-                exerciseName = "squat"
-                val squatCheckList = listOf(0,5, 5,7, 6,8, 5,11, 6,10, 6,12, 11,16, 12,15)
-                var boolean = true
-                for(i in squatCheckList.indices step 2){
-                    if(inputVector_y[i] >= inputVector_y[i+1]){
+                exerciseName = "스쿼트"
+
+                val squatCheckList1 = listOf(0, 5, 6, 5, 6, 11, 12)
+                val squatCheckList2 = listOf(5, 7, 8, 11, 12, 15, 16)
+
+                for(i in 0 until squatCheckList1.size){
+                    if(inputVector_y[squatCheckList1[i]] >= inputVector_y[squatCheckList2[i]]){
                         boolean = false
                     }
                 }
+                if(inputVector_y[squatCheckList1[0]] >= inputVector_y[10]){boolean = false}
+                else if(inputVector_y[squatCheckList1[0]] >= inputVector_y[9]){boolean = false}
+
+
                 if (boolean){
                     pair?.sortedByDescending { it.second }?.let {
                         Log.d("it[0].first", it[0].first)
+
+                        Log.d("abab11", inputVector_y[0].toString()+ "  "+ inputVector_y[5].toString()+ "  " + inputVector_y[11].toString())
+
+                        // 엉덩이와 무릅
+                        var d1L = sqrt( (inputVector_x[12]-inputVector_x[14]).pow(2) + (inputVector_y[12]-inputVector_y[14]).pow(2) )
+
+                        //무릅과 발목
+                        var d2L = sqrt( (inputVector_x[14]-inputVector_x[16]).pow(2) + (inputVector_y[14]-inputVector_y[16]).pow(2) )
+
+                        //엉덩이와 발목
+                        var d3L = sqrt( (inputVector_x[12]-inputVector_x[16]).pow(2) + (inputVector_y[12]-inputVector_y[16]).pow(2) )
+
+                        var a_left =
+                            Math.toDegrees(acos((d1L.pow(2) + d2L.pow(2) - d3L.pow(2)) / (2 * d1L * d2L)).toDouble())
+
+
+                        // 엉덩이와 무릅
+                        var d1 = sqrt( (inputVector_x[11]-inputVector_x[13]).pow(2) + (inputVector_y[11]-inputVector_y[13]).pow(2) )
+
+                        //무릅과 발목
+                        var d2 = sqrt( (inputVector_x[13]-inputVector_x[15]).pow(2) + (inputVector_y[13]-inputVector_y[15]).pow(2) )
+
+                        //엉덩이와 발목
+                        var d3 = sqrt( (inputVector_x[11]-inputVector_x[15]).pow(2) + (inputVector_y[11]-inputVector_y[15]).pow(2) )
+
+                        var a_right =
+                            Math.toDegrees(acos((d1.pow(2) + d2.pow(2) - d3.pow(2)) / (2 * d1 * d2)).toDouble())
+
+
                         when(it[0].first){
-                            "down_1" ->  {
-                                when (checkNumberTmp) {
-                                    1 -> {checkNumberTmp = 2}
-                                    else -> {}
-                                }
-                            }
-                            "down_2" -> {
-                                when (checkNumberTmp) {
-                                    1 -> {checkNumberTmp = 2}
-                                    else -> {}
-                                }
-                            }
-                            "narrow" -> {
-                                when (checkNumberTmp) {
-                                    1 -> {checkNumberTmp = 2}
-                                    else -> {}
-                                }
-                            }
                             "stand" -> {
-                                when (checkNumberTmp) {
-                                    0 -> {
-                                        checkNumberTmp = 1
-                                    }
-                                    2 -> {
-                                        checkNumberTmp = 0
-                                        exerciseNum++
-                                    }
-                                    else -> {
+                                if(a_left>140 && a_right>140) {
+                                    when (checkNumberTmp) {
+                                        0 -> {
+                                            checkNumberTmp = 1
+                                        }
+                                        2 -> {
+                                            checkNumberTmp = 0
+                                            exerciseNum++
+                                        }
+                                        else -> {
+                                        }
                                     }
                                 }
                             }
-                            "wide" -> {
-                                when (checkNumberTmp) {
-                                    1 -> {checkNumberTmp = 2}
-                                    else -> {}
-                                }
+                            else -> {
+                                if(a_left<140 && a_right<140) {
+                                    if(a_left<100 && a_right<100){
+                                        explain = "perfect"
+
+                                        when (checkNumberTmp) {
+                                            1 -> {
+                                                checkNumberTmp = 2
+                                            }
+                                            else -> {
+                                            }
+                                        } // when end
+                                    }
+                                    else{explain = "too up"}
+
+                                    val len = inputVector_x[12]-inputVector_x[11]
+                                    if(inputVector_x[14] < inputVector_x[12] && inputVector_x[13] > inputVector_x[11]){
+                                        explain = "narrow"
+                                    }
+                                    else if(inputVector_x[14] > inputVector_x[12] + len/2 || inputVector_x[11] - len/2 > inputVector_x[13]){
+                                        explain = "wide"
+                                    }
+                                    else{}
+
+
+                                } // 140 end
+
+
                             }
-                            else -> {}
                         }
 
                     }
@@ -274,6 +496,11 @@ class PoseActivity : AppCompatActivity() {
             }
         }
 
+        runOnUiThread {
+            counter.text = exerciseNum.toString()
+            //name.text = exerciseName
+            name.text = explain
+        }
     }
 
     private fun convertPoseLabels(pair: Pair<String, Float>?): String {

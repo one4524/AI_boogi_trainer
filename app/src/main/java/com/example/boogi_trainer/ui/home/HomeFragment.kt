@@ -30,7 +30,8 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        _binding!!.userName.text = APIManager.user.name
+        //테스트를 위해 막아놓음
+        //_binding!!.userName.text = APIManager.user.name
 
         return root
     }
