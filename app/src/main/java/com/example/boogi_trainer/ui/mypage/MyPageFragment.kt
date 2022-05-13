@@ -33,29 +33,29 @@ class MyPageFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        val templang = AppMemberInfo("ko", MyApplication.uuid.getUid("uuid","nouid"));
-        val templist = listOf(templang);
-
-
-        val tempbody = MemberReq(templist);
-        api.member_info(MyApplication.prefs.getString("token","notoken"), tempbody).enqueue(object :
-            Callback<MemberAns> {
-            override fun onResponse(call: Call<MemberAns>, response: Response<MemberAns>) {
-                Log.d("log",response.toString())
-                Log.d("log", response.body().toString())
-                if(!response.body().toString().isEmpty()) {
-                    val name : TextView = view!!.findViewById(R.id.user_name) // 얘로 정의
-                    name.setText(response.body()?.result?.name) //setText는 이렇게 사용
-                }
-            }
-
-            override fun onFailure(call: Call<MemberAns>, t: Throwable) {
-                // 실패
-                Log.d("log",t.message.toString())
-                Log.d("log","fail")
-            }
-        })
+//
+//        val templang = AppMemberInfo("ko", MyApplication.uuid.getUid("uuid","nouid"));
+//        val templist = listOf(templang);
+//
+//
+//        val tempbody = MemberReq(templist);
+//        api.member_info(MyApplication.prefs.getString("token","notoken"), tempbody).enqueue(object :
+//            Callback<MemberAns> {
+//            override fun onResponse(call: Call<MemberAns>, response: Response<MemberAns>) {
+//                Log.d("log",response.toString())
+//                Log.d("log", response.body().toString())
+//                if(!response.body().toString().isEmpty()) {
+//                    val name : TextView = view!!.findViewById(R.id.user_name) // 얘로 정의
+//                    name.setText(response.body()?.result?.name) //setText는 이렇게 사용
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<MemberAns>, t: Throwable) {
+//                // 실패
+//                Log.d("log",t.message.toString())
+//                Log.d("log","fail")
+//            }
+//        })
 
         val notificationsViewModel =
             ViewModelProvider(this).get(MyPageViewModel::class.java)

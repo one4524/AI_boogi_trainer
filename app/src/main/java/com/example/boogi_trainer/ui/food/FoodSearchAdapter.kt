@@ -1,11 +1,8 @@
 package com.example.boogi_trainer.ui.food
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.boogi_trainer.R
 import com.example.boogi_trainer.databinding.RecyclerviewFoodSearchItemBinding
 
 class FoodSearchAdapter: RecyclerView.Adapter<Holder>() {
@@ -25,6 +22,7 @@ class FoodSearchAdapter: RecyclerView.Adapter<Holder>() {
     override fun getItemCount(): Int = foodData.size
 
 
+    
 }
 
 class Holder(val binding: RecyclerviewFoodSearchItemBinding): RecyclerView.ViewHolder(binding.root) {

@@ -15,7 +15,7 @@ class FoodDetailAdapter: RecyclerView.Adapter<DetailHolder>() {
 
     override fun onBindViewHolder(holder: DetailHolder, position: Int) {
         val foodDetailData = foodData[position]
-        holder.setData(foodDetailData)
+        holder.setData(foodDetailData, position)
     }
 
     override fun getItemCount(): Int {
@@ -24,7 +24,8 @@ class FoodDetailAdapter: RecyclerView.Adapter<DetailHolder>() {
 }
 
 class DetailHolder(val binding: RecyclerviewFoodListItemBinding): RecyclerView.ViewHolder(binding.root) {
-    fun setData(foodDetailData: FoodDetailData) {
-        binding.listItemFoodName.text = foodDetailData.foodName
+    fun setData(foodDetailData: FoodDetailData, position: Int) {
+        binding.listItemFoodName.text = foodDetailData.name
+        binding.editTextGram.setText(foodDetailData.gram)
     }
 }

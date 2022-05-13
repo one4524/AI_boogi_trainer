@@ -17,8 +17,10 @@ class LoginActivity : AppCompatActivity() {
 
         val button=findViewById<Button>(R.id.btn_login)
         button.setOnClickListener {
-            var inputId = edit_id.text.toString()
-            var inputPw = edit_pw.text.toString()
+//            var inputId = edit_id.text.toString()
+//            var inputPw = edit_pw.text.toString()
+            var inputId = "test"
+            var inputPw = "test"
 
             runBlocking{
                 GlobalScope.launch {

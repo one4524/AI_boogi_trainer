@@ -16,6 +16,7 @@ class FoodFragmentDialogSearch : DialogFragment() {
         isCancelable = true
         setStyle(STYLE_NO_TITLE, R.style.FullScreenDialog)
     }
+    
 
     private lateinit var binding: FragmentFoodDialogSearchBinding
     // 리사이클러뷰가 가져올 음식 데이터 목록

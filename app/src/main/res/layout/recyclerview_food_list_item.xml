@@ -1,38 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/storyOutline"
-        android:layout_gravity="center"
-        app:cardBackgroundColor="@color/black"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        app:cardCornerRadius="27dp"
-        android:layout_marginHorizontal="16dp">
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:id="@+id/storyOutline"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_gravity="center"
-            app:cardCornerRadius="25dp">
+            app:cardBackgroundColor="@color/color_primary"
+            app:cardCornerRadius="27dp">
 
-            <ImageView
-                android:id="@+id/listItemFoodImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_launcher_foreground"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="25dp">
+
+                <ImageView
+                    android:id="@+id/listItemFoodImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_launcher_foreground" />
+            </androidx.cardview.widget.CardView>
         </androidx.cardview.widget.CardView>
-    </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/listItemFoodName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:text="foodname"
-        android:layout_gravity="center"/>
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout3"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout3" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="가(이) 아닌가요?"
+        app:layout_constraintStart_toEndOf="@+id/listItemFoodName"
+        app:layout_constraintTop_toTopOf="@+id/listItemFoodName" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonFoodSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search_food"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout3" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="용량(g)"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextGram"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editTextGram" />
+
+    <EditText
+        android:id="@+id/editTextGram"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="100"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:text="100"
+        app:layout_constraintEnd_toEndOf="@+id/buttonFoodSearch"
+        app:layout_constraintStart_toStartOf="@+id/listItemFoodName"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
