@@ -2,19 +2,16 @@ package com.example.boogi_trainer.ui.exercise
 
 import android.content.Context
 import android.content.Intent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.boogi_trainer.PoseActivity
 import com.example.boogi_trainer.R
 
 
-class itemAdapter(val context: Context, val items: ArrayList<exersiceData>) : RecyclerView.Adapter<itemAdapter.ViewHolder>() {
+class itemAdapter(val context: Context, val items: ArrayList<exerciseData>) : RecyclerView.Adapter<itemAdapter.ViewHolder>() {
 
 
     override fun getItemCount(): Int = items.size
@@ -24,7 +21,9 @@ class itemAdapter(val context: Context, val items: ArrayList<exersiceData>) : Re
         val item = items[position]
         val listener = View.OnClickListener { it ->
             val intent = Intent(context, PoseActivity::class.java)
+            intent.putExtra("exerciseKinds", position)
             context.startActivity(intent)
+
         }
         holder.apply {
             bind(listener, item)
@@ -44,7 +43,7 @@ class itemAdapter(val context: Context, val items: ArrayList<exersiceData>) : Re
         private val img : ImageButton = v.findViewById(R.id.pose_item)
         var view : View = v
 
-        fun bind(listener: View.OnClickListener, item: exersiceData) {
+        fun bind(listener: View.OnClickListener, item: exerciseData) {
             //name.text = item.name
             img.setImageResource(item.img)
             view.setOnClickListener(listener)

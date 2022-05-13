@@ -44,6 +44,7 @@ class FoodFragment : Fragment() {
             ViewModelProvider(this).get(FoodViewModel::class.java)
 
         _binding = FragmentFoodBinding.inflate(inflater, container, false)
+
         val root: View = binding.root
 
 

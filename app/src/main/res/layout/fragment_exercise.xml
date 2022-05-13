@@ -18,10 +18,8 @@
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="15dp"
-            android:background="@color/color_primary"
             android:padding="5dp"
             android:text="  운동 추천"
-            android:textColor="@color/white"
             android:textSize="20dp" />
 
         <ImageButton
@@ -36,7 +34,6 @@
             android:layout_marginBottom="30dp"/>
 
         <TextView
-            android:background="@color/color_secondary"
             android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +41,6 @@
             android:layout_marginEnd="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:textColor="@color/white"
             android:text="  부위별 운동"
             android:textSize="20dp"
             android:padding="5dp"
@@ -105,7 +101,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:background="@color/color_third"
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -113,7 +108,6 @@
             android:layout_marginEnd="15dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="15dp"
-            android:textColor="@color/white"
             android:text="자세별 운동"
             android:textSize="20dp"
             android:padding="5dp"

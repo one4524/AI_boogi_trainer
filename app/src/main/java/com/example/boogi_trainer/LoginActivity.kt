@@ -19,20 +19,18 @@ class LoginActivity : AppCompatActivity() {
         button.setOnClickListener {
 //            var inputId = edit_id.text.toString()
 //            var inputPw = edit_pw.text.toString()
+
             var inputId = "test"
             var inputPw = "test"
 
             runBlocking{
                 GlobalScope.launch {
-                    """
+
                     var user = APIManager.getUser(inputId)
                     if(inputPw == user?.password){
                         val intent = Intent(this@LoginActivity, MainActivity::class.java);
                         startActivity(intent)
                     }
-"""
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java);
-                    startActivity(intent)
                 }
             }
 

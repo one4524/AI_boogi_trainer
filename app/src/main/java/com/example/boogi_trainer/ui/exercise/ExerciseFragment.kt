@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -37,17 +36,18 @@ class ExerciseFragment : Fragment() {
         val btn : ImageButton = binding.startExercise
         btn.setOnClickListener {
             val intent = Intent(context, PoseActivity::class.java)
+            intent.putExtra("exerciseKinds", 1)
             startActivity(intent)
 
         }
 
         val recyclerView : RecyclerView = binding.recycleView
 
-        val list = ArrayList<exersiceData>()
-        list.add(exersiceData(R.drawable.pushup_btn,"푸쉬업"))
-        list.add(exersiceData(R.drawable.squat_btn,"스쿼트"))
-        list.add(exersiceData(R.drawable.pullup_btn,"풀업"))
-        list.add(exersiceData(R.drawable.deadlift_btn,"데드리프트"))
+        val list = ArrayList<exerciseData>()
+        list.add(exerciseData(R.drawable.pushup_btn,"푸쉬업"))
+        list.add(exerciseData(R.drawable.squat_btn,"스쿼트"))
+        list.add(exerciseData(R.drawable.pullup_btn,"풀업"))
+        list.add(exerciseData(R.drawable.deadlift_btn,"데드리프트"))
 
 
 

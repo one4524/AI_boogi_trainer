@@ -3,6 +3,7 @@ package com.example.boogi_trainer
 import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,6 +27,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import android.util.Log
 import android.widget.Chronometer
+import com.example.boogi_trainer.repository.APIManager
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.runBlocking
 import kotlin.math.acos
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -92,6 +96,8 @@ class PoseActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        val exerciseKind = intent.getIntExtra("exerciseKinds",0)
+        changePose(exerciseKind)
         openCamera()
     }
 
@@ -184,6 +190,17 @@ class PoseActivity : AppCompatActivity() {
                                     convertPoseLabels(if (it.size >= 3) it[2] else null)
                                 )
                                 """
+                            }
+                            if(exerciseNum >= 20){
+                                runBlocking{
+                                    GlobalScope.launch {
+
+
+                                        APIManager.postExercise(exerciseName, exerciseNum)
+                                    }
+                                }
+
+                                finish()
                             }
                             // 체크 포인트 확인
                             checkPose(person, poseLabels)
@@ -519,11 +536,12 @@ class PoseActivity : AppCompatActivity() {
             0 -> { model = "pushup_classifier.tflite"
                 txt = "pushup_labels.txt" }
 
-            1 -> { model = "kneeup_classifier.tflite"
+            1 -> { model = "squat_classifier.tflite"
+                txt = "squat_labels.txt" }
+
+            2 -> { model = "kneeup_classifier.tflite"
                 txt = "kneeup_labels.txt" }
 
-            2 -> { model = "squat_classifier.tflite"
-                txt = "squat_labels.txt" }
 
             else -> {}
         }
