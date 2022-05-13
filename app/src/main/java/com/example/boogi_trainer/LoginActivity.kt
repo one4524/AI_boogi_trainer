@@ -22,11 +22,15 @@ class LoginActivity : AppCompatActivity() {
 
             runBlocking{
                 GlobalScope.launch {
+                    """
                     var user = APIManager.getUser(inputId)
                     if(inputPw == user?.password){
                         val intent = Intent(this@LoginActivity, MainActivity::class.java);
                         startActivity(intent)
                     }
+"""
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java);
+                    startActivity(intent)
                 }
             }
 

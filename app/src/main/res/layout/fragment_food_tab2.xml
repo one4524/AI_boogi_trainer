@@ -72,6 +72,7 @@
                 android:inputType="number"
                 android:minHeight="48dp" />
         </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

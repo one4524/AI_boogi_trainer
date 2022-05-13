@@ -45,8 +45,11 @@ import java.util.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
+
 class CameraSource(
     private val surfaceView: SurfaceView,
+    private val w: Int,
+    private val h: Int,
     private val listener: CameraSourceListener? = null
 ) {
 
@@ -118,7 +121,6 @@ class CameraSource(
                     imageBitmap, 0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT,
                     rotateMatrix, false
                 )
-
 
                 processImage(rotatedBitmap)
                 image.close()
@@ -284,10 +286,13 @@ class CameraSource(
 
         val outRotateMatrix = Matrix()
         outRotateMatrix.postRotate(90.0f)
-        val rotatedOutputBitmap = Bitmap.createBitmap(
+        var rotatedOutputBitmap = Bitmap.createBitmap(
             outputBitmap, 0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT,
             outRotateMatrix, false
         )
+
+        rotatedOutputBitmap = Bitmap.createScaledBitmap(rotatedOutputBitmap, h/4*3, h, true)
+
 
 
         val holder = surfaceView.holder
@@ -298,12 +303,15 @@ class CameraSource(
             val left: Int
             val top: Int
 
+            rotatedOutputBitmap = Bitmap.createBitmap(rotatedOutputBitmap, 0, 0, canvas.width, canvas.height)
+
             if (canvas.height > canvas.width) {
                 val ratio = rotatedOutputBitmap.height.toFloat() / rotatedOutputBitmap.width
                 screenWidth = canvas.width
                 left = 0
                 screenHeight = (canvas.width * ratio).toInt()
-                top = (canvas.height - screenHeight) / 2
+                //top = (canvas.height - screenHeight) / 2
+                top = 0
             } else {
                 val ratio = rotatedOutputBitmap.width.toFloat() / rotatedOutputBitmap.height
                 screenHeight = canvas.height
@@ -339,3 +347,4 @@ class CameraSource(
         fun onDetectedInfo(personScore: Float?, poseLabels: List<Pair<String, Float>>?, person: Person?)
     }
 }
+

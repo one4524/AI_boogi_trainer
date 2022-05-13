@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.boogi_trainer.databinding.ActivityFoodDetailBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
-class FoodDetailActivity : AppCompatActivity() {
+class FoodDetailActivity : AppCompatActivity(),
+    FoodFragmentTab1.onDataPassListener,
+    FoodFragmentTab2.onDataPassListener{
 
     private lateinit var binding: ActivityFoodDetailBinding
     private val tabTitleArray = arrayOf(
@@ -18,6 +20,9 @@ class FoodDetailActivity : AppCompatActivity() {
     )
     // 리사이클러뷰가 불러올 목록
     private val data: MutableList<FoodDetailData> = mutableListOf()
+
+    // tab에서 선택한 음식양(그램) 저장할 변수
+    private var gram = 100 // 기본으로 100g 선택되어 있음
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +61,6 @@ class FoodDetailActivity : AppCompatActivity() {
         refreshRecyclerView()
         // 리사이클러뷰 연결
 
-
     }
 
     private fun initialize() {
@@ -73,4 +77,15 @@ class FoodDetailActivity : AppCompatActivity() {
         binding.rvFoodList.adapter = adapter
         binding.rvFoodList.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
     }
+
+
+    // tab에서 오는 데이터 받기
+    override fun onDataPass(data: Int) {
+        println("------------- $data")
+    }
+
+    override fun onDataPass(gram: Int, kcal: Int) {
+        println("------------- $gram ---- $kcal")
+    }
+    // tab에서 오는 데이터 받기
 }
