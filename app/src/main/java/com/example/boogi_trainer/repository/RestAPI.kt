@@ -6,6 +6,7 @@ import retrofit2.Call
 import retrofit2.http.*
 data class ResponseUser(val user:User?)
 data class ResponseUserLog(val userLog:UserLog?)
+data class Foods(val foods: ArrayList<Food>)
 data class Message(val message: String)
 
 data class User(var uid: String?="",
@@ -28,6 +29,15 @@ data class Exercise(
     val exercise: String? = "",
     val reps: Int? = 0
 )
+data class Food(
+    val name: String? = "",
+    val kcal: Double? = 0.0,
+    val carbs: Double? = 0.0,
+    val sugar: Double? = 0.0,
+    val fat: Double? = 0.0,
+    val protein: Double? = 0.0,
+    val salt: Double? = 0.0
+)
 data class Meal(
     val food: String? = "",
     val size: String? = "",
@@ -39,7 +49,7 @@ data class Meal(
 )
 data class PostMeal(
     val food: String? = "",
-    val size: String? = "",
+    val gram: Int? = 1,
     val kind: String? = ""
 )
 data class DietInfo(
@@ -76,6 +86,8 @@ interface RestAPI {
     @GET("userLogs/{uid}")
     fun getUserLog(@Path("uid") uid:String):Call<ResponseUserLog>
 
+    @GET("foods")
+    fun getFoods():Call<Foods>
 
     @GET("users/{uid}")
     fun getUser(@Path("uid") uid:String):Call<ResponseUser>
