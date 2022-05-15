@@ -12,6 +12,7 @@ class APIManager {
         lateinit var user:User
         lateinit var userLog:UserLog
         lateinit var todayLog:DateLog
+        lateinit var foods:ArrayList<Food>
         var todayInfo:TodayInfo = TodayInfo()
 
         private val caller = RetrofitClient.restAPI
@@ -27,6 +28,10 @@ class APIManager {
             user= caller.getUser(uid).execute().body()?.user!!
         }
 
+        fun setFoods() {
+            foods = caller.getFoods().execute().body()?.foods!!
+        }
+
         private fun setUserLog(uid:String){
             userLog = caller.getUserLog(uid).execute().body()?.userLog!!
             setTodayLog()
@@ -36,8 +41,37 @@ class APIManager {
             todayInfo = TodayInfo()
             setUser(uid)
             setUserLog(uid)
+            setFoods()
             return user
         }
+
+        fun getFood(foodName:String) : Food {
+            var mfood:Food = Food()
+            for(food in foods){
+                if(food.name == foodName)
+                    mfood = food
+            }
+            return mfood!!
+        }
+
+        fun getFoodName(foodName:String) : String {
+            var mfood:Food = Food()
+            for(food in foods){
+                if(food.name == foodName)
+                    mfood = food
+            }
+            return mfood.name!!
+        }
+
+        fun getFoodKcal(foodName:String, gram: Int) : Double {
+            var mfood:Food = Food()
+            for(food in foods){
+                if(food.name == foodName)
+                    mfood = food
+            }
+            return round(mfood.kcal!! * gram)
+        }
+
 
         private fun setTodayLog() { // 금일 데이터 초기화
             var i = 0
@@ -85,13 +119,12 @@ class APIManager {
                         }
                         "" ->{}
                     }
-                    println(todayInfo)
                 }
             }
         }
         //POST
-        fun postMeal(food:String, size:String, kind:String, date:String= today){
-            var payload = PostMeal(food, size, kind)
+        fun postMeal(food:String, gram:Int, kind:String, date:String= today){
+            var payload = PostMeal(food, gram, kind)
             if(caller.postMeal(user.uid!!,date,payload).execute().isSuccessful)
                 getUser(user.uid!!)
         }
