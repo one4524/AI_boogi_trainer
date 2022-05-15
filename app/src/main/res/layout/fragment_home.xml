@@ -5,183 +5,314 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".ui.home.HomeFragment">
-        <LinearLayout
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="10dp">
+            android:gravity="center"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="AI Boogi Trainer"
+            android:textColor="@color/color_primary"
+            android:textSize="20sp" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="400dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/user"
-                android:layout_marginBottom="1dp"
-                android:background="@color/white"
+            <ViewFlipper
+                android:id="@+id/viewFlipper"
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="match_parent"
+                android:autoStart="true"
+                android:flipInterval="2500"
+                >
 
                 <ImageView
-                    android:id="@+id/user_image"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"
-                    android:src="@drawable/ic_baseline_face_24"
+                    android:id="@+id/imageView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/home_image1" />
+
+                <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/home_image2" />
+
+                <ImageView
+                    android:id="@+id/imageView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/home_image3" />
+
+                <ImageView
+                    android:id="@+id/imageView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/home_image4" />
+            </ViewFlipper>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp">
+
+            <ImageView
+                android:id="@+id/user_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_baseline_face_24"
+                app:layout_constraintBottom_toBottomOf="@+id/user_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/user_name" />
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="15dp"
+                android:gravity="center_vertical"
+                android:text="닉네임"
+                android:textColor="@color/black"
+                android:textSize="30dp"
+                app:layout_constraintStart_toEndOf="@+id/user_image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="오늘 섭취한 칼로리 :  "
+                android:textSize="18dp"
+                app:layout_constraintBottom_toTopOf="@+id/textView3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_name" />
+
+            <TextView
+                android:id="@+id/food_kcal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 100"
+                android:textSize="18dp"
+                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="오늘 소비한 칼로리 :  "
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            <TextView
+                android:id="@+id/exercise_kcal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 100"
+                android:textSize="18dp"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" kcal"
+                android:textSize="18dp"
+                app:layout_constraintStart_toEndOf="@+id/food_kcal"
+                app:layout_constraintTop_toTopOf="@+id/food_kcal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" kcal"
+                android:textSize="18dp"
+                app:layout_constraintStart_toEndOf="@+id/exercise_kcal"
+                app:layout_constraintTop_toTopOf="@+id/exercise_kcal" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="탄수화물 "
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/user_name"
+                    android:id="@+id/textCarbohydrate"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:gravity="center_vertical"
-                    android:text="닉네임"
-                    android:textColor="@color/black"
-                    android:textSize="30dp"
-                    app:layout_constraintStart_toEndOf="@+id/user_image"
+                    android:layout_height="wrap_content"
+                    android:text="1234"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/textView22"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/textView28"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="90dp"
-                    android:textSize="18dp"
-                    android:text="오늘 섭취한 칼로리 :  "
-                    app:layout_constraintBottom_toTopOf="@+id/textView3"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="g을 섭취하려면?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/textCarbohydrate"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/food_kcal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="90dp"
-                    android:textSize="18dp"
-                    android:text=" 100"
-                    app:layout_constraintStart_toEndOf="@+id/textView2"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="15dp"
-                    android:text="오늘 소비한 칼로리 :  "
-                    android:textSize="18dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-                <TextView
-                    android:id="@+id/exercise_kcal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text=" 100"
-                    android:textSize="18dp"
-                    app:layout_constraintStart_toEndOf="@+id/textView3"
-                    app:layout_constraintTop_toBottomOf="@+id/food_kcal" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" kcal"
-                    android:textSize="18dp"
-                    app:layout_constraintStart_toEndOf="@+id/food_kcal"
-                    app:layout_constraintTop_toTopOf="@+id/food_kcal" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" kcal"
-                    android:textSize="18dp"
-                    app:layout_constraintStart_toEndOf="@+id/exercise_kcal"
-                    app:layout_constraintTop_toTopOf="@+id/exercise_kcal" />
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-            <LinearLayout
-                android:id="@+id/recommend_food"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewCarbohydrate"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:orientation="vertical">
+                android:layout_height="match_parent" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/black"
-                    android:text="오늘 뭐 먹을까?"
-                    android:textSize="25dp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/color_primary" />
-
-                <ImageView
-                    android:id="@+id/foodImageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/food" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="싱싱한 샐러드는 어때요?"/>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/recommend_exercise"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:orientation="vertical">
+                android:layout_height="1dp"
+                android:background="@color/color_secondary"
+                android:layout_marginVertical="16dp"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:id="@+id/textViewpro"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/black"
-                    android:text="오늘의 운동은?"
-                    android:textSize="25dp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/color_primary" />
-
-                <ImageView
-                    android:id="@+id/exerciseImageView"
-                    android:layout_margin="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:src="@drawable/squat"
-                    />
+                    android:text="단백질 "
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:id="@+id/textProtein"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="오늘은 힙업을 위해 스쿼트 가즈아"/>
+                    android:text="1234"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/textViewpro"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/textViewpro2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="g을 섭취하려면?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/textProtein"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewProtein"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_secondary"
+                android:layout_marginVertical="16dp"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:id="@+id/textViewfat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="지방 "
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textFat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1234"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/textViewfat"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textViewfat2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="g을 섭취하려면?"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/textFat"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewFat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_secondary"
+                android:layout_marginVertical="16dp"/>
         </LinearLayout>
+
+
+    </LinearLayout>
 
 </ScrollView>
