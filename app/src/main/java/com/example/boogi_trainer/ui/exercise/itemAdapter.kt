@@ -19,9 +19,9 @@ class itemAdapter(val context: Context, val items: ArrayList<exerciseData>) : Re
     override fun onBindViewHolder(holder: itemAdapter.ViewHolder, position: Int) {
 
         val item = items[position]
-        val listener = View.OnClickListener { it ->
+        val listener = View.OnClickListener {
             val intent = Intent(context, PoseActivity::class.java)
-            intent.putExtra("exerciseKinds", position)
+            intent.putExtra("exerciseKinds", item.name)
             context.startActivity(intent)
 
         }

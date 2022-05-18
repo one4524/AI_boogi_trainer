@@ -156,7 +156,13 @@
                 app:layout_constraintTop_toTopOf="@+id/exercise_kcal" />
 
 
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:background="@color/gray"/>
 
         <LinearLayout
             android:layout_width="match_parent"

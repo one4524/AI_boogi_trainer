@@ -3,18 +3,22 @@ package com.example.boogi_trainer
 import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.os.Process
 import android.os.SystemClock
+import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.SurfaceView
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.Chronometer
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
@@ -23,18 +27,17 @@ import com.example.boogi_trainer.camera.CameraSource
 import com.example.boogi_trainer.data.Device
 import com.example.boogi_trainer.data.Person
 import com.example.boogi_trainer.ml.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import android.util.Log
-import android.widget.Chronometer
 import com.example.boogi_trainer.repository.APIManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.util.*
 import kotlin.math.acos
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class PoseActivity : AppCompatActivity() {
+class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     companion object {
         private const val FRAGMENT_DIALOG = "dialog"
         //private var modelPos = 1
@@ -54,10 +57,12 @@ class PoseActivity : AppCompatActivity() {
     private var exerciseNum : Int = 0
     private var exerciseName : String = "운동"
     private var checkNumberTmp = 0
-    private var explain : String = ""
+    private var explain : String = "잘했어요"
 
     /** Default device is CPU */
     private var device = Device.CPU
+
+    private var tts: TextToSpeech? = null
 
     private lateinit var counter: TextView
     private lateinit var name: TextView
@@ -96,7 +101,8 @@ class PoseActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val exerciseKind = intent.getIntExtra("exerciseKinds",0)
+        val exerciseKind = intent.getStringExtra("exerciseKinds")
+
         changePose(exerciseKind)
         openCamera()
     }
@@ -136,6 +142,8 @@ class PoseActivity : AppCompatActivity() {
         //pushUp.setOnClickListener { changePose(0) }
         //kneeUp.setOnClickListener { changePose(1) }
         //squat.setOnClickListener { changePose(2) }
+
+        tts = TextToSpeech(this, this)
 
         SystemClock.elapsedRealtime()
 
@@ -311,23 +319,23 @@ class PoseActivity : AppCompatActivity() {
                             }
                             "fail_2_left" -> {
                                 if(a_left<=100){
-                                    explain = "perfect"
+                                    explain = "완벽해요"
                                     when (checkNumberTmp) {
                                         1 -> {checkNumberTmp = 2}
                                         else -> {}
                                     }
                                 }
-                                else{explain = "too up"}
+                                else{explain = "너무 높아요"}
                             }
                             "fail_2_right" -> {
                                 if(a_right<=100){
-                                    explain = "perfect"
+                                    explain = "완벽해요"
                                     when (checkNumberTmp) {
                                         1 -> {checkNumberTmp = 2}
                                         else -> {}
                                     }
                                 }
-                                else{explain = "too up"}
+                                else{explain = "너무 높아요"}
                             }
                             "fail_3_left" -> {
                                 when (checkNumberTmp) {
@@ -350,11 +358,12 @@ class PoseActivity : AppCompatActivity() {
                                         2 -> {
                                             checkNumberTmp = 0
                                             exerciseNum++
+                                            speakOut()
                                         }
                                         else -> {
                                         }
                                     }
-                                }else{explain = "wrong"}
+                                }else{explain = "잘못됐어요"}
                             }
                             "set_right" -> {
                                 if(a_right>140) {
@@ -365,26 +374,28 @@ class PoseActivity : AppCompatActivity() {
                                         2 -> {
                                             checkNumberTmp = 0
                                             exerciseNum++
+                                            speakOut()
                                         }
                                         else -> {
                                         }
                                     }
-                                }else{explain = "wrong"}
+                                }else{explain = "잘못됐어요"}
                             }
                             "success_left" -> {
                                 if(a_left<=100){
-                                    explain = "perfect"
+                                    explain = "완벽해요"
                                     when (checkNumberTmp) {
-                                        1 -> {checkNumberTmp = 2}
+                                        1 -> {checkNumberTmp = 2
+                                        }
                                         else -> {}
                                     }
                                 }
-                                else{explain = "too up"}
+                                else{explain = "너무 높아요"}
 
                             }
                             "success_right" -> {
                                 if(a_right<=100) {
-                                    explain = "perfect"
+                                    explain = "완벽해요"
                                     when (checkNumberTmp) {
                                         1 -> {
                                             checkNumberTmp = 2
@@ -393,7 +404,7 @@ class PoseActivity : AppCompatActivity() {
                                         }
                                     }
                                 }
-                                else{explain = "too up"}
+                                else{explain = "너무 높아요"}
                             }
                             else -> {}
                         }
@@ -466,6 +477,7 @@ class PoseActivity : AppCompatActivity() {
                                         2 -> {
                                             checkNumberTmp = 0
                                             exerciseNum++
+                                            speakOut()
                                         }
                                         else -> {
                                         }
@@ -473,29 +485,31 @@ class PoseActivity : AppCompatActivity() {
                                 }
                             }
                             else -> {
-                                if(a_left<140 && a_right<140) {
-                                    if(a_left<100 && a_right<100){
-                                        explain = "perfect"
+                                if (a_left < 140 && a_right < 140) {
+                                    if (a_left < 100 && a_right < 100) {
+                                        explain = "완벽해요"
 
-                                        when (checkNumberTmp) {
-                                            1 -> {
-                                                checkNumberTmp = 2
-                                            }
-                                            else -> {
-                                            }
-                                        } // when end
+                                    } else{
+                                        if (checkNumberTmp != 2) {
+                                            explain = "너무 높아요"
+                                        }
                                     }
-                                    else{explain = "too up"}
+                                    when (checkNumberTmp) {
+                                        1 -> {
+                                            checkNumberTmp = 2
+                                        }
+                                        else -> {
+                                        }
+                                    } // when end
 
-                                    val len = inputVector_x[12]-inputVector_x[11]
-                                    if(inputVector_x[14] < inputVector_x[12] && inputVector_x[13] > inputVector_x[11]){
-                                        explain = "narrow"
-                                    }
-                                    else if(inputVector_x[14] > inputVector_x[12] + len/2 || inputVector_x[11] - len/2 > inputVector_x[13]){
-                                        explain = "wide"
-                                    }
-                                    else{}
 
+                                val len = inputVector_x[12] - inputVector_x[11]
+                                if (inputVector_x[14] < inputVector_x[6] || inputVector_x[13] > inputVector_x[5]) {
+                                    explain = "다리 사이가 좁아요"
+                                } else if (inputVector_x[14] > inputVector_x[12] + len && inputVector_x[11] - len > inputVector_x[13]) {
+                                    explain = "다리 사이가 넓어요"
+                                } else {
+                                }
 
                                 } // 140 end
 
@@ -531,15 +545,15 @@ class PoseActivity : AppCompatActivity() {
     }
 
     // 분류기 변경
-    private fun changePose(poseNum : Int){
+    private fun changePose(poseNum: String?){
         when(poseNum){
-            0 -> { model = "pushup_classifier.tflite"
+            "푸쉬업" -> { model = "pushup_classifier.tflite"
                 txt = "pushup_labels.txt" }
 
-            1 -> { model = "squat_classifier.tflite"
+            "스쿼트" -> { model = "squat_classifier.tflite"
                 txt = "squat_labels.txt" }
 
-            2 -> { model = "kneeup_classifier.tflite"
+            "니업" -> { model = "kneeup_classifier.tflite"
                 txt = "kneeup_labels.txt" }
 
 
@@ -593,5 +607,40 @@ class PoseActivity : AppCompatActivity() {
                 arguments = Bundle().apply { putString(ARG_MESSAGE, message) }
             }
         }
+    }
+
+    override fun onDestroy() {
+        if (tts != null) { // 사용한 TTS객체 제거
+            tts!!.stop()
+            tts!!.shutdown()
+        }
+        super.onDestroy()
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    override fun onInit(status: Int) { // OnInitListener를 통해서 TTS 초기화
+        if (status == TextToSpeech.SUCCESS) {
+            val result = tts!!.setLanguage(Locale.KOREA) // TTS언어 한국어로 설정
+            if (result == TextToSpeech.LANG_NOT_SUPPORTED || result == TextToSpeech.LANG_MISSING_DATA) {
+                Log.e("TTS", "This Language is not supported")
+            } else {
+                //speakOut() // onInit에 음성출력할 텍스트를 넣어줌
+            }
+        } else {
+            Log.e("TTS", "Initialization Failed!")
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private fun speakOut() {
+        val text: CharSequence = explain
+        tts?.setPitch(1.toFloat()) // 음성 톤 높이 지정
+        tts?.setSpeechRate(1.toFloat()) // 음성 속도 지정
+
+        // 첫 번째 매개변수: 음성 출력을 할 텍스트
+        // 두 번째 매개변수: 1. TextToSpeech.QUEUE_FLUSH - 진행중인 음성 출력을 끊고 이번 TTS의 음성 출력
+        //                 2. TextToSpeech.QUEUE_ADD - 진행중인 음성 출력이 끝난 후에 이번 TTS의 음성 출력
+        tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "id1")
     }
 }

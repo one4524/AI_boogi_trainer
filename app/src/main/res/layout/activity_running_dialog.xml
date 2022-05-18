@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+
+    <Button
+        android:id="@+id/walk"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="걷기"/>
+
+    <Button
+        android:id="@+id/fast_walk"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="빠르게 걷기"/>
+
+    <Button
+        android:id="@+id/running"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="뛰기"/>
+
+    <Button
+        android:id="@+id/stairs"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="계단"/>
+
+</LinearLayout>

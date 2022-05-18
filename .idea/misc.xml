@@ -3,8 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AI_boogi_trainner2/app/src/main/res/layout/activity_exercise_part.xml" value="0.36614583333333334" />
+        <entry key="..\:/AI_boogi_trainner2/app/src/main/res/layout/activity_main.xml" value="0.1875" />
         <entry key="..\:/AI_boogi_trainner2/app/src/main/res/layout/activity_pose.xml" value="0.1" />
+        <entry key="..\:/AI_boogi_trainner2/app/src/main/res/layout/activity_running.xml" value="0.22" />
+        <entry key="..\:/AI_boogi_trainner2/app/src/main/res/layout/activity_running_dialog.xml" value="0.21" />
+        <entry key="..\:/AI_boogi_trainner2/app/src/main/res/layout/activity_splash.xml" value="0.3515625" />
         <entry key="..\:/AI_boogi_trainner2/app/src/main/res/layout/fragment_exercise.xml" value="0.18" />
+        <entry key="..\:/AI_boogi_trainner2/app/src/main/res/layout/fragment_food.xml" value="0.34782608695652173" />
+        <entry key="..\:/AI_boogi_trainner2/app/src/main/res/layout/fragment_home.xml" value="0.36614583333333334" />
+        <entry key="..\:/AI_boogi_trainner2/app/src/main/res/layout/fragment_mypage.xml" value="0.34782608695652173" />
         <entry key="..\:/AI_boogi_trainner2/app/src/main/res/layout/recycleview_item.xml" value="0.1" />
         <entry key="..\:/Users/User/Documents/GitHub/AI_boogi_trainner2/app/src/main/res/layout/activity_pose.xml" value="0.18489583333333334" />
         <entry key="..\:/Users/User/Documents/GitHub/AI_boogi_trainner2/app/src/main/res/layout/fragment_exercise.xml" value="0.29030797101449274" />

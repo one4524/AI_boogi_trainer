@@ -9,8 +9,10 @@ import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.example.boogi_trainer.ExercisePartActivity
 import com.example.boogi_trainer.PoseActivity
 import com.example.boogi_trainer.R
+import com.example.boogi_trainer.RunningActivity
 import com.example.boogi_trainer.databinding.FragmentExerciseBinding
 
 class ExerciseFragment : Fragment() {
@@ -27,7 +29,7 @@ class ExerciseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val notificationsViewModel =
-            ViewModelProvider(this).get(ExerciseViewModel::class.java)
+            ViewModelProvider(this)[ExerciseViewModel::class.java]
 
         _binding = FragmentExerciseBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -35,10 +37,30 @@ class ExerciseFragment : Fragment() {
 
         val btn : ImageButton = binding.startExercise
         btn.setOnClickListener {
-            val intent = Intent(context, PoseActivity::class.java)
-            intent.putExtra("exerciseKinds", 1)
+            val intent = Intent(context, RunningActivity::class.java)
             startActivity(intent)
 
+        }
+
+        binding.startBody.setOnClickListener {
+            val intent = Intent(context, ExercisePartActivity::class.java)
+            intent.putExtra("partName", 0)
+            startActivity(intent)
+        }
+        binding.startUp.setOnClickListener {
+            val intent = Intent(context, ExercisePartActivity::class.java)
+            intent.putExtra("partName", 1)
+            startActivity(intent)
+        }
+        binding.startDown.setOnClickListener {
+            val intent = Intent(context, ExercisePartActivity::class.java)
+            intent.putExtra("partName", 2)
+            startActivity(intent)
+        }
+        binding.startArm.setOnClickListener {
+            val intent = Intent(context, ExercisePartActivity::class.java)
+            intent.putExtra("partName", 3)
+            startActivity(intent)
         }
 
         val recyclerView : RecyclerView = binding.recycleView
