@@ -9,7 +9,7 @@
     android:paddingRight="32dp"
     android:paddingBottom="32dp">
 
-    <EditText
+    <SearchView
         android:id="@+id/searchFoodName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

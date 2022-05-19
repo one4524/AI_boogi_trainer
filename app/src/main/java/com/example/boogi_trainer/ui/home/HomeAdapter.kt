@@ -3,6 +3,8 @@ package com.example.boogi_trainer.ui.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.boogi_trainer.FindFoodImage
+import com.example.boogi_trainer.MainActivity
 import com.example.boogi_trainer.databinding.RecyclerviewHomeItemBinding
 import com.example.boogi_trainer.ui.food.FoodDetailData
 
@@ -30,5 +32,12 @@ class HomeHolder(val binding: RecyclerviewHomeItemBinding): RecyclerView.ViewHol
     fun setData(foodDetailData: FoodDetailData, position: Int) {
         binding.homeItemFoodName.text = foodDetailData.name
         binding.homeItemFoodGram.text = "${foodDetailData.gram}g"
+        try {
+            val res = MainActivity.context().resources.getIdentifier(
+                "${FindFoodImage().foodImage[foodDetailData.name]}",
+                "drawable",
+                MainActivity.context().packageName)
+            binding.homeItemFoodImage.setImageResource(res)
+        } catch (e: NullPointerException) {}
     }
 }

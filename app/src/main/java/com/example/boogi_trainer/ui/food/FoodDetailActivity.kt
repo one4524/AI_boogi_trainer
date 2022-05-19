@@ -8,6 +8,7 @@ import androidx.core.view.get
 import androidx.core.view.size
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.boogi_trainer.R
 import com.example.boogi_trainer.databinding.ActivityFoodDetailBinding
 import com.example.boogi_trainer.databinding.RecyclerviewFoodListItemBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -58,7 +59,7 @@ class FoodDetailActivity : AppCompatActivity(){
 
     private fun initialize() {
         with(data) {
-            add(FoodDetailData("food1", "100"))
+            add(FoodDetailData("쌀밥", "100"))
             add(FoodDetailData("food2", "100"))
             add(FoodDetailData("food3", "100"))
         }
@@ -70,5 +71,4 @@ class FoodDetailActivity : AppCompatActivity(){
         binding.rvFoodList.adapter = adapter
         binding.rvFoodList.layoutManager = LinearLayoutManager(this)
     }
-
 }

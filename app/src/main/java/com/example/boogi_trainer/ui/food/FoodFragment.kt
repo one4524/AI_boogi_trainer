@@ -66,7 +66,7 @@ class FoodFragment : Fragment() {
         binding.proteinBar.setProgress(proteinProgress)
         // 탄수화물 바
         val myCarbohydrate = todayLog.dietInfo?.intakeCarbs!!
-        val goalCarbohydrate = "500"
+        val goalCarbohydrate = "100"
         val carbohydrateProgress = (myCarbohydrate/goalCarbohydrate.toDouble()*100).toInt()
         binding.myCarbohydrate.text = myCarbohydrate.toString()
         binding.goalCarbohydrate.text = goalCarbohydrate

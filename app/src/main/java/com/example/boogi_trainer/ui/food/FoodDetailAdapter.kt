@@ -1,13 +1,17 @@
 package com.example.boogi_trainer.ui.food
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.boogi_trainer.FindFoodImage
+import com.example.boogi_trainer.MainActivity
+import com.example.boogi_trainer.R
 import com.example.boogi_trainer.databinding.RecyclerviewFoodListItemBinding
 import com.example.boogi_trainer.repository.APIManager
 
-class FoodDetailAdapter: RecyclerView.Adapter<DetailHolder>() {
+class FoodDetailAdapter(): RecyclerView.Adapter<DetailHolder>() {
     var foodData = mutableListOf<FoodDetailData>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailHolder {
@@ -50,6 +54,13 @@ class DetailHolder(val binding: RecyclerviewFoodListItemBinding): RecyclerView.V
     fun setData(foodDetailData: FoodDetailData, position: Int) {
         binding.listItemFoodName.text = foodDetailData.name
         binding.editTextGram.setText(foodDetailData.gram)
+        try {
+            val res = MainActivity.context().resources.getIdentifier(
+                "${FindFoodImage().foodImage[foodDetailData.name]}",
+                "drawable",
+                MainActivity.context().packageName)
+            binding.listItemFoodImage.setImageResource(res)
+        } catch (e: NullPointerException) {}
     }
 
     private fun changeHeightLayoutFoodSearch(height: Int) {

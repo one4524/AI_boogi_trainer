@@ -1,5 +1,6 @@
 package com.example.boogi_trainer
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -25,5 +26,16 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
 
         navView.setupWithNavController(navController)
+    }
+
+    init{
+        instance = this
+    }
+
+    companion object {
+        var instance: MainActivity? = null
+        fun context() : Context {
+            return instance!!.applicationContext
+        }
     }
 }

@@ -4,15 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.boogi_trainer.FindFoodImage
 import com.example.boogi_trainer.databinding.FragmentHomeBinding
 import com.example.boogi_trainer.repository.APIManager
-import com.example.boogi_trainer.ui.food.FoodDetailAdapter
+import com.example.boogi_trainer.repository.APIManager.Companion.todayLog
 import com.example.boogi_trainer.ui.food.FoodDetailData
+import kotlin.random.Random
 
 class HomeFragment : Fragment() {
 
@@ -50,6 +51,7 @@ class HomeFragment : Fragment() {
         initialize() // 리사이클러뷰에 아이템 추가
         refreshRecyclerView()
         // 리사이클러뷰 연결
+
     }
 
     override fun onDestroyView() {
@@ -58,27 +60,67 @@ class HomeFragment : Fragment() {
     }
 
     private fun initialize() {
-        with(dataCarb) {
-            add(FoodDetailData("food1", "100"))
-            add(FoodDetailData("food2", "100"))
-            add(FoodDetailData("food3", "100"))
-            add(FoodDetailData("food3", "100"))
-            add(FoodDetailData("food3", "100"))
+        // 필요 단탄지 계산
+        val myProtein = todayLog.dietInfo?.intakeProtein!!
+        val goalProtein = 70
+        val needProtein = goalProtein - myProtein
+        val myCarbohydrate = todayLog.dietInfo?.intakeCarbs!!
+        val goalCarbohydrate = 100
+        val needCarbohydrate = goalCarbohydrate - myCarbohydrate
+        val myFat = todayLog.dietInfo?.intakeFat!!
+        val goalFat = 40
+        val needFat = goalFat - myFat
+        // 필요 단탄지 계산
+
+        // 필요 단탄지 표시
+        binding.textCarbohydrate.text = needCarbohydrate.toInt().toString()
+        binding.textProtein.text = needProtein.toInt().toString()
+        binding.textFat.text = needFat.toInt().toString()
+        // 필요 단탄지 표시
+
+        val random = Random
+
+        // 탄수화물
+        for (i in 1..5) { // 5개 음식 추천
+            // 랜덤으로 음식 뽑아
+            val foodName = FindFoodImage().foodImage.entries.elementAt(random.nextInt(FindFoodImage().foodImage.size)).key
+            // 몇 그램 필요한지 계산
+            val foodGram = needCarbohydrate / APIManager.getFood(foodName).carbs!!
+            if (foodGram != null) {
+                with(dataCarb) {
+                    add(FoodDetailData(foodName, foodGram.toInt().toString()))
+                }
+            }
         }
-        with(dataProt) {
-            add(FoodDetailData("food4", "100"))
-            add(FoodDetailData("food5", "100"))
-            add(FoodDetailData("food6", "100"))
-            add(FoodDetailData("food6", "100"))
-            add(FoodDetailData("food6", "100"))
+        // 탄수화물
+
+        // 단백질
+        for (i in 1..5) { // 5개 음식 추천
+            // 랜덤으로 음식 뽑아
+            val foodName = FindFoodImage().foodImage.entries.elementAt(random.nextInt(FindFoodImage().foodImage.size)).key
+            // 몇 그램 필요한지 계산
+            val foodGram = needProtein / APIManager.getFood(foodName).protein!!
+            if (foodGram != null) {
+                with(dataProt) {
+                    add(FoodDetailData(foodName, foodGram.toInt().toString()))
+                }
+            }
         }
-        with(dataFat) {
-            add(FoodDetailData("food7", "100"))
-            add(FoodDetailData("food8", "100"))
-            add(FoodDetailData("food9", "100"))
-            add(FoodDetailData("food9", "100"))
-            add(FoodDetailData("food9", "100"))
+        // 단백질
+
+        // 지방
+        for (i in 1..5) { // 5개 음식 추천
+            // 랜덤으로 음식 뽑아
+            val foodName = FindFoodImage().foodImage.entries.elementAt(random.nextInt(FindFoodImage().foodImage.size)).key
+            // 몇 그램 필요한지 계산
+            val foodGram = needFat / APIManager.getFood(foodName).fat!!
+            if (foodGram != null) {
+                with(dataFat) {
+                    add(FoodDetailData(foodName, foodGram.toInt().toString()))
+                }
+            }
         }
+        // 지방
     }
 
     private fun refreshRecyclerView() {
@@ -101,4 +143,5 @@ class HomeFragment : Fragment() {
         binding.recyclerViewFat.adapter = adapterFat
         binding.recyclerViewFat.layoutManager = LinearLayoutManager(binding.root.context, RecyclerView.HORIZONTAL, false)
     }
+
 }
