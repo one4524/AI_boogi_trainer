@@ -23,11 +23,13 @@ data class DateLog(val date: String?,
                 val exercises:ArrayList<Exercise>?,
                 val meals:ArrayList<Meal>?,
                 @SerializedName("diet_info")
-                val dietInfo: DietInfo?
+                   var dietInfo: DietInfo?
 )
 data class Exercise(
     val exercise: String? = "",
-    val reps: Int? = 0
+    val reps: Int? = 0,
+    val time: Int? = 0,
+    val burned_kcal: Double? = 0.0
 )
 data class Food(
     val name: String? = "",
