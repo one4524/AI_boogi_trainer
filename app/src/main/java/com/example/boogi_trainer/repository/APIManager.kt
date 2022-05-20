@@ -42,6 +42,7 @@ class APIManager {
             setUser(uid)
             setUserLog(uid)
             setFoods()
+            println(userLog)
             return user
         }
 
@@ -86,6 +87,9 @@ class APIManager {
                     }
                     if(todayLog.exercises?.size==0){ // 오늘 운동한게 없는 경우
                         todayLog.exercises!!.add(Exercise())
+                    }
+                    if(todayLog.dietInfo == null){
+                        todayLog.dietInfo = DietInfo();
                     }
                     break
                 } else{ // 금일 데이터 자체가 없는 경우
