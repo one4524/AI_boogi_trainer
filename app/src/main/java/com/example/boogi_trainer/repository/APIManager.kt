@@ -42,7 +42,6 @@ class APIManager {
             setUser(uid)
             setUserLog(uid)
             setFoods()
-            println(userLog)
             return user
         }
 
@@ -136,6 +135,18 @@ class APIManager {
             var payload = Exercise(exercise, reps)
             if(caller.postExercise(user.uid!!,date,payload).execute().isSuccessful)
                 getUser(user.uid!!)
+        }
+        fun postFood(food:Food){
+            var payload = food
+            if(caller.postFood(food).execute().isSuccessful)
+                getUser(user.uid!!)
+        }
+        fun postCardioExercise(exercise: String, time:Int, date:String= today){
+            var payload = Exercise(exercise, time = time)
+            if(caller.postExercise(user.uid!!,date,payload).execute().isSuccessful){
+                getUser(user.uid!!)
+            }
+
         }
     }
 }
