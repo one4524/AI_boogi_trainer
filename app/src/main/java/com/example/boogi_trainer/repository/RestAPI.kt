@@ -27,7 +27,7 @@ data class DateLog(val date: String?,
 )
 data class Exercise(
     val exercise: String? = "",
-    val reps: Int? = 0,
+    val reps: Int? = 1,
     val time: Int? = 0,
     val burned_kcal: Double? = 0.0
 )
@@ -99,4 +99,7 @@ interface RestAPI {
 
     @POST("userLogs/{uid}/{date}/exercises")
     fun postExercise(@Path("uid") uid:String, @Path("date") date:String, @Body payload:Exercise):Call<Message>
+
+    @POST("foods")
+    fun postFood(@Body payload:Food):Call<Message>
 }
