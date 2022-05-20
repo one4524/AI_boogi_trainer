@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/editTextTextPersonName4"
+            android:id="@+id/editTextFood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
@@ -33,204 +33,139 @@
             android:textColor="@color/black"
             android:textColorHint="@android:color/darker_gray" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.25"
-                android:text="@string/unit"
-                android:textColor="@color/black" />
-
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radioButtonSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/small"
-                    android:textColor="@color/black"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonMedium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/medium"
-                    android:textColor="@color/black"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonLarge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/large"
-                    android:textColor="@color/black"
-                    tools:ignore="TouchTargetSizeCheck" />
-            </RadioGroup>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/kcal_kr"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:id="@+id/editTextTextPersonName8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/background_text_color"
-                android:ems="10"
-                android:hint="0"
-                android:inputType="numberDecimal"
+                android:text="용량(g)"
                 android:textColor="@color/black"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="14sp"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.6"
-                android:text="@string/kcal"
-                android:textColor="@color/black" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal">
+                app:layout_constraintBottom_toBottomOf="@+id/editTextUnit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/editTextUnit" />
 
             <TextView
                 android:id="@+id/textView11"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/carbohydrate"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:id="@+id/editTextTextPersonName9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/background_text_color"
-                android:ems="10"
-                android:hint="0"
-                android:inputType="numberDecimal"
+                android:text="칼로리(kcal)"
                 android:textColor="@color/black"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="14sp"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.6"
-                android:text="@string/gram"
-                android:textColor="@color/black" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal">
+                app:layout_constraintBottom_toBottomOf="@+id/editTextKcal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/editTextKcal" />
 
             <TextView
                 android:id="@+id/textView12"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/protein"
-                android:textColor="@color/black" />
+                android:text="탄수화물(g)"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextCarbohydrate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/editTextCarbohydrate" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="단백질(g)"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextProtein"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/editTextProtein" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="지방(g)"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/editTextFat"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/editTextFat" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName10"
-                android:layout_width="match_parent"
+                android:id="@+id/editTextUnit"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/background_text_color"
+                android:background="@drawable/edittext_shadow"
+                android:paddingLeft="16dp"
                 android:ems="10"
                 android:hint="0"
                 android:inputType="numberDecimal"
+                android:minHeight="48dp"
                 android:textColor="@color/black"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="14sp"
-                tools:ignore="TouchTargetSizeCheck" />
-
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.6"
-                android:text="@string/gram"
-                android:textColor="@color/black" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textViewFat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/fat"
-                android:textColor="@color/black" />
+                android:textColorHint="@color/background_text_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName11"
-                android:layout_width="match_parent"
+                android:id="@+id/editTextKcal"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/background_text_color"
+                android:background="@drawable/edittext_shadow"
+                android:paddingLeft="16dp"
+                android:layout_marginTop="16dp"
                 android:ems="10"
                 android:hint="0"
                 android:inputType="numberDecimal"
+                android:minHeight="48dp"
                 android:textColor="@color/black"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="14sp"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:textColorHint="@color/background_text_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextUnit" />
 
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/editTextCarbohydrate"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.6"
-                android:text="@string/gram"
-                android:textColor="@color/black" />
-        </LinearLayout>
+                android:background="@drawable/edittext_shadow"
+                android:paddingLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="0"
+                android:inputType="numberDecimal"
+                android:minHeight="48dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/background_text_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextKcal" />
+
+            <EditText
+                android:id="@+id/editTextProtein"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_shadow"
+                android:paddingLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="0"
+                android:inputType="numberDecimal"
+                android:minHeight="48dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/background_text_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextCarbohydrate" />
+
+            <EditText
+                android:id="@+id/editTextFat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_shadow"
+                android:paddingLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="0"
+                android:inputType="numberDecimal"
+                android:minHeight="48dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/background_text_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextProtein" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

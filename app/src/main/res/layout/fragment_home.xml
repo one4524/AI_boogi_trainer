@@ -95,7 +95,7 @@
                 android:gravity="center_vertical"
                 android:text="닉네임"
                 android:textColor="@color/black"
-                android:textSize="30dp"
+                android:textSize="24sp"
                 app:layout_constraintStart_toEndOf="@+id/user_image"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="오늘 섭취한 칼로리 :  "
-                android:textSize="18dp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@+id/textView3"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/user_name" />
@@ -115,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" 100"
-                android:textSize="18dp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/textView2"
                 app:layout_constraintTop_toTopOf="@+id/textView2" />
 
@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="오늘 소비한 칼로리 :  "
-                android:textSize="18dp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -134,7 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" 100"
-                android:textSize="18dp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/textView3"
                 app:layout_constraintTop_toTopOf="@+id/textView3" />
 
@@ -143,7 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" kcal"
-                android:textSize="18dp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/food_kcal"
                 app:layout_constraintTop_toTopOf="@+id/food_kcal" />
 
@@ -151,7 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" kcal"
-                android:textSize="18dp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/exercise_kcal"
                 app:layout_constraintTop_toTopOf="@+id/exercise_kcal" />
 

@@ -31,12 +31,5 @@ class FoodFragmentDialogAddFood : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.radioGroup.setOnCheckedChangeListener{ group, checkedId ->
-            when(checkedId) {
-                R.id.radioButtonSmall -> println("-----small")
-                R.id.radioButtonMedium -> println("-----medium")
-                R.id.radioButtonLarge -> println("-----large")
-            }
-        }
     }
 }

@@ -50,7 +50,6 @@ class FoodFragment : Fragment() {
 
         // 프로그레스바로 텍스트 뷰에 있는 숫자를 가져와서 표시함
         // 총 섭취량 바
-
         val myTotalKcal = todayLog.dietInfo?.intakeKcal!!
         val goalTotalKcal = "2400"
         val totalProgress = (myTotalKcal/goalTotalKcal.toDouble()*100).toInt()

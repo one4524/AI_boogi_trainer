@@ -1,13 +1,11 @@
 package com.example.boogi_trainer.ui.food
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.boogi_trainer.FindFoodImage
 import com.example.boogi_trainer.MainActivity
-import com.example.boogi_trainer.R
 import com.example.boogi_trainer.databinding.RecyclerviewFoodListItemBinding
 import com.example.boogi_trainer.repository.APIManager
 

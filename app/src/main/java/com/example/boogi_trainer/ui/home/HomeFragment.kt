@@ -62,13 +62,13 @@ class HomeFragment : Fragment() {
     private fun initialize() {
         // 필요 단탄지 계산
         val myProtein = todayLog.dietInfo?.intakeProtein!!
-        val goalProtein = 70
-        val needProtein = goalProtein - myProtein
         val myCarbohydrate = todayLog.dietInfo?.intakeCarbs!!
-        val goalCarbohydrate = 100
-        val needCarbohydrate = goalCarbohydrate - myCarbohydrate
         val myFat = todayLog.dietInfo?.intakeFat!!
+        val goalProtein = 70
+        val goalCarbohydrate = 100
         val goalFat = 40
+        val needProtein = goalProtein - myProtein
+        val needCarbohydrate = goalCarbohydrate - myCarbohydrate
         val needFat = goalFat - myFat
         // 필요 단탄지 계산
 
