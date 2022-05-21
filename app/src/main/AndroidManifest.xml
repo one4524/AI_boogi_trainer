@@ -57,6 +57,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.food.FoodCameraActivity" />
         <activity android:name=".ui.food.FoodDetailActivity" />
+        <activity android:name=".ui.food.FoodSearchActivity" />
     </application>
 
 </manifest>

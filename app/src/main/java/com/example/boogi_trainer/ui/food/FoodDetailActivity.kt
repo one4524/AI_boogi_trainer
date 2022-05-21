@@ -2,6 +2,7 @@ package com.example.boogi_trainer.ui.food
 
 import android.annotation.SuppressLint
 import android.app.ActivityManager
+import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
@@ -10,6 +11,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -75,12 +78,18 @@ class FoodDetailActivity : AppCompatActivity(){
 
         // FoodCameraActivity에서 넘어온 Intent 받음
         val intent = getIntent()
-        val uri = intent.getParcelableExtra<Uri>("imageUri")
+        if (intent.getStringExtra("from") == "camera") {
+            val uri = intent.getParcelableExtra<Uri>("imageUri")
+            binding.imageView.setImageURI(uri) // imageView에 가져온 이미지 삽입
+        }
+        else {
+            val food = intent.getStringExtra("foodName")
+            data.add(FoodDetailData(food!!, "100"))
+        }
         val mealTime = intent.getStringExtra("mealTime")
-
-
         binding.textMealTime.text = mealTime // 아침 점심 저녁 표시
-        binding.imageView.setImageURI(uri) // imageView에 가져온 이미지 삽입
+        refreshRecyclerView()
+
 
 
         // 음식 검출 Thread 시작 //
@@ -104,11 +113,12 @@ class FoodDetailActivity : AppCompatActivity(){
         }.start()
         //////////////////////////
 
-        // 리사이클러뷰 연결
-        //initialize() // 리사이클러뷰에 아이템 추가
-        //refreshRecyclerView()
-        // 리사이클러뷰 연결
 
+        // 음식 추가 버튼
+        binding.buttonAddFood.setOnClickListener {
+            data.add(FoodDetailData("쌀밥", "100"))
+            refreshRecyclerView()
+        }
 
         // 리사이클러뷰에서 데이터 가져와 서버로 보내야됨
         binding.buttonComplete.setOnClickListener {
@@ -122,13 +132,6 @@ class FoodDetailActivity : AppCompatActivity(){
         // 리사이클러뷰에서 데이터 가져와 서버로 보내야됨
     }
 
-    private fun initialize() {
-        with(data) {
-            add(FoodDetailData("쌀밥", "100"))
-            add(FoodDetailData("food2", "100"))
-            add(FoodDetailData("food3", "100"))
-        }
-    }
 
     private fun refreshRecyclerView() {
         val adapter = FoodDetailAdapter()
@@ -198,4 +201,5 @@ class FoodDetailActivity : AppCompatActivity(){
         binding.trackingOverlay.postInvalidate()
         binding.imageView.setImageBitmap(bitmap)
     }
+
 }

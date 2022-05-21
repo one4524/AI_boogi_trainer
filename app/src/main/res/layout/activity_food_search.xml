@@ -16,10 +16,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/edittext_shadow"
+        android:queryBackground="@drawable/edittext_shadow"
+        android:iconifiedByDefault="false"
         android:ems="10"
-        android:hint="@string/search_food_name"
-        android:inputType="textPersonName"
+        android:queryHint="@string/search_food_name"
+        android:inputType="text"
         android:minHeight="48dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
@@ -41,14 +42,25 @@
         app:srcCompat="@android:drawable/ic_input_add"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_foodName"
-        android:layout_width="409dp"
-        android:layout_height="545dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
         android:layout_marginTop="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchFoodName" />
+        app:layout_constraintTop_toBottomOf="@+id/searchFoodName">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_foodName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

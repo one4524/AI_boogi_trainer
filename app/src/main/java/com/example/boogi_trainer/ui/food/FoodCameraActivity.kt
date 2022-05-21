@@ -8,10 +8,8 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -24,8 +22,6 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.boogi_trainer.databinding.ActivityFoodCameraBinding
-import java.io.File
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -73,7 +69,10 @@ class FoodCameraActivity : AppCompatActivity() {
         }
         // 음식 검색해서 정보 가져옴
         viewBinding.writeButton.setOnClickListener {
-            FoodFragmentDialogSearch().show(supportFragmentManager, "dialog is working")
+            //FoodFragmentDialogSearch().show(supportFragmentManager, "dialog is working")
+            val intent = Intent(this, FoodSearchActivity::class.java)
+            intent.putExtra("mealTime", mealTime)
+            startActivity(intent)
         }
     }
 
@@ -218,6 +217,7 @@ class FoodCameraActivity : AppCompatActivity() {
         val intent = Intent(this, FoodDetailActivity::class.java)
         intent.putExtra("imageUri", uri)
         intent.putExtra("mealTime", mealTime)
+        intent.putExtra("from", "camera")
         activityResultLauncher.launch(intent)
     }
 }
