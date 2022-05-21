@@ -6,12 +6,180 @@
     android:layout_height="match_parent"
     tools:context=".RunningActivity">
 
-    <fragment
-        android:id="@+id/map_fragment"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/map_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="100dp"
-        android:name="com.naver.maps.map.MapFragment" />
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="100dp">
+
+        <fragment
+            android:id="@+id/map_fragment"
+            android:name="com.naver.maps.map.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/meter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="15dp"
+            android:background="@android:color/transparent"
+            android:text="0"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/textView24" />
+
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="15dp"
+            android:background="@android:color/transparent"
+            android:text="m"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/running_machine_layout"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="100dp">
+
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="런닝머신"
+            android:textSize="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/teal_200"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현재까지 소모한 Kcal : "
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+        <TextView
+            android:id="@+id/kcal_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="0"
+            android:textSize="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text=" Kcal"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toBottomOf="@+id/kcal_num"
+            app:layout_constraintStart_toEndOf="@+id/kcal_num"
+            app:layout_constraintTop_toTopOf="@+id/kcal_num" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/teal_200"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/kcal_num" />
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현재 속도"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+        <TextView
+            android:id="@+id/speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="0"
+            android:textSize="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+        <Button
+            android:id="@+id/speed_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DOWN"
+            app:layout_constraintBottom_toBottomOf="@+id/speed"
+            app:layout_constraintEnd_toStartOf="@+id/speed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/speed" />
+
+        <Button
+            android:id="@+id/speed_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" UP "
+            app:layout_constraintBottom_toBottomOf="@+id/speed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/speed"
+            app:layout_constraintTop_toTopOf="@+id/speed" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/marking"
+        android:layout_marginTop="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -31,7 +199,7 @@
             android:scaleType="fitCenter"
             android:background="@drawable/running_back"
             android:gravity="center"
-            android:text="걷기"
+            android:text="머신러닝"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
