@@ -2,32 +2,28 @@ package com.example.boogi_trainer.ui.food
 
 import android.annotation.SuppressLint
 import android.app.ActivityManager
-import android.content.Context
 import android.graphics.*
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.provider.MediaStore
-import android.view.MotionEvent
-import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
-import androidx.core.view.get
+import androidx.core.view.iterator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.boogi_trainer.customview.OverlayView
 import com.example.boogi_trainer.databinding.ActivityFoodDetailBinding
 import com.example.boogi_trainer.env.ImageUtils
 import com.example.boogi_trainer.env.Logger
 import com.example.boogi_trainer.env.Utils
+import com.example.boogi_trainer.repository.APIManager
 import com.example.boogi_trainer.tflite.Classifier
 import com.example.boogi_trainer.tflite.YoloV5Classifier
 import com.example.boogi_trainer.tracking.MultiBoxTracker
 import kotlinx.android.synthetic.main.recyclerview_food_list_item.view.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.io.IOException
 import java.util.*
 
@@ -65,7 +61,7 @@ class FoodDetailActivity : AppCompatActivity(){
     private lateinit var binding: ActivityFoodDetailBinding
 
     // 리사이클러뷰가 불러올 목록
-    private val data: MutableList<FoodDetailData> = mutableListOf()
+    private var data: MutableList<FoodDetailData> = mutableListOf()
 
 
     @SuppressLint("WrongThread")
@@ -113,25 +109,58 @@ class FoodDetailActivity : AppCompatActivity(){
         }.start()
         //////////////////////////
 
+        setTotalKcal()
 
         // 음식 추가 버튼
         binding.buttonAddFood.setOnClickListener {
+            data = updateData()
             data.add(FoodDetailData("쌀밥", "100"))
+            setTotalKcal()
             refreshRecyclerView()
         }
 
         // 리사이클러뷰에서 데이터 가져와 서버로 보내야됨
         binding.buttonComplete.setOnClickListener {
-            val rvFoodList = binding.rvFoodList
-            for (i in data.indices) {
-                data[i].name = rvFoodList[i].listItemFoodName.text.toString()
-                data[i].gram = rvFoodList[i].editTextGram.text.toString()
+            data = updateData()
+            var kind = ""
+            when (mealTime) {
+                "아침" -> kind = "breakfast"
+                "점심" -> kind = "lunch"
+                "저녁" -> kind = "dinner"
             }
-            println("----------$data")
+            runBlocking {
+                GlobalScope.launch {
+                    for (food in data) {
+                        APIManager.postMeal(food.name, food.gram.toInt(), kind)
+                    }
+                }
+            }
         }
         // 리사이클러뷰에서 데이터 가져와 서버로 보내야됨
     }
 
+    private fun setTotalKcal() {
+        var kcal = 0
+        for (item in data) {
+            kcal = (kcal + APIManager.getFoodKcal(item.name, item.gram.toInt())).toInt()
+        }
+        binding.totalKcalMeal.text = kcal.toString()
+    }
+
+    private fun updateData(): MutableList<FoodDetailData> {
+        val rvFoodList = binding.rvFoodList
+        val mutableList = mutableListOf<FoodDetailData>()
+
+        for (item in rvFoodList) {
+            val name = item.listItemFoodName.text.toString()
+            val gram = item.editTextGram.text.toString()
+            with(mutableList) {
+                add(FoodDetailData(name, gram))
+            }
+        }
+
+        return mutableList
+    }
 
     private fun refreshRecyclerView() {
         val adapter = FoodDetailAdapter()

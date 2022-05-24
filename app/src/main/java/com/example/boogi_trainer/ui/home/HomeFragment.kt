@@ -81,7 +81,7 @@ class HomeFragment : Fragment() {
         val random = Random
 
         // 탄수화물
-        for (i in 1..5) { // 5개 음식 추천
+        for (i in 1..4) { // 4개 음식 추천
             // 랜덤으로 음식 뽑아
             val foodName = FindFoodImage().foodImage.entries.elementAt(random.nextInt(FindFoodImage().foodImage.size)).key
             // 몇 그램 필요한지 계산
@@ -95,7 +95,7 @@ class HomeFragment : Fragment() {
         // 탄수화물
 
         // 단백질
-        for (i in 1..5) { // 5개 음식 추천
+        for (i in 1..4) { // 4개 음식 추천
             // 랜덤으로 음식 뽑아
             val foodName = FindFoodImage().foodImage.entries.elementAt(random.nextInt(FindFoodImage().foodImage.size)).key
             // 몇 그램 필요한지 계산
@@ -109,7 +109,7 @@ class HomeFragment : Fragment() {
         // 단백질
 
         // 지방
-        for (i in 1..5) { // 5개 음식 추천
+        for (i in 1..4) { // 4개 음식 추천
             // 랜덤으로 음식 뽑아
             val foodName = FindFoodImage().foodImage.entries.elementAt(random.nextInt(FindFoodImage().foodImage.size)).key
             // 몇 그램 필요한지 계산

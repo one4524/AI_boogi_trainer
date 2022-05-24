@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.fragment.app.DialogFragment
 import com.example.boogi_trainer.R
 import com.example.boogi_trainer.databinding.FragmentFoodDialogAddFoodBinding
+import com.example.boogi_trainer.repository.APIManager
+import com.example.boogi_trainer.repository.Food
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class FoodFragmentDialogAddFood : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,5 +35,23 @@ class FoodFragmentDialogAddFood : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.completeButton.setOnClickListener {
+            val name = binding.editTextFood.text.toString()
+            val gram = binding.editTextUnit.text.toString().toDouble()
+            val kcal = binding.editTextKcal.text.toString().toInt() / gram
+            val carbs = binding.editTextCarbohydrate.text.toString().toInt() / gram
+            val prot = binding.editTextProtein.text.toString().toInt() / gram
+            val fat = binding.editTextFat.text.toString().toInt() / gram
+            val food = Food(name = name,
+                            kcal = kcal,
+                            carbs = carbs,
+                            protein = prot,
+                            fat = fat)
+            runBlocking {
+                GlobalScope.launch {
+                    APIManager.postFood(food)
+                }
+            }
+        }
     }
 }

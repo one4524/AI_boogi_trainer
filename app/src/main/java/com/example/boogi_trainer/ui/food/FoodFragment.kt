@@ -1,24 +1,14 @@
 package com.example.boogi_trainer.ui.food
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.boogi_trainer.MainActivity
 import com.example.boogi_trainer.databinding.FragmentFoodBinding
 import com.example.boogi_trainer.repository.APIManager
-import com.example.boogi_trainer.repository.DateLog
-import com.example.boogi_trainer.repository.DietInfo
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class FoodFragment : Fragment() {
     private val breakfast = "아침"
