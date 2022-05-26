@@ -49,6 +49,8 @@ class FoodSearchAdapter(var foods: ArrayList<String>, var mContext: Context): Re
                 intent.putExtra("foodName", food.text)
                 intent.putExtra("mealTime", mealTime)
                 mContext.startActivity(intent)
+                val activity: FoodSearchActivity = mContext as FoodSearchActivity
+                activity.finish()
             }
         }
     }

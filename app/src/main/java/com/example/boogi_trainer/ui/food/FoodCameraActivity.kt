@@ -69,10 +69,10 @@ class FoodCameraActivity : AppCompatActivity() {
         }
         // 음식 검색해서 정보 가져옴
         viewBinding.writeButton.setOnClickListener {
-            //FoodFragmentDialogSearch().show(supportFragmentManager, "dialog is working")
             val intent = Intent(this, FoodSearchActivity::class.java)
             intent.putExtra("mealTime", mealTime)
             startActivity(intent)
+            finish()
         }
     }
 
@@ -219,5 +219,6 @@ class FoodCameraActivity : AppCompatActivity() {
         intent.putExtra("mealTime", mealTime)
         intent.putExtra("from", "camera")
         activityResultLauncher.launch(intent)
+        finish()
     }
 }

@@ -1,5 +1,6 @@
 package com.example.boogi_trainer.ui.food
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
@@ -34,7 +35,8 @@ class FoodSearchActivity : AppCompatActivity() {
         adapter.mealTime = intent.getStringExtra("mealTime").toString()
 
         binding.floatingActionButton.setOnClickListener {
-            FoodFragmentDialogAddFood().show(supportFragmentManager, "dialog")
+            val i = Intent(this, FoodAddActivity::class.java)
+            startActivity(i)
         }
     }
 

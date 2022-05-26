@@ -2,6 +2,7 @@ package com.example.boogi_trainer.ui.food
 
 import android.annotation.SuppressLint
 import android.app.ActivityManager
+import android.content.Intent
 import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.iterator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.boogi_trainer.MainActivity
 import com.example.boogi_trainer.databinding.ActivityFoodDetailBinding
 import com.example.boogi_trainer.env.ImageUtils
 import com.example.boogi_trainer.env.Logger
@@ -135,6 +137,11 @@ class FoodDetailActivity : AppCompatActivity(){
                     }
                 }
             }
+//            // 백스택 액티비티들 종료하고 메인 액티비티 실행
+//            val intent = Intent(this, MainActivity::class.java)
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//            startActivity(intent)
+            finish()
         }
         // 리사이클러뷰에서 데이터 가져와 서버로 보내야됨
     }

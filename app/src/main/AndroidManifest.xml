@@ -58,6 +58,7 @@
         <activity android:name=".ui.food.FoodCameraActivity" />
         <activity android:name=".ui.food.FoodDetailActivity" />
         <activity android:name=".ui.food.FoodSearchActivity" />
+        <activity android:name=".ui.food.FoodAddActivity" />
     </application>
 
 </manifest>
