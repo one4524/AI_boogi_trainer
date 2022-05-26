@@ -19,6 +19,7 @@ import com.example.boogi_trainer.data.MemberAns
 import com.example.boogi_trainer.data.MemberReq
 import com.example.boogi_trainer.data.MyApplication
 import com.example.boogi_trainer.databinding.FragmentMypageBinding
+import kotlinx.android.synthetic.main.fragment_mypage.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -88,6 +89,10 @@ class MyPageFragment : Fragment() {
             binding.diaryContent.visibility = View.INVISIBLE
             binding.updateBtn.visibility = View.INVISIBLE
             binding.deleteBtn.visibility = View.INVISIBLE
+            binding.foodLinear.visibility = View.VISIBLE
+            binding.foodLinear2.visibility = View.VISIBLE
+            binding.exerciseLinear.visibility = View.VISIBLE
+            binding.exerciseLinear3.visibility = View.VISIBLE
             binding.diaryTextView.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth)
             binding.contextEditText.setText("")
             checkDay(year, month, dayOfMonth, userID)
@@ -103,6 +108,9 @@ class MyPageFragment : Fragment() {
             binding.diaryContent.text = str
             binding.diaryContent.visibility = View.VISIBLE
         }
+
+
+
 
         return root
 
@@ -189,4 +197,8 @@ class MyPageFragment : Fragment() {
             e.printStackTrace()
         }
     }
+}
+
+class FragmentMypageBinding {
+
 }

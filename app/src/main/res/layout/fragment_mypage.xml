@@ -172,7 +172,216 @@
             android:layout_marginRight="8dp"
             android:visibility="invisible">
         </Button>
+
+        <LinearLayout
+            android:layout_width="20dp"
+            android:layout_height="150dp"
+            android:id="@+id/exercise_linear2"
+            app:layout_constraintTop_toBottomOf="@+id/saveBtn"
+            tools:ignore="MissingConstraints"
+            android:orientation="vertical">
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/saveBtn"
+            app:layout_constraintStart_toEndOf="@+id/exercise_linear2"
+            android:layout_marginTop="5dp"
+            android:id="@+id/exercise_linear"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/exercise_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:text="오늘의 운동" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="10dp"
+                android:text="소모 칼로리"
+                android:textColor="@color/black" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:background="@null"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_kcal_circle" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:text="1000 Kcal"
+                    android:textColor="@color/black"></TextView>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/exercise_linear3"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@+id/exercise_linear"
+            app:layout_constraintTop_toBottomOf="@+id/saveBtn"
+            android:visibility="invisible"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="55dp"
+                android:text="푸시업 : 20회"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="스쿼트 : 20회"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="풀업 : 30회"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="데드리프트 : 20회"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="20dp"
+            android:layout_height="150dp"
+            android:id="@+id/food_linear3"
+            app:layout_constraintTop_toBottomOf="@+id/exercise_linear"
+            tools:ignore="MissingConstraints"
+            android:orientation="vertical">
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/food_linear"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/exercise_linear"
+            app:layout_constraintStart_toEndOf="@+id/food_linear3"
+            tools:ignore="MissingConstraints"
+            android:visibility="invisible"
+            tools:layout_editor_absoluteX="15dp">
+
+
+            <TextView
+                android:id="@+id/food_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="일일 영양소"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="10dp"
+                android:text="섭취한 영양소"
+                android:textColor="@color/black" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:background="@null"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_kcal_circle" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:clickable="false"
+                    android:text="1000 Kcal"
+                    android:textColor="@color/black"></TextView>
+
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/food_linear2"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@+id/food_linear"
+            app:layout_constraintTop_toBottomOf="@+id/exercise_linear"
+            android:visibility="invisible"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:text="Protein : 220g"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Fat : 61g"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Carbs : 192g"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     <View
         android:layout_width="match_parent"
@@ -180,206 +389,7 @@
         android:background="@color/gray"/>
 
 
-    <LinearLayout
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/food_record"
-            android:layout_marginBottom="1dp"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="60dp">
-
-            <TextView
-                android:id="@+id/textView"
-                android:text="식단 기록"
-                android:textSize="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/ic_baseline_arrow_forward_ios_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/exercise_record"
-            android:layout_marginBottom="1dp"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="60dp">
-
-            <TextView
-                android:text="운동 기록"
-                android:textSize="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/ic_baseline_arrow_forward_ios_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/question"
-            android:layout_marginBottom="1dp"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="60dp">
-
-            <TextView
-                android:textSize="15dp"
-                android:text="문의하기"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/ic_baseline_arrow_forward_ios_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/notice"
-            android:layout_marginBottom="1dp"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="60dp">
-
-            <TextView
-                android:textSize="15dp"
-                android:text="공지사항"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/ic_baseline_arrow_forward_ios_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/settings"
-            android:layout_marginBottom="1dp"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="60dp">
-
-            <TextView
-                android:textSize="15dp"
-                android:text="환경설정"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/ic_baseline_arrow_forward_ios_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/terms_policies"
-            android:layout_marginBottom="1dp"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="60dp">
-
-            <TextView
-                android:textSize="15dp"
-                android:text="약관 및 정책"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/ic_baseline_arrow_forward_ios_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:textColor="@color/theme_color"
-            android:textSize="11dp"
-            android:padding="15dp"
-            android:gravity="center_horizontal"
-            android:text="Copyright Boogi AI Trainer in Hansung Univ, All Rights Reserved"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </LinearLayout>
 
 
 </LinearLayout>
