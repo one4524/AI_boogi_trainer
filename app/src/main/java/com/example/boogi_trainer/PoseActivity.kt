@@ -28,6 +28,7 @@ import com.example.boogi_trainer.data.Device
 import com.example.boogi_trainer.data.Person
 import com.example.boogi_trainer.ml.*
 import com.example.boogi_trainer.repository.APIManager
+import com.example.boogi_trainer.repository.ExerciseType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -55,7 +56,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     /*sdadsad */
     private var exerciseNum : Int = 0
-    private var exerciseName : String = "운동"
+    private var exerciseName = ExerciseType.PUSH_UP
     private var checkNumberTmp = 0
     private var explain : String = "잘했어요"
 
@@ -259,7 +260,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         when (model) {
             //푸쉬업 자세
             "pushup_classifier.tflite" -> {
-                exerciseName = "푸쉬업"
+                exerciseName = ExerciseType.PUSH_UP
                 val pushupList1 = listOf(5, 7, 6, 8, 11, 12, 5, 6)
                 val pushupList2 = listOf(9, 9, 10, 10, 15, 16, 15, 16)
 
@@ -416,12 +417,12 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             } // 푸쉬업 끝
 
             "kneeup_classifier.tflite" -> {
-                exerciseName = "kneeup"
+                exerciseName = ExerciseType.PUSH_UP
 
             }   // 니업 끝
 
             "squat_classifier.tflite" -> {
-                exerciseName = "스쿼트"
+                exerciseName = ExerciseType.SQUAT
 
                 val squatCheckList1 = listOf(0, 5, 6, 5, 6, 11, 12)
                 val squatCheckList2 = listOf(5, 7, 8, 11, 12, 15, 16)

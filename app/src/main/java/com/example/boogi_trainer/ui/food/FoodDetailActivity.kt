@@ -19,6 +19,7 @@ import com.example.boogi_trainer.env.ImageUtils
 import com.example.boogi_trainer.env.Logger
 import com.example.boogi_trainer.env.Utils
 import com.example.boogi_trainer.repository.APIManager
+import com.example.boogi_trainer.repository.MealType
 import com.example.boogi_trainer.tflite.Classifier
 import com.example.boogi_trainer.tflite.YoloV5Classifier
 import com.example.boogi_trainer.tracking.MultiBoxTracker
@@ -124,11 +125,11 @@ class FoodDetailActivity : AppCompatActivity(){
         // 리사이클러뷰에서 데이터 가져와 서버로 보내야됨
         binding.buttonComplete.setOnClickListener {
             data = updateData()
-            var kind = ""
+            var kind = MealType.BREAKFAST
             when (mealTime) {
-                "아침" -> kind = "breakfast"
-                "점심" -> kind = "lunch"
-                "저녁" -> kind = "dinner"
+                "아침" -> kind = MealType.BREAKFAST
+                "점심" -> kind = MealType.LUNCH
+                "저녁" -> kind = MealType.DINNER
             }
             runBlocking {
                 GlobalScope.launch {

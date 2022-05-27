@@ -38,9 +38,14 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
+        // 유저 이름 표시
         _binding!!.userName.text = APIManager.user.name
-
+        // 오늘 섭취한 칼로리 표시
+        val foodKcal = APIManager.todayLog.dietInfo?.intakeKcal
+        binding.foodKcal.text = foodKcal.toString()
+        // 오늘 소비한 칼로리 표시
+        val burnedKcal = APIManager.todayLog.dietInfo?.burnedKcal
+        binding.exerciseKcal.text = burnedKcal.toString()
         return root
     }
 
