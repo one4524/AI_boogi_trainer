@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.inflate
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -22,6 +23,7 @@ import com.example.boogi_trainer.databinding.ActivityExercisePartBinding.inflate
 import com.example.boogi_trainer.databinding.FragmentHomeBinding
 import com.example.boogi_trainer.databinding.FragmentMypageBinding
 import com.example.boogi_trainer.repository.*
+import com.example.boogi_trainer.repository.APIManager.Companion.todayLog
 import kotlinx.android.synthetic.main.fragment_mypage.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -78,7 +80,6 @@ class MyPageFragment : Fragment() {
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
 
         // 유저 이름 표시
-        _binding!!.userName.text = APIManager.user.name
 
         // 섭취한 칼로리 표시
         val foodKcal = APIManager.todayLog.dietInfo?.intakeKcal
@@ -86,6 +87,23 @@ class MyPageFragment : Fragment() {
         val burnedKcal = APIManager.todayLog.dietInfo?.burnedKcal
 
         var userLog = APIManager.userLog
+
+        var pushUp = 0
+        var pullUp = 0
+        var squat = 0
+        var deadlift = 0
+        for(exercise in todayLog.exercises!!) {
+            if (exercise.exercise == "푸쉬업")
+                pushUp += exercise.reps!!
+            if (exercise.exercise == "풀업")
+                pullUp += exercise.reps!!
+            if (exercise.exercise == "스쿼트")
+                squat += exercise.reps!!
+            if (exercise.exercise == "데드리프트")
+                deadlift += exercise.reps!!
+        }
+
+
 
 
 
@@ -95,6 +113,18 @@ class MyPageFragment : Fragment() {
 
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        _binding!!.userName.text = APIManager.user.name
+        binding.intakeKcal.text = foodKcal.toString()
+        binding.burnedKcal.text = burnedKcal.toString()
+        binding.pushUpCount.text = pushUp.toString()
+        binding.pullUpCount.text = pullUp.toString()
+        binding.squatsCount.text = squat.toString()
+        binding.deadLiftCount.text = deadlift.toString()
+        binding.proteinCount.text = todayLog.dietInfo?.intakeProtein.toString()
+        binding.carbsCount.text = todayLog.dietInfo?.intakeCarbs.toString()
+        binding.fatCount.text = todayLog.dietInfo?.intakeFat.toString()
+
 
         binding.calendarView.setOnDateChangeListener{view, year, month, dayOfMonth ->
             var day = ""

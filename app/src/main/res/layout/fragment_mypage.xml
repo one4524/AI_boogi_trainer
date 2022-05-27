@@ -82,14 +82,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+            app:layout_constraintTop_toBottomOf="@+id/food_linear2" />
 
         <EditText
             android:id="@+id/contextEditText"
@@ -112,7 +112,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
             app:layout_constraintStart_toStartOf="@+id/contextEditText" android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp" android:visibility="invisible"/>
+            android:layout_marginStart="8dp"
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/title"
@@ -145,7 +146,8 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
-            android:visibility="invisible"/>
+            android:visibility="invisible"
+            />
 
         <Button
             android:text="수정"
@@ -159,7 +161,8 @@
             app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:visibility="invisible"/>
+            android:visibility="invisible"
+            />
 
         <Button
             android:text="삭제"
@@ -170,7 +173,8 @@
             app:layout_constraintEnd_toEndOf="@+id/saveBtn"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:visibility="invisible">
+            android:visibility="invisible"
+            >
         </Button>
 
         <LinearLayout
@@ -185,12 +189,11 @@
         <LinearLayout
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/saveBtn"
+            app:layout_constraintTop_toBottomOf="@+id/calendarView"
             app:layout_constraintStart_toEndOf="@+id/exercise_linear2"
             android:layout_marginTop="5dp"
             android:id="@+id/exercise_linear"
             android:orientation="vertical"
-            android:visibility="invisible"
             tools:ignore="MissingConstraints">
 
 
@@ -234,8 +237,7 @@
             android:layout_marginTop="4dp"
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@+id/exercise_linear"
-            app:layout_constraintTop_toBottomOf="@+id/saveBtn"
-            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@+id/calendarView"
             tools:ignore="MissingConstraints">
 
             <TextView
@@ -290,8 +292,7 @@
             android:layout_marginTop="4dp"
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@+id/exercise_linear3"
-            app:layout_constraintTop_toBottomOf="@+id/saveBtn"
-            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@+id/calendarView"
             tools:ignore="MissingConstraints">
 
             <TextView
@@ -353,7 +354,6 @@
             app:layout_constraintTop_toBottomOf="@+id/exercise_linear"
             app:layout_constraintStart_toEndOf="@+id/food_linear3"
             tools:ignore="MissingConstraints"
-            android:visibility="invisible"
             tools:layout_editor_absoluteX="15dp">
 
 
@@ -398,7 +398,6 @@
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@+id/food_linear"
             app:layout_constraintTop_toBottomOf="@+id/exercise_linear"
-            android:visibility="invisible"
             tools:ignore="MissingConstraints">
 
             <TextView
@@ -446,7 +445,6 @@
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@+id/food_linear2"
             app:layout_constraintTop_toBottomOf="@+id/exercise_linear"
-            android:visibility="invisible"
             tools:ignore="MissingConstraints">
 
             <TextView
