@@ -92,6 +92,10 @@ class MyPageFragment : Fragment() {
         var pullUp = 0
         var squat = 0
         var deadlift = 0
+        var situp = 0
+        var babelraw = 0
+        var babelcurl = 0
+        var dumbbellcurl = 0
         for(exercise in todayLog.exercises!!) {
             if (exercise.exercise == "푸쉬업")
                 pushUp += exercise.reps!!
@@ -101,6 +105,14 @@ class MyPageFragment : Fragment() {
                 squat += exercise.reps!!
             if (exercise.exercise == "데드리프트")
                 deadlift += exercise.reps!!
+            if (exercise.exercise == "싯업")
+                situp += exercise.reps!!
+            if (exercise.exercise == "바벨로우")
+                babelraw += exercise.reps!!
+            if (exercise.exercise == "바벨컬")
+                babelcurl += exercise.reps!!
+            if (exercise.exercise == "덤벨컬")
+                dumbbellcurl += exercise.reps!!
         }
 
 
@@ -121,6 +133,10 @@ class MyPageFragment : Fragment() {
         binding.pullUpCount.text = pullUp.toString()
         binding.squatsCount.text = squat.toString()
         binding.deadLiftCount.text = deadlift.toString()
+        binding.sitUpCount.text = situp.toString()
+        binding.babelRawCount.text = babelraw.toString()
+        binding.babelCurlCount.text = babelcurl.toString()
+        binding.dumbbellCurlCount.text = dumbbellcurl.toString()
         binding.proteinCount.text = todayLog.dietInfo?.intakeProtein.toString()
         binding.carbsCount.text = todayLog.dietInfo?.intakeCarbs.toString()
         binding.fatCount.text = todayLog.dietInfo?.intakeFat.toString()
@@ -140,6 +156,10 @@ class MyPageFragment : Fragment() {
                     var pullUp = 0
                     var squat = 0
                     var deadlift = 0
+                    var situp = 0
+                    var babelraw = 0
+                    var babelcurl = 0
+                    var dumbbellcurl = 0
                     for(exercise in log.exercises!!){
                         if(exercise.exercise=="푸쉬업")
                             pushUp+= exercise.reps!!
@@ -149,6 +169,14 @@ class MyPageFragment : Fragment() {
                             squat+= exercise.reps!!
                         if(exercise.exercise=="데드리프트")
                             deadlift+= exercise.reps!!
+                        if (exercise.exercise == "싯업")
+                            situp += exercise.reps!!
+                        if (exercise.exercise == "바벨로우")
+                            babelraw += exercise.reps!!
+                        if (exercise.exercise == "바벨컬")
+                            babelcurl += exercise.reps!!
+                        if (exercise.exercise == "덤벨컬")
+                            dumbbellcurl += exercise.reps!!
                     }
                     binding.intakeKcal.text = log.dietInfo?.intakeKcal.toString()
                     binding.burnedKcal.text = log.dietInfo?.burnedKcal.toString()
@@ -156,6 +184,10 @@ class MyPageFragment : Fragment() {
                     binding.pullUpCount.text = pullUp.toString()
                     binding.squatsCount.text = squat.toString()
                     binding.deadLiftCount.text = deadlift.toString()
+                    binding.sitUpCount.text = situp.toString()
+                    binding.babelRawCount.text = babelraw.toString()
+                    binding.babelCurlCount.text = babelcurl.toString()
+                    binding.dumbbellCurlCount.text = dumbbellcurl.toString()
                     binding.proteinCount.text = log.dietInfo?.intakeProtein.toString()
                     binding.carbsCount.text = log.dietInfo?.intakeCarbs.toString()
                     binding.fatCount.text = log.dietInfo?.intakeFat.toString()
@@ -174,6 +206,8 @@ class MyPageFragment : Fragment() {
             binding.exerciseLinear3.visibility = View.VISIBLE
             binding.exerciseLinear4.visibility = View.VISIBLE
             binding.foodLinear4.visibility = View.VISIBLE
+            binding.exerciseLinear5.visibility = View.VISIBLE
+            binding.exerciseLinear6.visibility = View.VISIBLE
             binding.diaryTextView.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth)
             binding.contextEditText.setText("")
             checkDay(year, month, dayOfMonth, userID)
