@@ -37,7 +37,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:text="닉네임"
+            android:text="김부기"
             android:textColor="@color/black"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -122,7 +122,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:gravity="center"
-            android:text="달력일기장"
+            android:text="Calendar"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="#9E28B3"
             android:textSize="24sp"
@@ -193,20 +193,13 @@
             android:visibility="invisible"
             tools:ignore="MissingConstraints">
 
-            <TextView
-                android:id="@+id/exercise_record"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:text="오늘의 운동" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginTop="10dp"
-                android:text="소모 칼로리"
+                android:layout_marginTop="25dp"
+                android:text="소모 칼로리 (단위 : kcal)"
                 android:textColor="@color/black" />
 
             <FrameLayout
@@ -221,11 +214,12 @@
                     android:src="@drawable/ic_kcal_circle" />
 
                 <TextView
+                    android:id="@+id/burned_kcal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:clickable="false"
-                    android:text="1000 Kcal"
+                    android:text="1000"
                     android:textColor="@color/black"></TextView>
 
             </FrameLayout>
@@ -234,7 +228,7 @@
 
         <LinearLayout
             android:id="@+id/exercise_linear3"
-            android:layout_width="150dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
@@ -245,36 +239,96 @@
             tools:ignore="MissingConstraints">
 
             <TextView
+                android:id="@+id/exercise_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13dp"
+                android:layout_marginTop="27dp"
+                android:textColor="@color/black"
+                android:text="일일 운동 (단위 : 회)" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="푸시업"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="스쿼트"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="풀업"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="데드리프트"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/exercise_linear4"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@+id/exercise_linear3"
+            app:layout_constraintTop_toBottomOf="@+id/saveBtn"
+            android:visibility="invisible"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/push_up_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="55dp"
-                android:text="푸시업 : 20회"
+                android:text="20"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
 
             <TextView
+                android:id="@+id/squats_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="스쿼트 : 20회"
+                android:text="30"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
 
             <TextView
+                android:id="@+id/pull_up_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="풀업 : 30회"
+                android:text="20"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
 
             <TextView
+                android:id="@+id/dead_lift_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="데드리프트 : 20회"
+                android:text="50"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
 
 
         </LinearLayout>
@@ -303,20 +357,13 @@
             tools:layout_editor_absoluteX="15dp">
 
 
-            <TextView
-                android:id="@+id/food_record"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="일일 영양소"
-                android:textColor="@color/black"
-                android:textSize="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginTop="10dp"
-                android:text="섭취한 영양소"
+                android:layout_marginTop="25dp"
+                android:text="섭취 칼로리 (단위 : kcal)"
                 android:textColor="@color/black" />
 
             <FrameLayout
@@ -331,11 +378,12 @@
                     android:src="@drawable/ic_kcal_circle" />
 
                 <TextView
+                    android:id="@+id/intake_kcal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:clickable="false"
-                    android:text="1000 Kcal"
+                    android:text="1000"
                     android:textColor="@color/black"></TextView>
 
             </FrameLayout>
@@ -343,7 +391,7 @@
 
         <LinearLayout
             android:id="@+id/food_linear2"
-            android:layout_width="150dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
@@ -354,28 +402,79 @@
             tools:ignore="MissingConstraints">
 
             <TextView
+                android:id="@+id/food_record"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:text="Protein : 220g"
+                android:text="일일 영양소 (단위 : g)"
+                android:layout_marginTop="25dp"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="13dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="단백질"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="Fat : 61g"
+                android:text="지방"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="Carbs : 192g"
+                android:text="탄수화물"
                 android:textColor="@color/black"
-                android:textSize="20dp" />
+                android:textSize="18dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/food_linear4"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@+id/food_linear2"
+            app:layout_constraintTop_toBottomOf="@+id/exercise_linear"
+            android:visibility="invisible"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/protein_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="200"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/fat_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="100"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/carbs_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="300"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
 
 
         </LinearLayout>
