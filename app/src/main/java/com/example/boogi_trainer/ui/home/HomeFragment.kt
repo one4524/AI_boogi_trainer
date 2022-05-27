@@ -77,55 +77,67 @@ class HomeFragment : Fragment() {
         val needFat = goalFat - myFat
         // 필요 단탄지 계산
 
-        // 필요 단탄지 표시
-        binding.textCarbohydrate.text = needCarbohydrate.toInt().toString()
-        binding.textProtein.text = needProtein.toInt().toString()
-        binding.textFat.text = needFat.toInt().toString()
-        // 필요 단탄지 표시
-
         val random = Random
-
+        // 필요 단탄지 표시
         // 탄수화물
-        for (i in 1..4) { // 4개 음식 추천
-            // 랜덤으로 음식 뽑아
-            val foodName = FindFoodImage().foodImage.entries.elementAt(random.nextInt(FindFoodImage().foodImage.size)).key
-            // 몇 그램 필요한지 계산
-            val foodGram = needCarbohydrate / APIManager.getFood(foodName).carbs!!
-            if (foodGram != null) {
-                with(dataCarb) {
-                    add(FoodDetailData(foodName, foodGram.toInt().toString()))
+        if (needCarbohydrate > 0) {
+            binding.textCarbohydrate.text = needCarbohydrate.toInt().toString()
+            for (i in 1..4) { // 4개 음식 추천
+                // 랜덤으로 음식 뽑아
+                val foodName = FindFoodImage().foodImage.entries.elementAt(random.nextInt(FindFoodImage().foodImage.size)).key
+                // 몇 그램 필요한지 계산
+                val foodGram = needCarbohydrate / APIManager.getFood(foodName).carbs!!
+                if (foodGram != null) {
+                    with(dataCarb) {
+                        add(FoodDetailData(foodName, foodGram.toInt().toString()))
+                    }
                 }
             }
+        }
+        else {
+            binding.textCarbohydrate.text = "0"
         }
         // 탄수화물
-
         // 단백질
-        for (i in 1..4) { // 4개 음식 추천
-            // 랜덤으로 음식 뽑아
-            val foodName = FindFoodImage().foodImage.entries.elementAt(random.nextInt(FindFoodImage().foodImage.size)).key
-            // 몇 그램 필요한지 계산
-            val foodGram = needProtein / APIManager.getFood(foodName).protein!!
-            if (foodGram != null) {
-                with(dataProt) {
-                    add(FoodDetailData(foodName, foodGram.toInt().toString()))
+        if (needProtein > 0) {
+            binding.textProtein.text = needProtein.toInt().toString()
+            for (i in 1..4) { // 4개 음식 추천
+                // 랜덤으로 음식 뽑아
+                val foodName = FindFoodImage().foodImage.entries.elementAt(random.nextInt(FindFoodImage().foodImage.size)).key
+                // 몇 그램 필요한지 계산
+                val foodGram = needProtein / APIManager.getFood(foodName).protein!!
+                if (foodGram != null) {
+                    with(dataProt) {
+                        add(FoodDetailData(foodName, foodGram.toInt().toString()))
+                    }
                 }
             }
         }
+        else {
+            binding.textProtein.text = "0"
+        }
         // 단백질
-
         // 지방
-        for (i in 1..4) { // 4개 음식 추천
-            // 랜덤으로 음식 뽑아
-            val foodName = FindFoodImage().foodImage.entries.elementAt(random.nextInt(FindFoodImage().foodImage.size)).key
-            // 몇 그램 필요한지 계산
-            val foodGram = needFat / APIManager.getFood(foodName).fat!!
-            if (foodGram != null) {
-                with(dataFat) {
-                    add(FoodDetailData(foodName, foodGram.toInt().toString()))
+        if (needFat > 0) {
+            binding.textFat.text = needFat.toInt().toString()
+            for (i in 1..4) { // 4개 음식 추천
+                // 랜덤으로 음식 뽑아
+                val foodName = FindFoodImage().foodImage.entries.elementAt(random.nextInt(FindFoodImage().foodImage.size)).key
+                // 몇 그램 필요한지 계산
+                val foodGram = needFat / APIManager.getFood(foodName).fat!!
+                if (foodGram != null) {
+                    with(dataFat) {
+                        add(FoodDetailData(foodName, foodGram.toInt().toString()))
+                    }
                 }
             }
         }
+        else {
+            binding.textFat.text = "0"
+        }
         // 지방
+        // 필요 단탄지 표시
+
     }
 
     private fun refreshRecyclerView() {
