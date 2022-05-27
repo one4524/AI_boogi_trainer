@@ -18,7 +18,10 @@ import com.example.boogi_trainer.data.AppMemberInfo
 import com.example.boogi_trainer.data.MemberAns
 import com.example.boogi_trainer.data.MemberReq
 import com.example.boogi_trainer.data.MyApplication
+import com.example.boogi_trainer.databinding.ActivityExercisePartBinding.inflate
+import com.example.boogi_trainer.databinding.FragmentHomeBinding
 import com.example.boogi_trainer.databinding.FragmentMypageBinding
+import com.example.boogi_trainer.repository.*
 import kotlinx.android.synthetic.main.fragment_mypage.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -72,6 +75,17 @@ class MyPageFragment : Fragment() {
 """
 
 
+        _binding = FragmentMypageBinding.inflate(inflater, container, false)
+
+        // 유저 이름 표시
+        _binding!!.userName.text = APIManager.user.name
+
+        // 섭취한 칼로리 표시
+        val foodKcal = APIManager.todayLog.dietInfo?.intakeKcal
+        // 소비한 칼로리 표시
+        val burnedKcal = APIManager.todayLog.dietInfo?.burnedKcal
+
+        var userLog = APIManager.userLog
 
 
 
@@ -83,6 +97,39 @@ class MyPageFragment : Fragment() {
         val root: View = binding.root
 
         binding.calendarView.setOnDateChangeListener{view, year, month, dayOfMonth ->
+            var day = ""
+            if(month>=10){
+                day = String.format("%d%d%d", year, month + 1, dayOfMonth)
+            }else day = String.format("%d0%d%d", year, month + 1, dayOfMonth)
+
+            for(log in APIManager.userLog.dates!!){
+                if(log.date == day){
+                    var pushUp = 0
+                    var pullUp = 0
+                    var squat = 0
+                    var deadlift = 0
+                    for(exercise in log.exercises!!){
+                        if(exercise.exercise=="푸쉬업")
+                            pushUp+= exercise.reps!!
+                        if(exercise.exercise=="풀업")
+                            pullUp+= exercise.reps!!
+                        if(exercise.exercise=="스쿼트")
+                            squat+= exercise.reps!!
+                        if(exercise.exercise=="데드리프트")
+                            deadlift+= exercise.reps!!
+                    }
+                    binding.intakeKcal.text = log.dietInfo?.intakeKcal.toString()
+                    binding.burnedKcal.text = log.dietInfo?.burnedKcal.toString()
+                    binding.pushUpCount.text = pushUp.toString()
+                    binding.pullUpCount.text = pullUp.toString()
+                    binding.squatsCount.text = squat.toString()
+                    binding.deadLiftCount.text = deadlift.toString()
+                    binding.proteinCount.text = log.dietInfo?.intakeProtein.toString()
+                    binding.carbsCount.text = log.dietInfo?.intakeCarbs.toString()
+                    binding.fatCount.text = log.dietInfo?.intakeFat.toString()
+                }
+            }
+
             binding.diaryTextView.visibility = View.VISIBLE
             binding.saveBtn.visibility = View.VISIBLE
             binding.contextEditText.visibility = View.VISIBLE
@@ -93,9 +140,12 @@ class MyPageFragment : Fragment() {
             binding.foodLinear2.visibility = View.VISIBLE
             binding.exerciseLinear.visibility = View.VISIBLE
             binding.exerciseLinear3.visibility = View.VISIBLE
+            binding.exerciseLinear4.visibility = View.VISIBLE
+            binding.foodLinear4.visibility = View.VISIBLE
             binding.diaryTextView.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth)
             binding.contextEditText.setText("")
             checkDay(year, month, dayOfMonth, userID)
+
         }
 
         binding.saveBtn.setOnClickListener {
