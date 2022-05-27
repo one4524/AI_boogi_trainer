@@ -156,8 +156,7 @@ class APIManager {
         }
         fun postFood(food:Food){
             var payload = food
-            if(caller.postFood(food).execute().isSuccessful)
-                setFoods()
+            caller.postFood(food).execute()
         }
         fun postCardioExercise(cardioExerciseType: CardioExerciseType, time:Int, date:String= today){
             var exercise = when(cardioExerciseType){

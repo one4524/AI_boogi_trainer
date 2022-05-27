@@ -1,5 +1,6 @@
 package com.example.boogi_trainer.ui.food
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -35,10 +36,11 @@ class FoodAddActivity: AppCompatActivity() {
                 runBlocking {
                     GlobalScope.launch {
                         APIManager.postFood(food)
-                        println("--------------------asdf")
                     }
                 }
                 Toast.makeText(this, "저장 되었습니다.", Toast.LENGTH_SHORT).show()
+                val i = Intent(this, FoodSearchActivity::class.java)
+                startActivity(i)
                 finish()
             }
             else {

@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.boogi_trainer.databinding.ActivityFoodSearchBinding
 import com.example.boogi_trainer.repository.APIManager
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class FoodSearchActivity : AppCompatActivity() {
 
@@ -36,6 +39,7 @@ class FoodSearchActivity : AppCompatActivity() {
 
         binding.floatingActionButton.setOnClickListener {
             val i = Intent(this, FoodAddActivity::class.java)
+            finish()
             startActivity(i)
         }
     }
@@ -63,9 +67,16 @@ class FoodSearchActivity : AppCompatActivity() {
     }
 
     private fun initialization() {
-        for (food in APIManager.foods) {
-            with(foodNameList) {
-                add(food.name!!)
+        runBlocking {
+            GlobalScope.launch {
+                foodNameList.clear()
+                APIManager.setFoods()
+                for (food in APIManager.foods) {
+                    with(foodNameList) {
+                        add(food.name!!)
+                    }
+                }
+
             }
         }
     }
