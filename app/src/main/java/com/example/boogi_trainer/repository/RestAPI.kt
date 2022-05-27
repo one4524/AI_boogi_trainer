@@ -63,7 +63,8 @@ data class Meal(
 data class PostMeal(
     val food: String? = "",
     val gram: Int? = 1,
-    val kind: String? = ""
+    val kind: String? = "",
+    val image: String
 )
 data class DietInfo(
     @SerializedName("intake_kcal")
