@@ -1,16 +1,6 @@
 <component name="libraryTable">
   <library name="Gradle: com.naver.maps:geometry:1.2.0@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e3c32aa95c932338a5ef9a7ed237d9ee/transformed/geometry-1.2.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/06b5b64c9f8ff68f02a6d5d30a7d6e2c/transformed/jetified-geometry-1.2.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/06b5b64c9f8ff68f02a6d5d30a7d6e2c/transformed/jetified-geometry-1.2.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/06b5b64c9f8ff68f02a6d5d30a7d6e2c/transformed/jetified-geometry-1.2.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2d3abe8f79fc70767c1d2fa47c829ff2/transformed/jetified-geometry-1.2.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2d3abe8f79fc70767c1d2fa47c829ff2/transformed/jetified-geometry-1.2.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/2d3abe8f79fc70767c1d2fa47c829ff2/transformed/jetified-geometry-1.2.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/509c9eb61560b1239f2851ab6a7585ec/transformed/jetified-geometry-1.2.0/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/509c9eb61560b1239f2851ab6a7585ec/transformed/jetified-geometry-1.2.0/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/509c9eb61560b1239f2851ab6a7585ec/transformed/jetified-geometry-1.2.0/jars/classes.jar!/" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/ab6471d04ffdad873bdf832efd76ce48/transformed/jetified-geometry-1.2.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ab6471d04ffdad873bdf832efd76ce48/transformed/jetified-geometry-1.2.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ab6471d04ffdad873bdf832efd76ce48/transformed/jetified-geometry-1.2.0/AndroidManifest.xml" />

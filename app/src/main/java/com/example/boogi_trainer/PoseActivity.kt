@@ -15,12 +15,15 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.Chronometer
+import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.example.boogi_trainer.camera.CameraSource
@@ -28,6 +31,7 @@ import com.example.boogi_trainer.data.Device
 import com.example.boogi_trainer.data.Person
 import com.example.boogi_trainer.ml.*
 import com.example.boogi_trainer.repository.APIManager
+import com.example.boogi_trainer.repository.CardioExerciseType
 import com.example.boogi_trainer.repository.ExerciseType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -56,6 +60,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     /*sdadsad */
     private var exerciseNum : Int = 0
+    private var exerciseCutNum : Int = 0
     private var exerciseName = ExerciseType.PUSH_UP
     private var checkNumberTmp = 0
     private var explain : String = "잘했어요"
@@ -68,9 +73,12 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var counter: TextView
     private lateinit var name: TextView
     private lateinit var time: Chronometer
-    private lateinit var pushUp: Button
-    private lateinit var kneeUp: Button
-    private lateinit var squat: Button
+    private lateinit var start: Button
+    private lateinit var stop: Button
+    private lateinit var count : EditText
+    private lateinit var startlayout : ConstraintLayout
+    private var bool : Boolean = false
+
     private lateinit var tvFPS: TextView
     private lateinit var tvClassificationValue1: TextView
     private lateinit var tvClassificationValue2: TextView
@@ -129,13 +137,37 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         surfaceView = findViewById(R.id.surfaceView)
 
         //tvFPS = findViewById(R.id.tvFps)
-        //tvClassificationValue1 = findViewById(R.id.tvClassificationValue1)
+        tvClassificationValue1 = findViewById(R.id.tvClassificationValue1)
         //tvClassificationValue2 = findViewById(R.id.tvClassificationValue2)
         //tvClassificationValue3 = findViewById(R.id.tvClassificationValue3)
 
         //pushUp = findViewById(R.id.pushUP)
         //kneeUp = findViewById(R.id.kneeUP)
         //squat = findViewById(R.id.squat)
+        start = findViewById(R.id.start)
+        stop = findViewById(R.id.stop)
+        count = findViewById(R.id.count)
+        startlayout = findViewById(R.id.start_layout)
+
+        start.setOnClickListener {
+
+            exerciseCutNum = count.text.toString().toInt()
+            
+            bool = true
+            stop.isVisible = true
+            startlayout.isVisible = false
+
+        }
+
+        stop.setOnClickListener {
+            runBlocking {
+                GlobalScope.launch {
+                    APIManager.postExercise(exerciseName, exerciseNum)
+                }
+            }
+            finish()
+        }
+
         counter = findViewById(R.id.counter)
         name = findViewById(R.id.exercise_name)
         time = findViewById(R.id.exercise_time)
@@ -184,12 +216,16 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                             poseLabels: List<Pair<String, Float>>?,
                             person: Person?
                         ) {
-                            poseLabels?.sortedByDescending { it.second }?.let {
-                                """
-                                tvClassificationValue1.text = getString(
-                                    R.string.tfe_pe_tv_classification_value,
-                                    convertPoseLabels(if (it.isNotEmpty()) it[0] else null)
-                                )
+                            if(bool) {
+                                poseLabels?.sortedByDescending { it.second }?.let {
+                                    runOnUiThread {
+                                        tvClassificationValue1.text = getString(
+                                            R.string.tfe_pe_tv_classification_value,
+                                            convertPoseLabels(if (it.isNotEmpty()) it[0] else null)
+                                        )
+                                    }
+
+                                    """
                                 tvClassificationValue2.text = getString(
                                     R.string.tfe_pe_tv_classification_value,
                                     convertPoseLabels(if (it.size >= 2) it[1] else null)
@@ -199,17 +235,18 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                     convertPoseLabels(if (it.size >= 3) it[2] else null)
                                 )
                                 """
-                            }
-                            if(exerciseNum >= 20){
-                                runBlocking{
-                                    GlobalScope.launch {
-
-
-                                        APIManager.postExercise(exerciseName, exerciseNum)
-                                    }
                                 }
+                                if (exerciseNum >= exerciseCutNum) {
+                                    runBlocking {
+                                        GlobalScope.launch {
 
-                                finish()
+
+                                            APIManager.postExercise(exerciseName, exerciseNum)
+                                        }
+                                    }
+
+                                    finish()
+                                }
                             }
                             // 체크 포인트 확인
                             checkPose(person, poseLabels)
@@ -416,10 +453,40 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
             } // 푸쉬업 끝
 
-            "kneeup_classifier.tflite" -> {
-                exerciseName = ExerciseType.PUSH_UP
+            "pullup_classifier.tflite" -> {
+                exerciseName = ExerciseType.PULL_UP
 
-            }   // 니업 끝
+            }   // 풀업 끝
+
+            "situp_classifier.tflite" -> {
+                exerciseName = ExerciseType.SIT_UP
+
+            }   // 싯업 끝
+
+            "babelrow_classifier.tflite" -> {
+                exerciseName = ExerciseType.BARBELL_ROW
+
+            }   // 바벨로우 끝
+
+            "deadlift_classifier.tflite" -> {
+                exerciseName = ExerciseType.DEAD_LIFT
+
+            }   // 데드리프트 끝
+
+            "dumbbelcurl_classifier.tflite" -> {
+                exerciseName = ExerciseType.DUMBBELL_CURL
+
+            } // 덤벨컬 끝
+
+            "babelcurl_classifier.tflite" -> {
+                exerciseName = ExerciseType.BARBELL_CURL
+
+            } // 바벨컬 끝
+
+            "plank_classifier.tflite" -> {
+                exerciseName = ExerciseType.PLANK
+
+            } // 플랭크 끝
 
             "squat_classifier.tflite" -> {
                 exerciseName = ExerciseType.SQUAT
@@ -554,11 +621,29 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             "스쿼트" -> { model = "squat_classifier.tflite"
                 txt = "squat_labels.txt" }
 
-            "니업" -> { model = "kneeup_classifier.tflite"
-                txt = "kneeup_labels.txt" }
+            "풀업" -> { model = "pullup_classifier.tflite"
+                txt = "pullup_labels.txt" }
+
+            "싯업" -> { model = "situp_classifier.tflite"
+                txt = "situp_labels.txt" }
+
+            "바벨로우" -> { model = "babelrow_classifier.tflite"
+                txt = "babelrow_labels.txt" }
+
+            "데드리프트" -> { model = "deadlift_classifier.tflite"
+                txt = "deadlift_labels.txt" }
+
+            "덤벨컬" -> { model = "dumbbelcurl_classifier.tflite"
+                txt = "dumbbelcurl_labels.txt" }
+
+            "바벨컬" -> { model = "babelcurl_classifier.tflite"
+                txt = "babelcurl_labels.txt" }
+
+            "플랭크" -> { model = "plank_classifier.tflite"
+                txt = "plank_labels.txt" }
 
 
-            else -> {}
+            else -> { finish()}
         }
         cameraSource?.setClassifier(if (isClassifyPose) PoseClassifier.create(this, model, txt) else null)
 

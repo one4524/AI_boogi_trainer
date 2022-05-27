@@ -16,7 +16,7 @@
         <entry key="..\:/AI_boogi_trainner2/app/src/main/res/layout/recycleview_item.xml" value="0.1" />
         <entry key="..\:/Users/User/Documents/GitHub/AI_boogi_trainner2/app/src/main/res/layout/activity_food_detail.xml" value="0.16691995947315097" />
         <entry key="..\:/Users/User/Documents/GitHub/AI_boogi_trainner2/app/src/main/res/layout/activity_login.xml" value="0.3432971014492754" />
-        <entry key="..\:/Users/User/Documents/GitHub/AI_boogi_trainner2/app/src/main/res/layout/activity_pose.xml" value="0.18489583333333334" />
+        <entry key="..\:/Users/User/Documents/GitHub/AI_boogi_trainner2/app/src/main/res/layout/activity_pose.xml" value="0.25" />
         <entry key="..\:/Users/User/Documents/GitHub/AI_boogi_trainner2/app/src/main/res/layout/activity_running.xml" value="0.33" />
         <entry key="..\:/Users/User/Documents/GitHub/AI_boogi_trainner2/app/src/main/res/layout/fragment_exercise.xml" value="0.29030797101449274" />
         <entry key="..\:/Users/User/Documents/GitHub/AI_boogi_trainner2/app/src/main/res/layout/fragment_food.xml" value="0.358695652173913" />
@@ -26,8 +26,7 @@
         <entry key="app/src/main/res/drawable/bt_highlight.xml" value="0.196" />
         <entry key="app/src/main/res/drawable/underline.xml" value="0.101" />
         <entry key="app/src/main/res/layout/activity_food_camera.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_food_detail.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_food_search.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_food_detail.xml" value="0.21851851851851853" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_exercise.xml" value="0.19610507246376813" />

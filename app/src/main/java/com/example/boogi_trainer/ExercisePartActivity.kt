@@ -25,11 +25,14 @@ class ExercisePartActivity : AppCompatActivity() {
         when(exercisePart){
             0 -> {
                 list.add(exerciseData(R.drawable.pushup_btn, "푸쉬업"))
+                list.add(exerciseData(R.drawable.pullup_btn,"풀업"))
                 binding.partName.text = "전신 운동"
             }
             1 -> {
+                list.add(exerciseData(R.drawable.deadlift_btn,"싯업"))
                 list.add(exerciseData(R.drawable.pullup_btn,"풀업"))
                 list.add(exerciseData(R.drawable.pushup_btn,"푸쉬업"))
+                list.add(exerciseData(R.drawable.deadlift_btn,"바벨로우"))
                 binding.partName.text = "상체 운동"
             }
 
@@ -40,7 +43,10 @@ class ExercisePartActivity : AppCompatActivity() {
             }
 
             3 -> {
+                list.add(exerciseData(R.drawable.deadlift_btn,"덤벨컬"))
+                list.add(exerciseData(R.drawable.deadlift_btn,"바벨컬"))
                 list.add(exerciseData(R.drawable.pushup_btn,"푸쉬업"))
+                list.add(exerciseData(R.drawable.deadlift_btn,"바벨로우"))
                 binding.partName.text = "팔 운동"
             }
         }

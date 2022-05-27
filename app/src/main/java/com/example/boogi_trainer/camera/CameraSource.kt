@@ -252,8 +252,20 @@ class CameraSource(
         val persons = mutableListOf<Person>()
         var classificationResult: List<Pair<String, Float>>? = null
 
+        val outRotateMatrix = Matrix()
+        outRotateMatrix.postRotate(0.0f)
+        var rotatedOutputBitmap = Bitmap.createBitmap(
+            bitmap, 0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT,
+            outRotateMatrix, false
+        )
+
+        rotatedOutputBitmap = Bitmap.createScaledBitmap(rotatedOutputBitmap, PREVIEW_WIDTH, PREVIEW_HEIGHT, true)
+
+
+
+
         synchronized(lock) {
-            detector?.estimatePoses(bitmap)?.let {
+            detector?.estimatePoses(rotatedOutputBitmap)?.let {
                 persons.addAll(it)
 
                 // if the model only returns one item, allow running the Pose classifier.
@@ -274,7 +286,7 @@ class CameraSource(
         if (persons.isNotEmpty()) {
             listener?.onDetectedInfo(persons[0].score, classificationResult, persons[0])
         }
-        visualize(persons, bitmap)
+        visualize(persons, rotatedOutputBitmap)
     }
 
     private fun visualize(persons: List<Person>, bitmap: Bitmap) {

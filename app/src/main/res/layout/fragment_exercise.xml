@@ -131,7 +131,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation ="vertical"
             android:layout_width="match_parent"
-            android:layout_height="760dp"
+            android:layout_height="1600dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="20dp"

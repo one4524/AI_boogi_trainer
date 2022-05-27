@@ -1,5 +1,4 @@
-down_1
-down_2
 narrow
-stand
+set
+success
 wide

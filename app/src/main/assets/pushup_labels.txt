@@ -1,9 +1,9 @@
-fail_1_left
-fail_1_right
-fail_2_left
-fail_2_right
-fail_3_left
-fail_3_right
+bodyup_left
+bodyup_right
+handup_left
+handup_right
+hipup_left
+hipup_right
 set_left
 set_right
 success_left
