@@ -1,0 +1,6 @@
+stand_left
+stand_right
+success_left
+success_right
+wrong_left
+wrong_right

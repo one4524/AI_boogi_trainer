@@ -13,10 +13,8 @@ import android.util.Log
 import android.view.SurfaceView
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.Chronometer
-import android.widget.EditText
-import android.widget.TextView
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -31,16 +29,14 @@ import com.example.boogi_trainer.data.Device
 import com.example.boogi_trainer.data.Person
 import com.example.boogi_trainer.ml.*
 import com.example.boogi_trainer.repository.APIManager
-import com.example.boogi_trainer.repository.CardioExerciseType
 import com.example.boogi_trainer.repository.ExerciseType
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import java.util.*
+import kotlin.concurrent.thread
 import kotlin.math.acos
 import kotlin.math.pow
 import kotlin.math.sqrt
+
 
 class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     companion object {
@@ -73,8 +69,8 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var counter: TextView
     private lateinit var name: TextView
     private lateinit var time: Chronometer
-    private lateinit var start: Button
-    private lateinit var stop: Button
+    private lateinit var start: ImageButton
+    private lateinit var stop: ImageButton
     private lateinit var count : EditText
     private lateinit var startlayout : ConstraintLayout
     private var bool : Boolean = false
@@ -127,6 +123,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         super.onPause()
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pose)
@@ -150,9 +147,21 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         startlayout = findViewById(R.id.start_layout)
 
         start.setOnClickListener {
-
+            hideKeyboard()
             exerciseCutNum = count.text.toString().toInt()
-            
+            thread(start = true) {
+                val list = listOf<String>("오초 후에 시작합니다", "", "", "", "", "시작")
+
+
+                for (c in list){
+
+                    runOnUiThread {
+                        speakOut2(c)
+                    }
+
+                    Thread.sleep(1000)
+                }
+            }
             bool = true
             stop.isVisible = true
             startlayout.isVisible = false
@@ -195,6 +204,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
     // open camera
+    @OptIn(DelicateCoroutinesApi::class)
     private fun openCamera() {
         val dm = applicationContext.resources.displayMetrics
         val width = dm.widthPixels
@@ -263,7 +273,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
             // 포즈넷 모델 생성
             val poseDetector = MoveNet.create(this, device, ModelType.Thunder)
-            poseDetector?.let { detector ->
+            poseDetector.let { detector ->
                 cameraSource?.setDetector(detector)
             }
         }
@@ -312,30 +322,30 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                         Log.d("it[0].first", it[0].first)
 
                         // 어깨와 팔꿈치
-                        var d1L = sqrt( (inputVector_x[6]-inputVector_x[8]).pow(2) + (inputVector_y[6]-inputVector_y[8]).pow(2) )
+                        val d1L = sqrt( (inputVector_x[6]-inputVector_x[8]).pow(2) + (inputVector_y[6]-inputVector_y[8]).pow(2) )
 
                         //팔꿈치와 손목
-                        var d2L = sqrt( (inputVector_x[8]-inputVector_x[10]).pow(2) + (inputVector_y[8]-inputVector_y[10]).pow(2) )
+                        val d2L = sqrt( (inputVector_x[8]-inputVector_x[10]).pow(2) + (inputVector_y[8]-inputVector_y[10]).pow(2) )
 
                         //어깨와 손목
-                        var d3L = sqrt( (inputVector_x[6]-inputVector_x[10]).pow(2) + (inputVector_y[6]-inputVector_y[10]).pow(2) )
+                        val d3L = sqrt( (inputVector_x[6]-inputVector_x[10]).pow(2) + (inputVector_y[6]-inputVector_y[10]).pow(2) )
 
-                        var a_left =
+                        val a_left =
                             Math.toDegrees(acos((d1L.pow(2) + d2L.pow(2) - d3L.pow(2)) / (2 * d1L * d2L)).toDouble())
 
 
                         Log.d("pushup-left", a_left.toString())
 
                         // 어깨와 팔꿈치
-                        var d1 = sqrt( (inputVector_x[5]-inputVector_x[7]).pow(2) + (inputVector_y[5]-inputVector_y[7]).pow(2) )
+                        val d1 = sqrt( (inputVector_x[5]-inputVector_x[7]).pow(2) + (inputVector_y[5]-inputVector_y[7]).pow(2) )
 
                         //팔꿈치와 손목
-                        var d2 = sqrt( (inputVector_x[7]-inputVector_x[9]).pow(2) + (inputVector_y[7]-inputVector_y[9]).pow(2) )
+                        val d2 = sqrt( (inputVector_x[7]-inputVector_x[9]).pow(2) + (inputVector_y[7]-inputVector_y[9]).pow(2) )
 
                         //어깨와 손목
-                        var d3 = sqrt( (inputVector_x[5]-inputVector_x[9]).pow(2) + (inputVector_y[5]-inputVector_y[9]).pow(2) )
+                        val d3 = sqrt( (inputVector_x[5]-inputVector_x[9]).pow(2) + (inputVector_y[5]-inputVector_y[9]).pow(2) )
 
-                        var a_right =
+                        val a_right =
                             Math.toDegrees(acos((d1.pow(2) + d2.pow(2) - d3.pow(2)) / (2 * d1 * d2)).toDouble())
 
 
@@ -510,28 +520,28 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                         Log.d("abab11", inputVector_y[0].toString()+ "  "+ inputVector_y[5].toString()+ "  " + inputVector_y[11].toString())
 
                         // 엉덩이와 무릅
-                        var d1L = sqrt( (inputVector_x[12]-inputVector_x[14]).pow(2) + (inputVector_y[12]-inputVector_y[14]).pow(2) )
+                        val d1L = sqrt( (inputVector_x[12]-inputVector_x[14]).pow(2) + (inputVector_y[12]-inputVector_y[14]).pow(2) )
 
                         //무릅과 발목
-                        var d2L = sqrt( (inputVector_x[14]-inputVector_x[16]).pow(2) + (inputVector_y[14]-inputVector_y[16]).pow(2) )
+                        val d2L = sqrt( (inputVector_x[14]-inputVector_x[16]).pow(2) + (inputVector_y[14]-inputVector_y[16]).pow(2) )
 
                         //엉덩이와 발목
-                        var d3L = sqrt( (inputVector_x[12]-inputVector_x[16]).pow(2) + (inputVector_y[12]-inputVector_y[16]).pow(2) )
+                        val d3L = sqrt( (inputVector_x[12]-inputVector_x[16]).pow(2) + (inputVector_y[12]-inputVector_y[16]).pow(2) )
 
-                        var a_left =
+                        val a_left =
                             Math.toDegrees(acos((d1L.pow(2) + d2L.pow(2) - d3L.pow(2)) / (2 * d1L * d2L)).toDouble())
 
 
                         // 엉덩이와 무릅
-                        var d1 = sqrt( (inputVector_x[11]-inputVector_x[13]).pow(2) + (inputVector_y[11]-inputVector_y[13]).pow(2) )
+                        val d1 = sqrt( (inputVector_x[11]-inputVector_x[13]).pow(2) + (inputVector_y[11]-inputVector_y[13]).pow(2) )
 
                         //무릅과 발목
-                        var d2 = sqrt( (inputVector_x[13]-inputVector_x[15]).pow(2) + (inputVector_y[13]-inputVector_y[15]).pow(2) )
+                        val d2 = sqrt( (inputVector_x[13]-inputVector_x[15]).pow(2) + (inputVector_y[13]-inputVector_y[15]).pow(2) )
 
                         //엉덩이와 발목
-                        var d3 = sqrt( (inputVector_x[11]-inputVector_x[15]).pow(2) + (inputVector_y[11]-inputVector_y[15]).pow(2) )
+                        val d3 = sqrt( (inputVector_x[11]-inputVector_x[15]).pow(2) + (inputVector_y[11]-inputVector_y[15]).pow(2) )
 
-                        var a_right =
+                        val a_right =
                             Math.toDegrees(acos((d1.pow(2) + d2.pow(2) - d3.pow(2)) / (2 * d1 * d2)).toDouble())
 
 
@@ -728,5 +738,31 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         // 두 번째 매개변수: 1. TextToSpeech.QUEUE_FLUSH - 진행중인 음성 출력을 끊고 이번 TTS의 음성 출력
         //                 2. TextToSpeech.QUEUE_ADD - 진행중인 음성 출력이 끝난 후에 이번 TTS의 음성 출력
         tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, "id1")
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private fun speakOut2(str : String) {
+        val text: CharSequence = str
+        tts?.setPitch(1.toFloat()) // 음성 톤 높이 지정
+        tts?.setSpeechRate(1.toFloat()) // 음성 속도 지정
+
+        // 첫 번째 매개변수: 음성 출력을 할 텍스트
+        // 두 번째 매개변수: 1. TextToSpeech.QUEUE_FLUSH - 진행중인 음성 출력을 끊고 이번 TTS의 음성 출력
+        //                 2. TextToSpeech.QUEUE_ADD - 진행중인 음성 출력이 끝난 후에 이번 TTS의 음성 출력
+        tts?.speak(text, TextToSpeech.QUEUE_ADD, null, "id1")
+    }
+
+    /**
+     * Hiding keyboard after every button press
+     */
+    private fun hideKeyboard() {
+        val imm: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        //Find the currently focused view, so we can grab the correct window token from it.
+        var view = currentFocus
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = View(this)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

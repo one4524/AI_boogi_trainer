@@ -131,13 +131,13 @@ class FoodDetailActivity : AppCompatActivity(){
                 "점심" -> kind = MealType.LUNCH
                 "저녁" -> kind = MealType.DINNER
             }
-            runBlocking {
-                GlobalScope.launch {
-                    for (food in data) {
-                        APIManager.postMeal(food.name, food.gram.toInt(), kind)
-                    }
-                }
-            }
+//            runBlocking {
+//                GlobalScope.launch {
+//                    for (food in data) {
+//                        APIManager.postMeal(food.name, food.gram.toInt(), kind)
+//                    }
+//                }
+//            }
 //            // 백스택 액티비티들 종료하고 메인 액티비티 실행
 //            val intent = Intent(this, MainActivity::class.java)
 //            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
