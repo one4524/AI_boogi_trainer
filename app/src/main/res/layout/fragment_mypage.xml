@@ -149,6 +149,8 @@
             android:visibility="invisible"
             />
 
+
+
         <Button
             android:text="수정"
             android:layout_width="180dp"
