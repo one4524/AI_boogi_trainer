@@ -125,6 +125,7 @@ class MyPageFragment : Fragment() {
         binding.carbsCount.text = todayLog.dietInfo?.intakeCarbs.toString()
         binding.fatCount.text = todayLog.dietInfo?.intakeFat.toString()
 
+
         binding.calendarView.setOnDateChangeListener{view, year, month, dayOfMonth ->
             var day = ""
             if(month>=10){
