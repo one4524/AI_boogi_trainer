@@ -4,6 +4,17 @@ import com.google.gson.annotations.SerializedName
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
+
+
+enum class ExerciseType{
+    PUSH_UP, SQUAT, PULL_UP, SIT_UP, DEAD_LIFT, BARBELL_ROW, DUMBBELL_CURL,BARBELL_CURL, PLANK
+}
+enum class CardioExerciseType{
+    RUNNING_MACHINE, JOGGING, STAIR_CLIMBING
+}
+enum class MealType{
+    BREAKFAST, LUNCH, DINNER
+}
 data class ResponseUser(val user:User?)
 data class ResponseUserLog(val userLog:UserLog?)
 data class Foods(val foods: ArrayList<Food>)

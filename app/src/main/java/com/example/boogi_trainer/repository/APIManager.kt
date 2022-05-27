@@ -14,15 +14,6 @@ class APIManager {
         lateinit var todayLog:DateLog
         lateinit var foods:ArrayList<Food>
         var todayInfo:TodayInfo = TodayInfo()
-        enum class ExerciseType{
-            PUSH_UP, SQUAT, PULL_UP, SIT_UP, DEAD_LIFT, BARBELL_ROW, DUMBBELL_CURL,BARBELL_CURL, PLANK
-        }
-        enum class CardioExerciseType{
-            RUNNING_MACHINE, JOGGING, STAIR_CLIMBING
-        }
-        enum class MealType{
-            BREAKFAST, LUNCH, DINNER
-        }
 
         private val caller = RetrofitClient.restAPI
 
