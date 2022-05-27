@@ -89,7 +89,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/food_linear2" />
+            app:layout_constraintTop_toBottomOf="@+id/exercise_linear5" />
 
         <EditText
             android:id="@+id/contextEditText"
@@ -183,7 +183,7 @@
             android:layout_width="20dp"
             android:layout_height="150dp"
             android:id="@+id/exercise_linear2"
-            app:layout_constraintTop_toBottomOf="@+id/saveBtn"
+            app:layout_constraintTop_toBottomOf="@+id/food_linear"
             tools:ignore="MissingConstraints"
             android:orientation="vertical">
         </LinearLayout>
@@ -191,7 +191,7 @@
         <LinearLayout
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/calendarView"
+            app:layout_constraintTop_toBottomOf="@+id/food_linear"
             app:layout_constraintStart_toEndOf="@+id/exercise_linear2"
             android:layout_marginTop="5dp"
             android:id="@+id/exercise_linear"
@@ -239,7 +239,7 @@
             android:layout_marginTop="4dp"
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@+id/exercise_linear"
-            app:layout_constraintTop_toBottomOf="@+id/calendarView"
+            app:layout_constraintTop_toBottomOf="@+id/food_linear"
             tools:ignore="MissingConstraints">
 
             <TextView
@@ -294,7 +294,7 @@
             android:layout_marginTop="4dp"
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@+id/exercise_linear3"
-            app:layout_constraintTop_toBottomOf="@+id/calendarView"
+            app:layout_constraintTop_toBottomOf="@+id/food_linear"
             tools:ignore="MissingConstraints">
 
             <TextView
@@ -340,7 +340,7 @@
             android:layout_width="20dp"
             android:layout_height="150dp"
             android:id="@+id/food_linear3"
-            app:layout_constraintTop_toBottomOf="@+id/exercise_linear"
+            app:layout_constraintTop_toBottomOf="@+id/calendarView"
             tools:ignore="MissingConstraints"
             android:orientation="vertical">
 
@@ -353,7 +353,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/exercise_linear"
+            app:layout_constraintTop_toBottomOf="@+id/calendarView"
             app:layout_constraintStart_toEndOf="@+id/food_linear3"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="15dp">
@@ -399,7 +399,7 @@
             android:layout_marginTop="4dp"
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@+id/food_linear"
-            app:layout_constraintTop_toBottomOf="@+id/exercise_linear"
+            app:layout_constraintTop_toBottomOf="@+id/calendarView"
             tools:ignore="MissingConstraints">
 
             <TextView
@@ -446,7 +446,7 @@
             android:layout_marginTop="4dp"
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@+id/food_linear2"
-            app:layout_constraintTop_toBottomOf="@+id/exercise_linear"
+            app:layout_constraintTop_toBottomOf="@+id/calendarView"
             tools:ignore="MissingConstraints">
 
             <TextView
@@ -478,6 +478,103 @@
 
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/exercise_linear5"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@+id/exercise_linear"
+            app:layout_constraintTop_toBottomOf="@+id/exercise_linear2"
+            tools:ignore="MissingConstraints">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="싯업"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="바벨로우"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="바벨컬"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="덤벨컬"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/exercise_linear6"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@+id/exercise_linear3"
+            app:layout_constraintTop_toBottomOf="@+id/exercise_linear2"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/sit_up_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="20"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/babel_raw_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="30"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/babel_curl_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="20"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/dumbbell_curl_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="50"
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -486,10 +583,6 @@
         android:layout_width="match_parent"
         android:layout_height="16dp"
         android:background="@color/gray"/>
-
-
-
-
 
 </LinearLayout>
 
