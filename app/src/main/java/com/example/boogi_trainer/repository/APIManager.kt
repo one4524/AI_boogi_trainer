@@ -1,7 +1,11 @@
 package com.example.boogi_trainer.repository
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
+import android.util.Base64
 import androidx.annotation.RequiresApi
+import java.io.ByteArrayOutputStream
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import kotlin.math.round
@@ -126,14 +130,17 @@ class APIManager {
             }
         }
         //POST
-        fun postMeal(food:String, gram:Int, mealType: MealType, date:String= today){
+        fun postMeal(food:String, gram:Int, mealType: MealType, image:Bitmap, date:String= today){
+            val image = bitmapToString(image)
             var kind = ""
             kind = when(mealType){
                 MealType.BREAKFAST -> "breakfast"
                 MealType.LUNCH -> "lunch"
                 MealType.DINNER -> "dinner"
             }
-            var payload = PostMeal(food, gram, kind)
+            var payload = PostMeal(food, gram, kind, image)
+            println(payload.toString())
+            println(payload)
             if(caller.postMeal(user.uid!!,date,payload).execute().isSuccessful)
                 getUser(user.uid!!)
         }
@@ -168,7 +175,17 @@ class APIManager {
             if(caller.postExercise(user.uid!!,date,payload).execute().isSuccessful){
                 getUser(user.uid!!)
             }
+        }
 
+        private fun bitmapToString(bitmap: Bitmap): String {
+            val byteArrayOutputStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream)
+            val byteArray = byteArrayOutputStream.toByteArray()
+            return Base64.encodeToString(byteArray, Base64.DEFAULT)
+        }
+        fun stringToBitmap(encodedString: String): Bitmap {
+            val encodeByte = Base64.decode(encodedString, Base64.DEFAULT)
+            return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
         }
     }
 }
