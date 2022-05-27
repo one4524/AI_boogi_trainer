@@ -14,6 +14,15 @@ class APIManager {
         lateinit var todayLog:DateLog
         lateinit var foods:ArrayList<Food>
         var todayInfo:TodayInfo = TodayInfo()
+        enum class ExerciseType{
+            PUSH_UP, SQUAT, PULL_UP, SIT_UP, DEAD_LIFT, BARBELL_ROW, DUMBBELL_CURL,BARBELL_CURL, PLANK
+        }
+        enum class CardioExerciseType{
+            RUNNING_MACHINE, JOGGING, STAIR_CLIMBING
+        }
+        enum class MealType{
+            BREAKFAST, LUNCH, DINNER
+        }
 
         private val caller = RetrofitClient.restAPI
 
@@ -126,12 +135,30 @@ class APIManager {
             }
         }
         //POST
-        fun postMeal(food:String, gram:Int, kind:String, date:String= today){
+        fun postMeal(food:String, gram:Int, mealType: MealType, date:String= today){
+            var kind = ""
+            kind = when(mealType){
+                MealType.BREAKFAST -> "breakfast"
+                MealType.LUNCH -> "lunch"
+                MealType.DINNER -> "dinner"
+            }
             var payload = PostMeal(food, gram, kind)
             if(caller.postMeal(user.uid!!,date,payload).execute().isSuccessful)
                 getUser(user.uid!!)
         }
-        fun postExercise(exercise:String, reps:Int, date:String= today){
+        fun postExercise(exerciseType:ExerciseType, reps:Int, date:String= today){
+            var exercise = ""
+            exercise = when(exerciseType){
+                ExerciseType.PUSH_UP -> "푸쉬업"
+                ExerciseType.SQUAT -> "스쿼트"
+                ExerciseType.PULL_UP -> "풀업"
+                ExerciseType.SIT_UP -> "윗몸일으키기"
+                ExerciseType.DEAD_LIFT -> "데드리프트"
+                ExerciseType.BARBELL_ROW -> "바벨로우"
+                ExerciseType.BARBELL_CURL -> "바벨컬"
+                ExerciseType.DUMBBELL_CURL -> "덤벨컬"
+                ExerciseType.PLANK -> "플랭크"
+            }
             var payload = Exercise(exercise, reps)
             if(caller.postExercise(user.uid!!,date,payload).execute().isSuccessful)
                 getUser(user.uid!!)
@@ -139,9 +166,14 @@ class APIManager {
         fun postFood(food:Food){
             var payload = food
             if(caller.postFood(food).execute().isSuccessful)
-                getUser(user.uid!!)
+                setFoods()
         }
-        fun postCardioExercise(exercise: String, time:Int, date:String= today){
+        fun postCardioExercise(cardioExerciseType: CardioExerciseType, time:Int, date:String= today){
+            var exercise = when(cardioExerciseType){
+                CardioExerciseType.RUNNING_MACHINE -> "런닝머신"
+                CardioExerciseType.JOGGING -> "조깅"
+                CardioExerciseType.STAIR_CLIMBING -> "계단오르기"
+            }
             var payload = Exercise(exercise, time = time)
             if(caller.postExercise(user.uid!!,date,payload).execute().isSuccessful){
                 getUser(user.uid!!)
