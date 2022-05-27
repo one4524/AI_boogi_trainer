@@ -34,7 +34,13 @@ data class DateLog(val date: String?,
                 val exercises:ArrayList<Exercise>?,
                 val meals:ArrayList<Meal>?,
                 @SerializedName("diet_info")
-                   var dietInfo: DietInfo?
+                   var dietInfo: DietInfo?,
+                   @SerializedName("breakfast_image")
+                   val breakfastImage:String?,
+                   @SerializedName("lunch_image")
+                   val lunchImage:String?,
+                   @SerializedName("dinner_image")
+                   val dinnerImage:String?
 )
 data class Exercise(
     val exercise: String? = "",
@@ -64,7 +70,11 @@ data class PostMeal(
     val food: String? = "",
     val gram: Int? = 1,
     val kind: String? = "",
-    val image: String
+)
+
+data class PostImage(
+    val image: String? = "",
+    val kind: String? = "",
 )
 data class DietInfo(
     @SerializedName("intake_kcal")
@@ -114,4 +124,7 @@ interface RestAPI {
 
     @POST("foods")
     fun postFood(@Body payload:Food):Call<Message>
+
+    @POST("userLogs/{uid}/{date}/image")
+    fun postImage(@Path("uid") uid:String, @Path("date") date:String, @Body payload:PostImage):Call<Message>
 }

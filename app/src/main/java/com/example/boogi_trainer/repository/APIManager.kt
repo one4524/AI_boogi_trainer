@@ -80,7 +80,7 @@ class APIManager {
         private fun setTodayLog() { // 금일 데이터 초기화
             var i = 0
             if(userLog.dates?.size == 0){ // 로그 데이터 자체가 없는 경우
-                todayLog = DateLog(date = today, exercises = null, meals = null, dietInfo = DietInfo())
+                todayLog = DateLog(date = today, exercises = null, meals = null, dietInfo = DietInfo(), breakfastImage = null, lunchImage = null, dinnerImage = null)
             }
             for(date in userLog.dates!!){
                 if(date.date == today) {
@@ -96,7 +96,7 @@ class APIManager {
                     }
                     break
                 } else{ // 금일 데이터 자체가 없는 경우
-                    todayLog = DateLog(date = today, exercises = null, meals = null, dietInfo = DietInfo())
+                    todayLog = DateLog(date = today, exercises = null, meals = null, dietInfo = DietInfo(),breakfastImage = null, lunchImage = null, dinnerImage = null)
                 }
                 i+=1
             }
@@ -130,17 +130,14 @@ class APIManager {
             }
         }
         //POST
-        fun postMeal(food:String, gram:Int, mealType: MealType, image:Bitmap, date:String= today){
-            val image = bitmapToString(image)
+        fun postMeal(food:String, gram:Int, mealType: MealType, date:String= today){
             var kind = ""
             kind = when(mealType){
                 MealType.BREAKFAST -> "breakfast"
                 MealType.LUNCH -> "lunch"
                 MealType.DINNER -> "dinner"
             }
-            var payload = PostMeal(food, gram, kind, image)
-            println(payload.toString())
-            println(payload)
+            var payload = PostMeal(food, gram, kind)
             if(caller.postMeal(user.uid!!,date,payload).execute().isSuccessful)
                 getUser(user.uid!!)
         }
@@ -186,6 +183,24 @@ class APIManager {
         fun stringToBitmap(encodedString: String): Bitmap {
             val encodeByte = Base64.decode(encodedString, Base64.DEFAULT)
             return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
+        }
+        fun postImage(image:String, mealType: MealType, date:String= today){
+            val image = bitmapToString(image)
+            var kind = ""
+            kind = when(mealType){
+                MealType.BREAKFAST -> "breakfast"
+                MealType.LUNCH -> "lunch"
+                MealType.DINNER -> "dinner"
+            }
+            var payload = PostImage(image, kind)
+            caller.postImage(user.uid!!,date,payload).execute().isSuccessful
+        }
+
+        fun getLogImage(mealType: MealType){
+            when (mealType) {
+                MealType.BREAKFAST -> stringToBitmap(todayLog.breakfastImage!!)
+                MealType.LUNCH -> stringToBitmap(todayLog.lunchImage!!)
+                MealType.DINNER -> stringToBitmap(todayLog.dinnerImage!!)
         }
     }
 }
