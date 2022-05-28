@@ -68,6 +68,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var exerciseNum : Int = 0
     private var plankNum : Int = 0
     private var squatNum : Int = 0
+    private var dumbellNum : Int = 0
     private var exerciseCutNum : Int = 0
     private var exerciseName = ExerciseType.PUSH_UP
     private var checkNumberTmp = 0
@@ -869,57 +870,89 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     pair?.sortedByDescending { it.second }?.let {
                         when (it[0].first) {
                             "left" -> {
-                                when (checkNumberTmp) {
-                                    1 -> {checkNumberTmp = 2
-                                        explain = numList[exerciseNum]}
-                                    3 -> {checkNumberTmp = 4
-                                        explain = numList[exerciseNum]}
-                                    else -> {}
-                                }}
-                            "left_wide" -> {
-                                when (checkNumberTmp) {
-                                    1 -> {checkNumberTmp = 2
-                                        explain = "오른쪽 팔꿈치를 붙이세요"
+                                if (inputVector_y[9] < inputVector_y[7] || inputVector_y[10] < inputVector_y[8]) {
+                                    when (checkNumberTmp) {
+                                        1 -> {
+                                            checkNumberTmp = 2
+                                            explain = numList[exerciseNum]
+                                        }
+                                        3 -> {
+                                            checkNumberTmp = 4
+                                            explain = numList[exerciseNum]
+                                        }
+                                        else -> {
+                                        }
                                     }
-                                    3 -> {checkNumberTmp = 4
-                                        explain = "오른쪽 팔꿈치를 붙이세요"}
-                                    else -> {}
+                                }
+                            }
+                            "left_wide" -> {
+                                if (inputVector_y[9] < inputVector_y[7] || inputVector_y[10] < inputVector_y[8]) {
+                                    when (checkNumberTmp) {
+                                        1 -> {
+                                            checkNumberTmp = 2
+                                            explain = "오른쪽 팔꿈치를 붙이세요"
+                                        }
+                                        3 -> {
+                                            checkNumberTmp = 4
+                                            explain = "오른쪽 팔꿈치를 붙이세요"
+                                        }
+                                        else -> {
+                                        }
+                                    }
                                 }
                             }
                             "right" -> {
-
-                                when (checkNumberTmp) {
-                                    1 -> {checkNumberTmp = 2
-                                        explain = numList[exerciseNum]}
-                                    3 -> {checkNumberTmp = 4
-                                        explain = numList[exerciseNum]}
-                                    else -> {}
-                                }}
+                                if (inputVector_y[9] < inputVector_y[7] || inputVector_y[10] < inputVector_y[8]) {
+                                    when (checkNumberTmp) {
+                                        1 -> {
+                                            checkNumberTmp = 2
+                                            explain = numList[exerciseNum]
+                                        }
+                                        3 -> {
+                                            checkNumberTmp = 4
+                                            explain = numList[exerciseNum]
+                                        }
+                                        else -> {
+                                        }
+                                    }
+                                }
+                            }
                             "right_wide" -> {
-                                when (checkNumberTmp) {
-                                    1 -> {checkNumberTmp = 2
-                                        explain = "왼쪽 팔꿈치를 붙이세요"}
-                                    3 -> {checkNumberTmp = 4
-                                        explain = "왼쪽 팔꿈치를 붙이세요"}
-                                    else -> {}
+                                if (inputVector_y[9] < inputVector_y[7] || inputVector_y[10] < inputVector_y[8]) {
+                                    when (checkNumberTmp) {
+                                        1 -> {
+                                            checkNumberTmp = 2
+                                            explain = "왼쪽 팔꿈치를 붙이세요"
+                                        }
+                                        3 -> {
+                                            checkNumberTmp = 4
+                                            explain = "왼쪽 팔꿈치를 붙이세요"
+                                        }
+                                        else -> {
+                                        }
+                                    }
                                 }
                             }
                             "set" -> {
-                                when (checkNumberTmp) {
-                                    0 -> {
-                                        checkNumberTmp = 1
-                                    }
-                                    2 -> {
-                                        checkNumberTmp = 3
-                                    }
-                                    4 -> {
-                                        checkNumberTmp = 0
-                                        exerciseNum++
-                                        speakOut()
-                                    }
-                                    else -> {
+                                dumbellNum++
+                                if(dumbellNum > 3){
+                                    when (checkNumberTmp) {
+                                        0 -> {
+                                            checkNumberTmp = 1
+                                        }
+                                        2 -> {
+                                            checkNumberTmp = 3
+                                        }
+                                        4 -> {
+                                            checkNumberTmp = 0
+                                            exerciseNum++
+                                            speakOut()
+                                        }
+                                        else -> {
+                                        }
                                     }
                                 }
+
                             }
                             else -> {}
                         }
@@ -994,7 +1027,12 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                     when (checkNumberTmp) {
                                         1 -> {
                                             checkNumberTmp = 2
-                                            explain = "팔꿈치를 몸에 붙이세요"
+
+                                            explain = if(inputVector_x[6] + 10 < inputVector_x[8] || inputVector_x[5] - 10 > inputVector_x[7]){
+                                                "팔꿈치를 몸에 붙이세요"
+                                            } else{
+                                                numList[exerciseNum]
+                                            }
                                         }
                                         else -> {
                                         }
