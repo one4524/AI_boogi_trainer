@@ -8,12 +8,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.MediaStore
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.iterator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.boogi_trainer.MainActivity
+import com.example.boogi_trainer.R
 import com.example.boogi_trainer.databinding.ActivityFoodDetailBinding
 import com.example.boogi_trainer.env.ImageUtils
 import com.example.boogi_trainer.env.Logger
@@ -66,7 +68,6 @@ class FoodDetailActivity : AppCompatActivity(){
     // 리사이클러뷰가 불러올 목록
     private var data: MutableList<FoodDetailData> = mutableListOf()
 
-
     @SuppressLint("WrongThread")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,12 +75,15 @@ class FoodDetailActivity : AppCompatActivity(){
         binding = ActivityFoodDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 비트맵 초기화(기본 nopicture)
+        var bitmap = BitmapFactory.decodeResource(resources, R.drawable.nopicture)
 
         // FoodCameraActivity에서 넘어온 Intent 받음
         val intent = getIntent()
         if (intent.getStringExtra("from") == "camera") {
             val uri = intent.getParcelableExtra<Uri>("imageUri")
             binding.imageView.setImageURI(uri) // imageView에 가져온 이미지 삽입
+            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri)
         }
         else {
             val food = intent.getStringExtra("foodName")
@@ -88,7 +92,6 @@ class FoodDetailActivity : AppCompatActivity(){
         val mealTime = intent.getStringExtra("mealTime")
         binding.textMealTime.text = mealTime // 아침 점심 저녁 표시
         refreshRecyclerView()
-
 
 
         // 음식 검출 Thread 시작 //
@@ -122,7 +125,7 @@ class FoodDetailActivity : AppCompatActivity(){
             refreshRecyclerView()
         }
 
-        // 리사이클러뷰에서 데이터 가져와 서버로 보내야됨
+        // 리사이클러뷰에서 데이터 가져와 서버로 보냄
         binding.buttonComplete.setOnClickListener {
             data = updateData()
             var kind = MealType.BREAKFAST
@@ -131,20 +134,24 @@ class FoodDetailActivity : AppCompatActivity(){
                 "점심" -> kind = MealType.LUNCH
                 "저녁" -> kind = MealType.DINNER
             }
-//            runBlocking {
-//                GlobalScope.launch {
-//                    for (food in data) {
-//                        APIManager.postMeal(food.name, food.gram.toInt(), kind)
-//                    }
-//                }
-//            }
-//            // 백스택 액티비티들 종료하고 메인 액티비티 실행
-//            val intent = Intent(this, MainActivity::class.java)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//            startActivity(intent)
+            runBlocking {
+                GlobalScope.launch {
+                    for (food in data) {
+                        APIManager.postMeal(food.name, food.gram.toInt(), kind)
+                    }
+                GlobalScope.launch {
+                    APIManager.postImage(bitmap, kind)
+                    }
+                }
+            }
+            // 백스택 액티비티들 종료하고 메인 액티비티 실행
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+
             finish()
         }
-        // 리사이클러뷰에서 데이터 가져와 서버로 보내야됨
+        // 리사이클러뷰에서 데이터 가져와 서버로 보냄
     }
 
     private fun setTotalKcal() {

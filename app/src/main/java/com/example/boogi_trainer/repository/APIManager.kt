@@ -41,7 +41,7 @@ class APIManager {
             setTodayLog()
             setTodayInfo()
         }
-        fun getUser(uid:String): User {
+        fun getUser(uid: String): User {
             todayInfo = TodayInfo()
             setUser(uid)
             setUserLog(uid)
@@ -184,7 +184,7 @@ class APIManager {
             val encodeByte = Base64.decode(encodedString, Base64.DEFAULT)
             return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
         }
-        fun postImage(image:String, mealType: MealType, date:String= today){
+        fun postImage(image:Bitmap, mealType: MealType, date:String= today){
             val image = bitmapToString(image)
             var kind = ""
             kind = when(mealType){
@@ -193,14 +193,16 @@ class APIManager {
                 MealType.DINNER -> "dinner"
             }
             var payload = PostImage(image, kind)
-            caller.postImage(user.uid!!,date,payload).execute().isSuccessful
+            if(caller.postImage(user.uid!!,date,payload).execute().isSuccessful)
+                getUser(user.uid!!)
         }
 
-        fun getLogImage(mealType: MealType){
-            when (mealType) {
+        fun getLogImage(mealType: MealType): Bitmap {
+            return when (mealType) {
                 MealType.BREAKFAST -> stringToBitmap(todayLog.breakfastImage!!)
                 MealType.LUNCH -> stringToBitmap(todayLog.lunchImage!!)
                 MealType.DINNER -> stringToBitmap(todayLog.dinnerImage!!)
+            }
         }
     }
 }

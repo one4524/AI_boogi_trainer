@@ -258,11 +258,12 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="305dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@color/white"
                 android:paddingLeft="16dp"
-                android:paddingRight="16dp">
+                android:paddingRight="16dp"
+                android:paddingBottom="16dp">
 
                 <TextView
                     android:id="@+id/breakfast"
@@ -368,25 +369,36 @@
                     app:layout_constraintEnd_toStartOf="@+id/gram4"
                     app:layout_constraintTop_toTopOf="@+id/gram4" />
 
-                <ImageView
-                    android:id="@+id/breakfastImage"
-                    android:layout_width="wrap_content"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/food_button"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="30dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView2"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2">
+
+                    <ImageView
+                        android:id="@+id/breakfastImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/food_button"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </androidx.cardview.widget.CardView>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="305dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@color/white"
                 android:paddingLeft="16dp"
-                android:paddingRight="16dp">
+                android:paddingRight="16dp"
+                android:paddingBottom="16dp">
 
                 <TextView
                     android:id="@+id/lunch"
@@ -492,23 +504,35 @@
                     app:layout_constraintEnd_toStartOf="@+id/lunchProtein"
                     app:layout_constraintTop_toTopOf="@+id/lunchProtein" />
 
-                <ImageView
-                    android:id="@+id/lunchImage"
-                    android:layout_width="wrap_content"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/food_button"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="30dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    app:layout_constraintTop_toBottomOf="@+id/imageView7">
+
+                    <ImageView
+                        android:id="@+id/lunchImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/food_button"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </androidx.cardview.widget.CardView>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="305dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@color/white"
                 android:paddingLeft="16dp"
-                android:paddingRight="16dp">
+                android:paddingRight="16dp"
+                android:paddingBottom="16dp">
 
                 <TextView
                     android:id="@+id/dinner"
@@ -614,14 +638,26 @@
                     app:layout_constraintEnd_toStartOf="@+id/dinnerProtein"
                     app:layout_constraintTop_toTopOf="@+id/dinnerProtein" />
 
-                <ImageView
-                    android:id="@+id/dinnerImage"
-                    android:layout_width="wrap_content"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/food_button"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="30dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView9" />
+                    app:layout_constraintTop_toBottomOf="@+id/imageView9">
+
+                    <ImageView
+                        android:id="@+id/dinnerImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/food_button"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </androidx.cardview.widget.CardView>
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>

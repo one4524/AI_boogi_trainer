@@ -6,9 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.example.boogi_trainer.databinding.FragmentFoodBinding
 import com.example.boogi_trainer.repository.APIManager
+import com.example.boogi_trainer.repository.MealType
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class FoodFragment : Fragment() {
     private val breakfast = "아침"
@@ -25,18 +30,39 @@ class FoodFragment : Fragment() {
     var todayLog = APIManager.todayLog
     var todayInfo = APIManager.todayInfo
 
+//    override fun onResume() {
+//        super.onResume()
+//        runBlocking {
+//            GlobalScope.launch {
+//                APIManager.getUser(APIManager.user.uid!!)
+//            }
+//        }
+//    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(FoodViewModel::class.java)
 
         _binding = FragmentFoodBinding.inflate(inflater, container, false)
 
         val root: View = binding.root
 
+        // 식단 이미지 표시
+        if(todayLog.breakfastImage !=null){
+            var bitmapBreakfast = APIManager.getLogImage(MealType.BREAKFAST)
+            binding.breakfastImage.setImageBitmap(bitmapBreakfast)
+        }
+        if(todayLog.lunchImage !=null){
+            var bitmapLunch = APIManager.getLogImage(MealType.LUNCH)
+            binding.lunchImage.setImageBitmap(bitmapLunch)
+        }
+        if(todayLog.dinnerImage !=null){
+            var bitmapDinner = APIManager.getLogImage(MealType.DINNER)
+            binding.dinnerImage.setImageBitmap(bitmapDinner)
+        }
+        // 식단 이미지 표시
 
         // 프로그레스바로 텍스트 뷰에 있는 숫자를 가져와서 표시함
         // 총 섭취량 바
@@ -74,12 +100,10 @@ class FoodFragment : Fragment() {
         binding.breakfastProtein.text = todayInfo.breakfastProtein.toString()
         binding.breakfastFat.text = todayInfo.breakfastFat.toString()
 
-
         binding.lunchKcal.text = todayInfo.lunchKcal.toString()
         binding.lunchCarbohydrate.text = todayInfo.lunchCarbohydrate.toString()
         binding.lunchProtein.text = todayInfo.lunchProtein.toString()
         binding.lunchFat.text = todayInfo.lunchFat.toString()
-
 
         binding.dinnerKcal.text = todayInfo.dinnerKcal.toString()
         binding.dinnerCarbohydrate.text = todayInfo.dinnerCarbohydrate.toString()
@@ -114,4 +138,5 @@ class FoodFragment : Fragment() {
         intent.putExtra("mealTime", mealTime)
         getActivity()?.startActivity(intent)
     }
+
 }
