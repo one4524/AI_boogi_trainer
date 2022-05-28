@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import com.example.boogi_trainer.databinding.ActivityRunningBinding
+import com.example.boogi_trainer.repository.APIManager
+import com.example.boogi_trainer.repository.CardioExerciseType
 import com.example.boogi_trainer.tflite.Classifier
 import com.google.android.gms.location.*
 import com.naver.maps.geometry.LatLng
@@ -39,7 +41,7 @@ class RunningActivity : AppCompatActivity(), OnMapReadyCallback {
 
     var saveTime = 0L
 
-    private var runningName : String = "walk"
+    private var runningName : String = "runningMachine"
 
     var speed = 1F
     var speedNum = 6
@@ -71,6 +73,7 @@ class RunningActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding.speed.text = speedNum.toString()
         binding.runningName.text = "런닝머신"
+        runningName = "runningMachine"
 
         if(binding.runningName.text == "조깅") {
             binding.mapLayout.isVisible = true
@@ -221,6 +224,14 @@ class RunningActivity : AppCompatActivity(), OnMapReadyCallback {
             saveTime = -pauseTime
             saveTime /= 1000
             Log.d("savetime", saveTime.toString())
+            if(runningName == "runningMachine"){
+                APIManager.postCardioExercise(CardioExerciseType.RUNNING_MACHINE, saveTime.toInt())
+            }
+            else{
+                APIManager.postCardioExercise(CardioExerciseType.JOGGING, saveTime.toInt())
+            }
+
+
             finish()
         }
 
