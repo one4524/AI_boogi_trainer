@@ -1,0 +1,8 @@
+hipdown_left
+hipdown_right
+hipup_left
+hipup_right
+set_left
+set_right
+success-left
+success-right

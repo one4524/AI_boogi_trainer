@@ -9,8 +9,6 @@ import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.example.boogi_trainer.ExercisePartActivity
-import com.example.boogi_trainer.PoseActivity
 import com.example.boogi_trainer.R
 import com.example.boogi_trainer.RunningActivity
 import com.example.boogi_trainer.databinding.FragmentExerciseBinding
@@ -68,12 +66,13 @@ class ExerciseFragment : Fragment() {
         val list = ArrayList<exerciseData>()
         list.add(exerciseData(R.drawable.pushup_btn,"푸쉬업"))
         list.add(exerciseData(R.drawable.squat_btn,"스쿼트"))
-        list.add(exerciseData(R.drawable.deadlift_btn,"싯업"))
-        list.add(exerciseData(R.drawable.pullup_btn,"풀업"))
         list.add(exerciseData(R.drawable.deadlift_btn,"데드리프트"))
-        list.add(exerciseData(R.drawable.deadlift_btn,"바벨로우"))
-        list.add(exerciseData(R.drawable.deadlift_btn,"덤벨컬"))
-        list.add(exerciseData(R.drawable.deadlift_btn,"바벨컬"))
+        list.add(exerciseData(R.drawable.situp_btn,"싯업"))
+        list.add(exerciseData(R.drawable.pullup_btn,"풀업"))
+        list.add(exerciseData(R.drawable.babellrow_btn,"바벨로우"))
+        list.add(exerciseData(R.drawable.dumbelcurl_btn,"덤벨컬"))
+        list.add(exerciseData(R.drawable.babellcurl_btn,"바벨컬"))
+        list.add(exerciseData(R.drawable.flank_btn,"플랭크"))
 
         val adapter = context?.let { itemAdapter(it, list) }
         recyclerView.adapter = adapter

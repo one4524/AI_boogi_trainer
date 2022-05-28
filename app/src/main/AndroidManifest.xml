@@ -27,7 +27,7 @@
         android:theme="@style/Theme.Pose"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ExercisePartActivity"
+            android:name=".ui.exercise.ExercisePartActivity"
             android:exported="false" />
 
         <meta-data
