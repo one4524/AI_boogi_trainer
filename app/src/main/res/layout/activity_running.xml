@@ -69,6 +69,7 @@
             android:layout_marginTop="20dp"
             android:text="런닝머신"
             android:textSize="30dp"
+            android:textColor="#ff7f00"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -78,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:layout_marginTop="10dp"
-            android:background="@color/teal_200"
+            android:background="#ff7f00"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView17" />
@@ -120,7 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:layout_marginTop="20dp"
-            android:background="@color/teal_200"
+            android:background="#ff7f00"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/kcal_num" />
@@ -185,7 +186,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@drawable/time_back"
+        android:background="@drawable/sc_bt_corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -197,7 +198,7 @@
             android:layout_marginStart="20dp"
             android:textColor="@color/white"
             android:scaleType="fitCenter"
-            android:background="@drawable/running_back"
+            android:background="@drawable/bt_corner"
             android:gravity="center"
             android:text="머신러닝"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -211,7 +212,7 @@
             android:layout_marginEnd="20dp"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            android:src="@drawable/stop"
+            android:src="@drawable/stop_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -239,9 +240,9 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/num_back"
+        android:layout_height="100dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/bt_corner"
         android:gravity="center_vertical|center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -252,7 +253,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:textSize="38dp"
+            android:textColor="@color/white"
+            android:textSize="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -263,10 +265,10 @@
     <ImageButton
         android:id="@+id/start"
         android:layout_width="150dp"
-        android:layout_height="100dp"
+        android:layout_height="70dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        android:src="@drawable/start"
+        android:src="@drawable/start_button"
         android:layout_marginBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
