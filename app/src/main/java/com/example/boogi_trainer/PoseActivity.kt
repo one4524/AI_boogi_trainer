@@ -69,6 +69,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var exerciseNum : Int = 0
     private var plankNum : Int = 0
     private var squatNum : Int = 0
+    private var squatNum2 : Int = 0
     private var dumbellNum : Int = 0
     private var exerciseCutNum : Int = 0
     private var exerciseName = ExerciseType.PUSH_UP
@@ -1255,7 +1256,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                         }
                                         4 -> {
                                             checkNumberTmp = 0
-                                            //speakOut()
+                                            speakOut()
                                         }
                                         else -> {
                                         }
@@ -1264,7 +1265,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                             }
                             "narrow" -> {
                                 when (checkNumberTmp) {
-                                    1, 2 -> {
+                                    1, 2, 4 -> {
                                         checkNumberTmp = 2
                                         explain = "무릎을 넓히세요"
                                     }
@@ -1275,7 +1276,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                             }
                             "wide" -> {
                                 when (checkNumberTmp) {
-                                    1, 2 -> {
+                                    1, 2, 4 -> {
                                         checkNumberTmp = 2
                                         explain = "무릎을 좁히세요"
                                     }
@@ -1284,14 +1285,25 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                 } // when end
                             }
                             "success" -> {
-                                when (checkNumberTmp) {
-                                    1 -> {
-                                        checkNumberTmp = 3
-                                        explain = numList[exerciseNum]
-                                    }
-                                    else -> {
+                                squatNum2++
+                                if(a_left > 150 || a_right>150 || squatNum2 >= 2){
+                                    checkNumberTmp = 4
+                                    explain = "너무 높아요"
+                                    squatNum2 = 0
+                                }
+                                else{
+                                    squatNum2 = 0
+                                    when (checkNumberTmp) {
+                                        1, 4 -> {
+                                            checkNumberTmp = 3
+                                            explain = numList[exerciseNum]
+
+                                        }
+                                        else -> {
+                                        }
                                     }
                                 }
+
 
                             }
                             else -> {
