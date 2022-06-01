@@ -96,6 +96,9 @@ class MyPageFragment : Fragment() {
         var babelraw = 0
         var babelcurl = 0
         var dumbbellcurl = 0
+        var running_machine = 0
+        var jogging = 0
+        var plank = 0
         for(exercise in todayLog.exercises!!) {
             if (exercise.exercise == "푸쉬업")
                 pushUp += exercise.reps!!
@@ -113,6 +116,12 @@ class MyPageFragment : Fragment() {
                 babelcurl += exercise.reps!!
             if (exercise.exercise == "덤벨컬")
                 dumbbellcurl += exercise.reps!!
+            if (exercise.exercise == "런닝머신")
+                running_machine += exercise.reps!!
+            if (exercise.exercise == "조깅")
+                jogging += exercise.reps!!
+            if (exercise.exercise == "플랭크")
+                plank += exercise.reps!!
         }
 
 
@@ -137,9 +146,13 @@ class MyPageFragment : Fragment() {
         binding.babelRawCount.text = babelraw.toString()
         binding.babelCurlCount.text = babelcurl.toString()
         binding.dumbbellCurlCount.text = dumbbellcurl.toString()
+        binding.runningMachineCount.text = running_machine.toString()
+        binding.joggingCount.text = jogging.toString()
+        binding.plankCount.text = plank.toString()
         binding.proteinCount.text = todayLog.dietInfo?.intakeProtein.toString()
         binding.carbsCount.text = todayLog.dietInfo?.intakeCarbs.toString()
         binding.fatCount.text = todayLog.dietInfo?.intakeFat.toString()
+
 
 
 
@@ -160,6 +173,9 @@ class MyPageFragment : Fragment() {
                     var babelraw = 0
                     var babelcurl = 0
                     var dumbbellcurl = 0
+                    var running_machine = 0
+                    var jogging = 0
+                    var plank = 0
                     for(exercise in log.exercises!!){
                         if(exercise.exercise=="푸쉬업")
                             pushUp+= exercise.reps!!
@@ -177,6 +193,12 @@ class MyPageFragment : Fragment() {
                             babelcurl += exercise.reps!!
                         if (exercise.exercise == "덤벨컬")
                             dumbbellcurl += exercise.reps!!
+                        if (exercise.exercise == "런닝머신")
+                            running_machine += exercise.reps!!
+                        if (exercise.exercise == "조깅")
+                            jogging += exercise.reps!!
+                        if (exercise.exercise == "플랭크")
+                            plank += exercise.reps!!
                     }
                     binding.intakeKcal.text = log.dietInfo?.intakeKcal.toString()
                     binding.burnedKcal.text = log.dietInfo?.burnedKcal.toString()
@@ -191,6 +213,9 @@ class MyPageFragment : Fragment() {
                     binding.proteinCount.text = log.dietInfo?.intakeProtein.toString()
                     binding.carbsCount.text = log.dietInfo?.intakeCarbs.toString()
                     binding.fatCount.text = log.dietInfo?.intakeFat.toString()
+                    binding.runningMachineCount.text = running_machine.toString()
+                    binding.joggingCount.text = jogging.toString()
+                    binding.plankCount.text = plank.toString()
                 }
             }
 
@@ -208,6 +233,8 @@ class MyPageFragment : Fragment() {
             binding.foodLinear4.visibility = View.VISIBLE
             binding.exerciseLinear5.visibility = View.VISIBLE
             binding.exerciseLinear6.visibility = View.VISIBLE
+            binding.runningExerciseLinear.visibility = View.VISIBLE
+            binding.runningExerciseLinear2.visibility = View.VISIBLE
             binding.diaryTextView.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth)
             binding.contextEditText.setText("")
             checkDay(year, month, dayOfMonth, userID)

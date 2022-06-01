@@ -89,7 +89,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/exercise_linear5" />
+            app:layout_constraintTop_toBottomOf="@+id/running_exercise_linear" />
 
         <EditText
             android:id="@+id/contextEditText"
@@ -209,7 +209,8 @@
 
             <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp">
 
                 <ImageButton
                     android:layout_width="120dp"
@@ -257,7 +258,7 @@
                 android:layout_marginTop="10dp"
                 android:text="푸시업"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -265,7 +266,7 @@
                 android:layout_marginTop="5dp"
                 android:text="스쿼트"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -273,7 +274,7 @@
                 android:layout_marginTop="5dp"
                 android:text="풀업"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -281,7 +282,7 @@
                 android:layout_marginTop="5dp"
                 android:text="데드리프트"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
 
 
         </LinearLayout>
@@ -304,7 +305,7 @@
                 android:layout_marginTop="55dp"
                 android:text="20"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/squats_count"
@@ -313,7 +314,7 @@
                 android:layout_marginTop="5dp"
                 android:text="30"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/pull_up_count"
@@ -322,7 +323,7 @@
                 android:layout_marginTop="5dp"
                 android:text="20"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/dead_lift_count"
@@ -331,7 +332,7 @@
                 android:layout_marginTop="5dp"
                 android:text="50"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
 
 
         </LinearLayout>
@@ -494,10 +495,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="4dp"
                 android:text="싯업"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -505,7 +506,7 @@
                 android:layout_marginTop="5dp"
                 android:text="바벨로우"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -513,7 +514,7 @@
                 android:layout_marginTop="5dp"
                 android:text="바벨컬"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -521,7 +522,7 @@
                 android:layout_marginTop="5dp"
                 android:text="덤벨컬"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
 
 
         </LinearLayout>
@@ -541,10 +542,10 @@
                 android:id="@+id/sit_up_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="4dp"
                 android:text="20"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/babel_raw_count"
@@ -553,7 +554,7 @@
                 android:layout_marginTop="5dp"
                 android:text="30"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/babel_curl_count"
@@ -562,7 +563,7 @@
                 android:layout_marginTop="5dp"
                 android:text="20"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/dumbbell_curl_count"
@@ -571,7 +572,96 @@
                 android:layout_marginTop="5dp"
                 android:text="50"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/running_exercise_linear"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@+id/exercise_linear"
+            app:layout_constraintTop_toBottomOf="@+id/exercise_linear5"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/running_exercise_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13dp"
+                android:layout_marginTop="27dp"
+                android:textColor="@color/black"
+                android:text="유산소 운동 (단위 : 분)" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="런닝머신"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="조깅"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="플랭크"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/running_exercise_linear2"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@+id/exercise_linear3"
+            app:layout_constraintTop_toBottomOf="@+id/exercise_linear5"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:id="@+id/running_machine_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="55dp"
+                android:text="20"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/jogging_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="30"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/plank_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="20"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
 
 
         </LinearLayout>
