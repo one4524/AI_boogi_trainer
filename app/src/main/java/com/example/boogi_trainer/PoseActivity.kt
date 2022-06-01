@@ -3,6 +3,7 @@ package com.example.boogi_trainer
 import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -30,14 +31,23 @@ import com.example.boogi_trainer.data.Device
 import com.example.boogi_trainer.data.Person
 import com.example.boogi_trainer.ml.*
 import com.example.boogi_trainer.repository.APIManager
+import com.example.boogi_trainer.repository.CardioExerciseType
 import com.example.boogi_trainer.repository.ExerciseType
 import kotlinx.coroutines.*
 import java.util.*
 import kotlin.concurrent.thread
+import kotlin.math.abs
 import kotlin.math.acos
 import kotlin.math.pow
 import kotlin.math.sqrt
 
+
+/*---------- 좌표 값 ----------*/
+// x값은 오른쪽부터 왼쪽으로 증가
+// y값은 위에서부터 아래로 증가
+// 9 - 오른손  10 - 왼손
+// 오른쪽  3 - 귀  5 - 어깨, 7 - 팔꿈치   11 - 엉덩이    13 - 무릎     15 - 발
+// 왼쪽 4 - 귀  6 - 어깨, 8 - 팔꿈치   12 - 엉덩이    14 - 무릎     16 - 발
 
 class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     companion object {
@@ -57,6 +67,9 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     /*sdadsad */
     private var exerciseNum : Int = 0
+    private var plankNum : Int = 0
+    private var squatNum : Int = 0
+    private var dumbellNum : Int = 0
     private var exerciseCutNum : Int = 0
     private var exerciseName = ExerciseType.PUSH_UP
     private var checkNumberTmp = 0
@@ -67,6 +80,11 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private var tts: TextToSpeech? = null
 
+    private var bool : Boolean = false
+    private var end : Boolean = true
+    private lateinit var numList : List<String>
+    private lateinit var context : Context
+
     private lateinit var counter: TextView
     private lateinit var name: TextView
     private lateinit var time: Chronometer
@@ -74,13 +92,10 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var stop: ImageButton
     private lateinit var count : EditText
     private lateinit var startlayout : ConstraintLayout
-    private var bool : Boolean = false
-
     private lateinit var tvFPS: TextView
     private lateinit var tvClassificationValue1: TextView
     private lateinit var tvClassificationValue2: TextView
     private lateinit var tvClassificationValue3: TextView
-
 
     private lateinit var swClassification: SwitchCompat
     private lateinit var vClassificationOption: View
@@ -108,7 +123,11 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     override fun onStart() {
         super.onStart()
         val exerciseKind = intent.getStringExtra("exerciseKinds")
+        name.text = exerciseKind
+        bool = false
+        numList = listOf("하나", "둘", "셋", "넷", "다섯", "여섯", "일곱", "여덟", "아홉", "열", "열하나", "열둘", "열셋", "열넷", "열다섯", "열여섯", "열일곱", "열여덟", "열아홉", "스물")
 
+        context = this
         changePose(exerciseKind)
         openCamera()
     }
@@ -134,6 +153,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         surfaceView = findViewById(R.id.surfaceView)
 
+
         //tvFPS = findViewById(R.id.tvFps)
         tvClassificationValue1 = findViewById(R.id.tvClassificationValue1)
         //tvClassificationValue2 = findViewById(R.id.tvClassificationValue2)
@@ -149,9 +169,10 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         start.setOnClickListener {
             hideKeyboard()
+            startTime()
             exerciseCutNum = count.text.toString().toInt()
             thread(start = true) {
-                val list = listOf<String>("오초 후에 시작합니다", "", "", "", "", "시작")
+                val list = listOf<String>("오초 후에 시작합니다", "", "", "", "", "", "시작")
 
 
                 for (c in list){
@@ -161,9 +182,10 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     }
 
                     Thread.sleep(1000)
+                    if (c == "시작"){
+                        bool = true}
                 }
             }
-            bool = true
             stop.isVisible = true
             startlayout.isVisible = false
 
@@ -176,7 +198,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 }
             }
             // 백스택 액티비티들 종료하고 메인 액티비티 실행
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(context, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
 
@@ -192,8 +214,6 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         //squat.setOnClickListener { changePose(2) }
 
         tts = TextToSpeech(this, this)
-
-        SystemClock.elapsedRealtime()
 
         if (!isCameraPermissionGranted()) {
             requestPermission()
@@ -217,8 +237,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         val height = dm.heightPixels
         Log.d("w,h", "$width   $height")
 
-        startTime()
-        var i = 0
+
         if (isCameraPermissionGranted()) {
             if (cameraSource == null) {
                 cameraSource =
@@ -252,27 +271,26 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                 )
                                 """
                                 }
-                                if (exerciseNum >= exerciseCutNum) {
+                                if (exerciseNum >= exerciseCutNum && end) {
                                     runBlocking {
-                                        if(i==0) {
-                                            GlobalScope.launch {
-                                                i=1
-                                                APIManager.postExercise(
-                                                    exerciseName, exerciseNum
-                                                )
-                                            }
+                                        GlobalScope.launch {
+
+                                            end = false
+                                            APIManager.postExercise(exerciseName, exerciseNum)
                                         }
                                     }
                                     // 백스택 액티비티들 종료하고 메인 액티비티 실행
-                                    val intent = Intent(this@PoseActivity, MainActivity::class.java)
+                                    val intent = Intent(context, MainActivity::class.java)
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                                     startActivity(intent)
 
+
                                     finish()
                                 }
+
+                                // 체크 포인트 확인
+                                checkPose(person, poseLabels)
                             }
-                            // 체크 포인트 확인
-                            checkPose(person, poseLabels)
                         }
 
                     }).apply {
@@ -330,6 +348,10 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     }
                 }
 
+                if(abs(inputVector_x[5] - inputVector_x[15])<abs(inputVector_y[6] - inputVector_y[16]) || abs(inputVector_x[5] - inputVector_x[15]) < 160){
+                    boolean = false
+                }
+
                 if (boolean){
                     pair?.sortedByDescending { it.second }?.let {
                         Log.d("it[0].first", it[0].first)
@@ -364,51 +386,77 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
                         //Log.d("pushup-right", a1.toString())
 
-
                         when(it[0].first){
-                            "fail_1_left" ->  {
-                                when (checkNumberTmp) {
-                                    1 -> {checkNumberTmp = 2}
-                                    else -> {}
-                                }
-                            }
-                            "fail_1_right" -> {
-                                when (checkNumberTmp) {
-                                    1 -> {checkNumberTmp = 2}
-                                    else -> {}
-                                }
-                            }
-                            "fail_2_left" -> {
+                            "bodyup_left" ->  {
                                 if(a_left<=100){
-                                    explain = "완벽해요"
                                     when (checkNumberTmp) {
-                                        1 -> {checkNumberTmp = 2}
+                                        1 -> {checkNumberTmp = 2
+                                            explain = "몸의 수평을 맞추세요"}
                                         else -> {}
                                     }
                                 }
-                                else{explain = "너무 높아요"}
+                                else{ if(checkNumberTmp==1){
+                                    explain = "너무 높아요"
+                                    checkNumberTmp = 2}}
                             }
-                            "fail_2_right" -> {
+                            "bodyup_right" -> {
                                 if(a_right<=100){
-                                    explain = "완벽해요"
+                                    when (checkNumberTmp) {
+                                        1 -> {checkNumberTmp = 2
+                                            explain = "몸의 수평을 맞추세요"}
+                                        else -> {}
+                                    }
+                                }
+                                else{if(checkNumberTmp==1){
+                                    explain = "너무 높아요"
+                                    checkNumberTmp = 2}}
+                            }
+                            "handup_left" -> {
+                                if(a_left<=100 && inputVector_x[6] > inputVector_x[10]){
+                                    explain = "손을 가슴 높이에 맞추세요"
                                     when (checkNumberTmp) {
                                         1 -> {checkNumberTmp = 2}
                                         else -> {}
                                     }
                                 }
+                                else{if(checkNumberTmp==1){
+                                    explain = "너무 높아요"
+                                    checkNumberTmp = 2}}
+                            }
+                            "handup_right" -> {
+                                if(a_right<=100 && inputVector_x[5] < inputVector_x[9]){
+                                    explain = "손을 가슴 높이에 맞추세요"
+                                    when (checkNumberTmp) {
+                                        1 -> {checkNumberTmp = 2}
+                                        else -> {}
+                                    }
+                                }
+                                else{if(checkNumberTmp==1){
+                                    explain = "너무 높아요"
+                                    checkNumberTmp = 2}}
+                            }
+                            "hipup_left" -> {
+                                if(a_left<=100){
+                                    when (checkNumberTmp) {
+                                        1 -> {checkNumberTmp = 2
+                                            explain = "엉덩이를 낮추세요"}
+                                        else -> {}
+                                    }
+                                }
                                 else{explain = "너무 높아요"}
                             }
-                            "fail_3_left" -> {
-                                when (checkNumberTmp) {
-                                    1 -> {checkNumberTmp = 2}
-                                    else -> {}
+                            "hipup_right" -> {
+                                if(a_right<=100){
+                                    when (checkNumberTmp) {
+                                        1 -> {checkNumberTmp = 2
+                                            explain = "엉덩이를 낮추세요"}
+                                        else -> {}
+                                    }
                                 }
-                            }
-                            "fail_3_right" -> {
-                                when (checkNumberTmp) {
-                                    1 -> {checkNumberTmp = 2}
-                                    else -> {}
-                                }
+                                else{if(checkNumberTmp==1){
+                                    explain = "너무 높아요"
+                                    checkNumberTmp = 2}}
+
                             }
                             "set_left" -> {
                                 if(a_left>140) {
@@ -421,10 +469,15 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                             exerciseNum++
                                             speakOut()
                                         }
+                                        3 -> {
+                                            checkNumberTmp = 0
+                                            exerciseNum++
+                                            speakOut()
+                                        }
                                         else -> {
                                         }
                                     }
-                                }else{explain = "잘못됐어요"}
+                                }else{}
                             }
                             "set_right" -> {
                                 if(a_right>140) {
@@ -437,35 +490,45 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                             exerciseNum++
                                             speakOut()
                                         }
+                                        3 -> {
+                                            checkNumberTmp = 0
+                                            exerciseNum++
+                                            speakOut()
+                                        }
                                         else -> {
                                         }
                                     }
-                                }else{explain = "잘못됐어요"}
+                                }else{}
                             }
                             "success_left" -> {
                                 if(a_left<=100){
-                                    explain = "완벽해요"
                                     when (checkNumberTmp) {
-                                        1 -> {checkNumberTmp = 2
+                                        1, 2 -> {
+                                            checkNumberTmp = 3
+                                            explain = numList[exerciseNum]
                                         }
                                         else -> {}
                                     }
                                 }
-                                else{explain = "너무 높아요"}
+                                else{if(checkNumberTmp==1){
+                                    explain = "너무 높아요"
+                                    checkNumberTmp = 2}}
 
                             }
                             "success_right" -> {
                                 if(a_right<=100) {
-                                    explain = "완벽해요"
                                     when (checkNumberTmp) {
-                                        1 -> {
-                                            checkNumberTmp = 2
+                                        1, 2 -> {
+                                            checkNumberTmp = 3
+                                            explain = numList[exerciseNum]
                                         }
                                         else -> {
                                         }
                                     }
                                 }
-                                else{explain = "너무 높아요"}
+                                else{if(checkNumberTmp==1){
+                                    explain = "너무 높아요"
+                                    checkNumberTmp = 2}}
                             }
                             else -> {}
                         }
@@ -478,36 +541,650 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
             "pullup_classifier.tflite" -> {
                 exerciseName = ExerciseType.PULL_UP
+                val pullupList1 = listOf(0, 0, 6, 5, 11, 12, 10, 9)
+                val pullupList2 = listOf(5, 6, 12, 11, 15, 16, 8, 7)
+
+                for(i in 0 until pullupList1.size){
+                    if(inputVector_y[pullupList1[i]] >= inputVector_y[pullupList2[i]]){
+                        boolean = false
+                    }
+                }
+                if(abs(inputVector_x[6] - inputVector_x[16])>abs(inputVector_y[16] - inputVector_y[6]) || abs(inputVector_y[15] - inputVector_y[5]) < 160){
+                    boolean = false
+                }
+
+                if (boolean) {
+                    pair?.sortedByDescending { it.second }?.let {
+                        when (it[0].first) {
+                            "narrow" -> {
+                                when (checkNumberTmp) {
+                                    1 -> {checkNumberTmp = 2
+                                        explain = "손을 넓게 잡으세요"
+                                    }
+                                    else -> {}
+                                }
+                            }
+
+                            "set" -> {
+                                when (checkNumberTmp) {
+                                    0 -> {
+                                        checkNumberTmp = 1
+                                    }
+                                    2, 3 -> {
+                                        checkNumberTmp = 0
+                                        exerciseNum++
+                                        speakOut()
+                                    }
+                                    else -> {
+                                    }
+                                }
+                            }
+
+                            "success" -> {
+                                when (checkNumberTmp) {
+                                    1, 2 -> {checkNumberTmp = 3
+                                        explain = if(abs(inputVector_x[10]-inputVector_x[9]) > abs(inputVector_x[6]-inputVector_x[5])*2.7){
+                                            "손을 조금 좁게 잡으세요"
+                                        } else if (inputVector_x[12] > inputVector_x[6] || inputVector_x[5] > inputVector_x[11]) {
+                                            "몸을 기울이지 마세요"
+                                        } else{
+                                            numList[exerciseNum]
+                                        }
+                                    }
+                                    else -> {}
+                                }
+                            }
+
+                            else -> {
+
+                            }
+
+                        }
+                    }
+                }else{}
+
 
             }   // 풀업 끝
 
             "situp_classifier.tflite" -> {
                 exerciseName = ExerciseType.SIT_UP
 
+                Log.d("situp", abs(inputVector_x[5] - inputVector_x[15]).toString() + "  -  "+abs(inputVector_y[6] - inputVector_y[16]).toString() )
+
+                if (abs(inputVector_x[5] - inputVector_x[15]) < 160 || (inputVector_x[6] - inputVector_x[16]) <160){
+                    boolean = false
+                }
+
+                if (boolean) {
+                    pair?.sortedByDescending { it.second }?.let {
+
+                        // 어깨와 팔꿈치
+                        val d1L = sqrt( (inputVector_x[6]-inputVector_x[12]).pow(2) + (inputVector_y[6]-inputVector_y[12]).pow(2) )
+
+                        //팔꿈치와 손목
+                        val d2L = sqrt( (inputVector_x[12]-inputVector_x[14]).pow(2) + (inputVector_y[12]-inputVector_y[14]).pow(2) )
+
+                        //어깨와 손목
+                        val d3L = sqrt( (inputVector_x[6]-inputVector_x[14]).pow(2) + (inputVector_y[6]-inputVector_y[14]).pow(2) )
+
+                        val a_left =
+                            Math.toDegrees(acos((d1L.pow(2) + d2L.pow(2) - d3L.pow(2)) / (2 * d1L * d2L)).toDouble())
+
+
+                        Log.d("pushup-left", a_left.toString())
+
+                        // 어깨와 팔꿈치
+                        val d1 = sqrt( (inputVector_x[5]-inputVector_x[11]).pow(2) + (inputVector_y[5]-inputVector_y[11]).pow(2) )
+
+                        //팔꿈치와 손목
+                        val d2 = sqrt( (inputVector_x[11]-inputVector_x[13]).pow(2) + (inputVector_y[11]-inputVector_y[13]).pow(2) )
+
+                        //어깨와 손목
+                        val d3 = sqrt( (inputVector_x[5]-inputVector_x[13]).pow(2) + (inputVector_y[5]-inputVector_y[13]).pow(2) )
+
+                        val a_right =
+                            Math.toDegrees(acos((d1.pow(2) + d2.pow(2) - d3.pow(2)) / (2 * d1 * d2)).toDouble())
+
+
+                        when (it[0].first) {
+                            "success_left" -> {
+                                when (checkNumberTmp) {
+                                    1 -> {
+                                        if(a_left < 90) {
+                                            explain = numList[exerciseNum]
+                                            checkNumberTmp = 2
+                                        }else{
+                                            explain = "상체를 더 올리세요"
+                                            checkNumberTmp = 3
+                                        }
+                                    }
+                                    else -> {}
+                                }
+                            }
+                            "success_right" -> {
+                                when (checkNumberTmp) {
+                                    1 -> {
+                                        if(a_right < 90) {
+                                            explain = numList[exerciseNum]
+                                            checkNumberTmp = 2
+                                        }else{
+                                            explain = "상체를 더 올리세요"
+                                            checkNumberTmp = 3
+                                        }
+                                    }
+                                    else -> {}
+                                }
+                            }
+                            "set_left" -> {
+                                when (checkNumberTmp) {
+                                    0 -> {
+                                        checkNumberTmp = 1
+                                    }
+                                    2 -> {
+                                        checkNumberTmp = 0
+                                        exerciseNum++
+                                        speakOut()
+                                    }
+                                    3 -> {
+                                        checkNumberTmp = 0
+                                        speakOut()
+                                    }
+                                    else -> {
+                                    }
+                                }
+                            }
+                            "set_right" -> {
+                                when (checkNumberTmp) {
+                                    0 -> {
+                                        checkNumberTmp = 1
+                                    }
+                                    2 -> {
+                                        checkNumberTmp = 0
+                                        exerciseNum++
+                                        speakOut()
+                                    }
+                                    3 -> {
+                                        checkNumberTmp = 0
+                                        speakOut()
+                                    }
+                                    else -> {
+                                    }
+                                }
+                            }
+                            else -> {}
+                        }
+                    }
+                }else{}
+
             }   // 싯업 끝
 
             "babelrow_classifier.tflite" -> {
                 exerciseName = ExerciseType.BARBELL_ROW
+                val babelrowList1 = listOf(5, 7, 6, 8, 5, 6, 11, 12)
+                val babelrowList2 = listOf(9, 9, 10, 10, 11, 12, 15, 16)
+
+                for(i in 0 until babelrowList1.size){
+                    if(inputVector_y[babelrowList1[i]] >= inputVector_y[babelrowList2[i]]){
+                        boolean = false
+                    }
+                }
+                if(abs(inputVector_x[6] - inputVector_x[16])>abs(inputVector_y[16] - inputVector_y[6]) || abs(inputVector_y[15] - inputVector_y[5]) < 140){
+                    boolean = false
+                }
+
+                if (boolean) {
+                    pair?.sortedByDescending { it.second }?.let {
+                        when (it[0].first) {
+                            "success_left" -> {
+                                when (checkNumberTmp) {
+                                    1 -> {checkNumberTmp = 2
+                                        explain = numList[exerciseNum]
+                                    }
+                                    else -> {}
+                                }
+                            }
+                            "success_right" -> {
+                                when (checkNumberTmp) {
+                                    1 -> {checkNumberTmp = 2
+                                        explain = numList[exerciseNum]
+                                    }
+                                    else -> {}
+                                }
+                            }
+                            "set_left" -> {
+                                when (checkNumberTmp) {
+                                    0 -> {
+                                        checkNumberTmp = 1
+                                    }
+                                    2 -> {
+                                        checkNumberTmp = 0
+                                        exerciseNum++
+                                        speakOut()
+                                    }
+                                    else -> {
+                                    }
+                                }
+                            }
+                            "set_right" -> {
+                                when (checkNumberTmp) {
+                                    0 -> {
+                                        checkNumberTmp = 1
+                                    }
+                                    2 -> {
+                                        checkNumberTmp = 0
+                                        exerciseNum++
+                                        speakOut()
+                                    }
+                                    else -> {
+                                    }
+                                }
+                            }
+                            else -> {}
+
+                        }
+                    }
+                }else{}
 
             }   // 바벨로우 끝
 
             "deadlift_classifier.tflite" -> {
                 exerciseName = ExerciseType.DEAD_LIFT
+                val deadliftList1 = listOf(5, 7, 6, 8, 5, 6, 11, 12)
+                val deadliftList2 = listOf(9, 9, 10, 10, 11, 12, 15, 16)
+
+                for(i in 0 until deadliftList1.size){
+                    if(inputVector_y[deadliftList1[i]] >= inputVector_y[deadliftList2[i]]){
+                        boolean = false
+                    }
+                }
+                if(abs(inputVector_x[6] - inputVector_x[16])>abs(inputVector_y[16] - inputVector_y[6]) || abs(inputVector_y[15] - inputVector_y[5]) < 110){
+                    boolean = false
+                }
+
+                if (boolean) {
+                    pair?.sortedByDescending { it.second }?.let {
+                        when (it[0].first) {
+                            "stand_left" -> {
+                                when (checkNumberTmp) {
+                                    1 -> {checkNumberTmp = 0
+                                        exerciseNum++
+                                        speakOut()
+                                    }
+                                    else -> {}
+                                }
+                            }
+                            "stand_right" -> {
+                                when (checkNumberTmp) {
+                                    1 -> {checkNumberTmp = 0
+                                        exerciseNum++
+                                        speakOut()
+                                    }
+                                    else -> {}
+                                }
+                            }
+                            "success_left" -> {
+                                if(inputVector_y[10] > inputVector_y[14]){
+                                    when (checkNumberTmp) {
+                                        0 -> {
+                                            checkNumberTmp = 1
+                                            explain = numList[exerciseNum]
+                                        }
+                                        else -> {
+                                        }
+                                    }}
+                            }
+                            "success_right" -> {
+                                if(inputVector_y[10] > inputVector_y[14]){
+                                    when (checkNumberTmp) {
+                                        0 -> {
+                                            checkNumberTmp = 1
+                                            explain = numList[exerciseNum]
+                                        }
+                                        else -> {
+                                        }
+                                    }}
+                            }
+                            else -> {
+                                if (inputVector_y[10] > inputVector_y[14]) {
+                                    when (checkNumberTmp) {
+                                        0 -> {
+                                            checkNumberTmp = 1
+                                            explain = "무릎을 내밀지 마세요"
+                                        }
+
+                                        else -> {
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }else{}
 
             }   // 데드리프트 끝
 
-            "dumbbelcurl_classifier.tflite" -> {
+            "dumbelcurl_classifier.tflite" -> {
                 exerciseName = ExerciseType.DUMBBELL_CURL
+                val dumbbelcurlList1 = listOf(0, 5, 6, 5, 6, 11, 12)
+                val dumbbelcurlList2 = listOf(5, 7, 8, 11, 12, 15, 16)
+
+                Log.d("dumbel  ", inputVector_x[9].toString() +" - "+ inputVector_x[10].toString())
+
+                for(i in 0 until dumbbelcurlList1.size){
+                    if(inputVector_y[dumbbelcurlList1[i]] >= inputVector_y[dumbbelcurlList2[i]]){
+                        boolean = false
+                    }
+                }
+                if(abs(inputVector_x[6] - inputVector_x[16])>abs(inputVector_y[16] - inputVector_y[6]) || abs(inputVector_y[15] - inputVector_y[5]) < 160){
+                    boolean = false
+                }
+
+                if(inputVector_y[9] > inputVector_y[7] && inputVector_y[10] > inputVector_y[8]){}
+
+                if (boolean) {
+                    pair?.sortedByDescending { it.second }?.let {
+                        when (it[0].first) {
+                            "left" -> {
+                                if (inputVector_y[9] < inputVector_y[7] || inputVector_y[10] < inputVector_y[8]) {
+                                    when (checkNumberTmp) {
+                                        1 -> {
+                                            checkNumberTmp = 2
+                                            explain = numList[exerciseNum]
+                                        }
+                                        3 -> {
+                                            checkNumberTmp = 4
+                                            explain = numList[exerciseNum]
+                                        }
+                                        else -> {
+                                        }
+                                    }
+                                }
+                            }
+                            "left_wide" -> {
+                                if (inputVector_y[9] < inputVector_y[7] || inputVector_y[10] < inputVector_y[8]) {
+                                    when (checkNumberTmp) {
+                                        1 -> {
+                                            checkNumberTmp = 2
+                                            explain = "오른쪽 팔꿈치를 붙이세요"
+                                        }
+                                        3 -> {
+                                            checkNumberTmp = 4
+                                            explain = "오른쪽 팔꿈치를 붙이세요"
+                                        }
+                                        else -> {
+                                        }
+                                    }
+                                }
+                            }
+                            "right" -> {
+                                if (inputVector_y[9] < inputVector_y[7] || inputVector_y[10] < inputVector_y[8]) {
+                                    when (checkNumberTmp) {
+                                        1 -> {
+                                            checkNumberTmp = 2
+                                            explain = numList[exerciseNum]
+                                        }
+                                        3 -> {
+                                            checkNumberTmp = 4
+                                            explain = numList[exerciseNum]
+                                        }
+                                        else -> {
+                                        }
+                                    }
+                                }
+                            }
+                            "right_wide" -> {
+                                if (inputVector_y[9] < inputVector_y[7] || inputVector_y[10] < inputVector_y[8]) {
+                                    when (checkNumberTmp) {
+                                        1 -> {
+                                            checkNumberTmp = 2
+                                            explain = "왼쪽 팔꿈치를 붙이세요"
+                                        }
+                                        3 -> {
+                                            checkNumberTmp = 4
+                                            explain = "왼쪽 팔꿈치를 붙이세요"
+                                        }
+                                        else -> {
+                                        }
+                                    }
+                                }
+                            }
+                            "set" -> {
+                                dumbellNum++
+                                if(dumbellNum > 3){
+                                    when (checkNumberTmp) {
+                                        0 -> {
+                                            checkNumberTmp = 1
+                                        }
+                                        2 -> {
+                                            checkNumberTmp = 3
+                                        }
+                                        4 -> {
+                                            checkNumberTmp = 0
+                                            exerciseNum++
+                                            speakOut()
+                                        }
+                                        else -> {
+                                        }
+                                    }
+                                }
+
+                            }
+                            else -> {}
+                        }
+                    }
+                }else{}
 
             } // 덤벨컬 끝
 
             "babelcurl_classifier.tflite" -> {
                 exerciseName = ExerciseType.BARBELL_CURL
 
+
+                val babelcurlList1 = listOf(0, 5, 6, 5, 6, 11, 12)
+                val babelcurlList2 = listOf(5, 7, 8, 11, 12, 15, 16)
+
+
+                for(i in 0 until babelcurlList1.size){
+                    if(inputVector_y[babelcurlList1[i]] >= inputVector_y[babelcurlList2[i]]){
+                        boolean = false
+                    }
+                }
+
+                if(abs(inputVector_x[6] - inputVector_x[16])>abs(inputVector_y[16] - inputVector_y[6]) || abs(inputVector_y[15] - inputVector_y[5]) < 160){
+                    boolean = false
+                }
+
+                if (boolean) {
+                    pair?.sortedByDescending { it.second }?.let {
+                        when (it[0].first) {
+
+                            "set" -> {
+                                if(inputVector_y[9] > inputVector_y[7] && inputVector_y[10] > inputVector_y[8]) {
+                                    when (checkNumberTmp) {
+                                        0 -> {
+                                            checkNumberTmp = 1
+                                        }
+                                        2, 3 -> {
+                                            checkNumberTmp = 0
+                                            exerciseNum++
+                                            speakOut()
+                                        }
+                                        else -> {
+                                        }
+                                    }
+                                }
+                            }
+                            "shoulderup" -> {
+                                if(inputVector_y[9] < inputVector_y[7] && inputVector_y[10] < inputVector_y[8]) {
+                                    when (checkNumberTmp) {
+                                        1 -> {
+                                            checkNumberTmp = 2
+                                            explain = "어깨를 내리고 고정하세요"
+                                        }
+                                        else -> {
+                                        }
+                                    }
+                                }
+                            }
+                            "success" -> {
+                                if(inputVector_y[9] < inputVector_y[7] && inputVector_y[10] < inputVector_y[8]) {
+                                    when (checkNumberTmp) {
+                                        1, 2 -> {checkNumberTmp = 3
+                                            explain = numList[exerciseNum]
+                                        }
+                                        else -> {}
+                                    }
+                                }
+
+                            }
+                            "wide" -> {
+                                if(inputVector_y[9] < inputVector_y[7] && inputVector_y[10] < inputVector_y[8]) {
+                                    when (checkNumberTmp) {
+                                        1 -> {
+                                            checkNumberTmp = 2
+
+                                            explain = if(inputVector_x[6] + 10 < inputVector_x[8] || inputVector_x[5] - 10 > inputVector_x[7]){
+                                                "팔꿈치를 몸에 붙이세요"
+                                            } else{
+                                                numList[exerciseNum]
+                                            }
+                                        }
+                                        else -> {
+                                        }
+                                    }
+                                }
+                            }
+
+                            else -> {}
+
+                        }
+                    }
+                }else{}
+
             } // 바벨컬 끝
 
             "plank_classifier.tflite" -> {
                 exerciseName = ExerciseType.PLANK
+
+                if(abs(inputVector_x[6] - inputVector_x[16])<abs(inputVector_y[6] - inputVector_y[16]) || abs(inputVector_x[5] - inputVector_x[15]) < 160){
+                    boolean = false
+                }
+                if (boolean) {
+                    pair?.sortedByDescending { it.second }?.let {
+                        when (it[0].first) {
+
+                            "hipdown_left" -> {
+                                plankNum++
+                                if(plankNum > 8){
+                                    speakOut2("몸을 수평으로 맞추세요")
+                                    plankNum = 0
+                                }
+                                when (checkNumberTmp) {
+                                    1 -> {checkNumberTmp = 2
+                                    }
+                                    else -> {}
+                                }
+                            }
+                            "hipdown_right" -> {
+                                plankNum++
+                                if(plankNum > 8){
+                                    speakOut2("몸을 수평으로 맞추세요")
+                                    plankNum = 0
+                                }
+                                when (checkNumberTmp) {
+                                    1 -> {checkNumberTmp = 2
+                                    }
+                                    else -> {}
+                                }
+                            }
+                            "hipup_left" -> {
+                                plankNum++
+                                if(plankNum > 8){
+                                    speakOut2("엉덩이를 내리세요")
+                                    plankNum = 0
+                                }
+
+                                when (checkNumberTmp) {
+                                    1 -> {checkNumberTmp = 2
+                                    }
+                                    else -> {}
+                                }}
+                            "hipup_right" -> {
+                                plankNum++
+                                if(plankNum > 8){
+                                    speakOut2("엉덩이를 내리세요")
+                                    plankNum = 0
+                                }
+                                when (checkNumberTmp) {
+                                    1 -> {checkNumberTmp = 2
+                                    }
+                                    else -> {}
+                                }
+                            }
+                            "success-left" -> {
+                                plankNum = 0
+                                when (checkNumberTmp) {
+                                    1 -> {checkNumberTmp = 2
+                                    }
+                                    else -> {}
+                                }
+                            }
+                            "success-right" -> {
+                                plankNum = 0
+                                when (checkNumberTmp) {
+                                    1 -> {checkNumberTmp = 2
+
+                                    }
+                                    else -> {}
+                                }
+                            }
+                            "set_left" -> {
+                                when (checkNumberTmp) {
+                                    0 -> {
+                                        checkNumberTmp = 1
+                                    }
+                                    2 -> {
+                                        plankNum++
+                                        if(plankNum > 16){
+                                            val pauseTime = time.base - SystemClock.elapsedRealtime()
+                                            var saveTime = -pauseTime
+                                            saveTime /= 1000
+                                            if(saveTime.toInt() < 5)
+                                                saveTime = 0
+                                            APIManager.postCardioExercise(CardioExerciseType.STAIR_CLIMBING, saveTime.toInt() - 4)
+                                            finish()
+                                        }
+                                    }
+                                    else -> {
+                                    }
+                                }
+                            }
+                            "set_right" -> {
+                                when (checkNumberTmp) {
+                                    0 -> {
+                                        checkNumberTmp = 1
+                                    }
+                                    2 -> {
+                                        plankNum++
+                                        if(plankNum > 16){
+                                            val pauseTime = time.base - SystemClock.elapsedRealtime()
+                                            var saveTime = -pauseTime
+                                            saveTime /= 1000
+                                            if(saveTime.toInt() < 5)
+                                                saveTime = 0
+                                            APIManager.postCardioExercise(CardioExerciseType.STAIR_CLIMBING, saveTime.toInt() - 4)
+                                            finish()
+                                        }
+                                    }
+                                    else -> {
+                                    }
+                                }
+                            }
+
+                            else -> {}
+                        }
+                    }
+                }else{}
 
             } // 플랭크 끝
 
@@ -525,12 +1202,13 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 if(inputVector_y[squatCheckList1[0]] >= inputVector_y[10]){boolean = false}
                 else if(inputVector_y[squatCheckList1[0]] >= inputVector_y[9]){boolean = false}
 
+                if(abs(inputVector_x[6] - inputVector_x[16])>abs(inputVector_y[16] - inputVector_y[6]) || abs(inputVector_y[15] - inputVector_y[5]) < 120){
+                    boolean = false
+                }
 
                 if (boolean){
                     pair?.sortedByDescending { it.second }?.let {
                         Log.d("it[0].first", it[0].first)
-
-                        Log.d("abab11", inputVector_y[0].toString()+ "  "+ inputVector_y[5].toString()+ "  " + inputVector_y[11].toString())
 
                         // 엉덩이와 무릅
                         val d1L = sqrt( (inputVector_x[12]-inputVector_x[14]).pow(2) + (inputVector_y[12]-inputVector_y[14]).pow(2) )
@@ -557,56 +1235,91 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                         val a_right =
                             Math.toDegrees(acos((d1.pow(2) + d2.pow(2) - d3.pow(2)) / (2 * d1 * d2)).toDouble())
 
+                        Log.d("squat_angle", "각도기 = $a_left - $a_right")
+
 
                         when(it[0].first){
-                            "stand" -> {
-                                if(a_left>140 && a_right>140) {
+                            "set" -> {
+                                squatNum++
+                                if(a_left>170 && a_right>170 && squatNum > 4) {
+                                    squatNum = 0
                                     when (checkNumberTmp) {
                                         0 -> {
                                             checkNumberTmp = 1
                                         }
-                                        2 -> {
+                                        2, 3 -> {
                                             checkNumberTmp = 0
                                             exerciseNum++
+                                            speakOut()
+                                        }
+                                        4 -> {
+                                            checkNumberTmp = 0
                                             speakOut()
                                         }
                                         else -> {
                                         }
                                     }
-                                }
+                                }   // if
                             }
-                            else -> {
-                                if (a_left < 140 && a_right < 140) {
-                                    if (a_left < 100 && a_right < 100) {
-                                        explain = "완벽해요"
-
-                                    } else{
-                                        if (checkNumberTmp != 2) {
-                                            explain = "너무 높아요"
-                                        }
-                                    }
+                            "narrow" -> {
+                                if (a_left < 120 && a_right < 120) {
                                     when (checkNumberTmp) {
-                                        1 -> {
+                                        1, 2 -> {
                                             checkNumberTmp = 2
+                                            explain = "무릎을 넓히세요"
                                         }
                                         else -> {
                                         }
                                     } // when end
 
-
-                                val len = inputVector_x[12] - inputVector_x[11]
-                                if (inputVector_x[14] < inputVector_x[6] || inputVector_x[13] > inputVector_x[5]) {
-                                    explain = "다리 사이가 좁아요"
-                                } else if (inputVector_x[14] > inputVector_x[12] + len && inputVector_x[11] - len > inputVector_x[13]) {
-                                    explain = "다리 사이가 넓어요"
-                                } else {
+                                } else{
+                                    if (checkNumberTmp == 1) {
+                                        explain = "너무 높아요"
+                                        checkNumberTmp = 4
+                                    }
                                 }
 
-                                } // 140 end
+                            }
+                            "wide" -> {
+                                if (a_left < 120 && a_right < 120) {
+                                    when (checkNumberTmp) {
+                                        1, 2 -> {
+                                            checkNumberTmp = 2
+                                            explain = "무릎을 좁히세요"
+                                        }
+                                        else -> {
+                                        }
+                                    } // when end
 
+                                } else{
+                                    if (checkNumberTmp == 1) {
+                                        explain = "너무 높아요"
+                                        checkNumberTmp = 4
+                                    }
+                                }
 
                             }
-                        }
+                            "success" -> {
+                                if (a_left < 115 && a_right < 115) {
+                                    when (checkNumberTmp) {
+                                        1, 2 -> {
+                                            checkNumberTmp = 3
+                                            explain = numList[exerciseNum]
+                                        }
+                                        else -> {
+                                        }
+                                    } // when end
+                                } else{
+                                    if (checkNumberTmp == 1) {
+                                        explain = "너무 높아요"
+                                        checkNumberTmp = 4
+                                    }
+                                }
+
+                            }
+                            else -> {
+                            }
+                        }   // when end
 
                     }
                 }else{}
@@ -621,7 +1334,6 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         runOnUiThread {
             counter.text = exerciseNum.toString()
             //name.text = exerciseName
-            name.text = explain
         }
     }
 
@@ -656,8 +1368,8 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             "데드리프트" -> { model = "deadlift_classifier.tflite"
                 txt = "deadlift_labels.txt" }
 
-            "덤벨컬" -> { model = "dumbbelcurl_classifier.tflite"
-                txt = "dumbbelcurl_labels.txt" }
+            "덤벨컬" -> { model = "dumbelcurl_classifier.tflite"
+                txt = "dumbelcurl_labels.txt" }
 
             "바벨컬" -> { model = "babelcurl_classifier.tflite"
                 txt = "babelcurl_labels.txt" }

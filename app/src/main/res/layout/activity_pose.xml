@@ -76,58 +76,71 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/start_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="5dp"
+        android:background="@drawable/exercise_start_back"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="운동 횟수 : "
-            android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/count"
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="190dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:background="@drawable/exercise_start_num"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/count" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/count"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="20"
-            android:inputType="number"
-            android:textAlignment="center"
-            app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text=" 운동 횟수 : "
+                android:textSize="20dp"
+                />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" 회"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="@+id/count"
-            app:layout_constraintStart_toEndOf="@+id/count"
-            app:layout_constraintTop_toTopOf="@+id/count" />
+            <EditText
+                android:layout_marginTop="3dp"
+                android:id="@+id/count"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/color_secondary"
+                android:text="20"
+                android:layout_marginBottom="3dp"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                />
+
+            <TextView
+                android:textColor="@color/white"
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="회"
+                android:textSize="20dp"
+                />
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/start"
             android:layout_width="150dp"
             android:layout_height="100dp"
+            android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            android:layout_marginTop="10dp"
             android:src="@drawable/start"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/count" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

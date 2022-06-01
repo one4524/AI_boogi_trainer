@@ -132,14 +132,14 @@ class RunningActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding.speedUp.setOnClickListener {
             if(speedNum < 15) {
-                speed += 0.05F
+                speed += 0.2F
                 speedNum += 1
                 binding.speed.text = (speedNum).toString()
             }
         }
         binding.speedDown.setOnClickListener {
             if(speedNum > 0) {
-                speed -= 0.05F
+                speed -= 0.2F
                 speedNum -= 1
                 binding.speed.text = (speedNum).toString()
             }
@@ -170,13 +170,13 @@ class RunningActivity : AppCompatActivity(), OnMapReadyCallback {
                 timer = Timer()
                 timer.schedule(object : TimerTask() {
                     override fun run() {
-                        kcal += 0.1.toFloat() * speed
+                        kcal += 0.8.toFloat() * speed
                         runOnUiThread {
                             binding.kcalNum.text = String.format("%.1f", kcal)
                         }
                     }
 
-                }, 1000, 10000)
+                }, 1000, 5000)
             }
             else{
                 requestLocationUpdate()
