@@ -164,20 +164,29 @@ class APIManager {
             caller.postFood(food).execute()
         }
         fun postCardioExercise(cardioExerciseType: CardioExerciseType, time:Int, date:String= today){
+            println("API+ "+ "진입")
             var exercise = when(cardioExerciseType){
                 CardioExerciseType.RUNNING_MACHINE -> "런닝머신"
                 CardioExerciseType.JOGGING -> "조깅"
                 CardioExerciseType.STAIR_CLIMBING -> "계단오르기"
+                CardioExerciseType.PLANK -> "플랭크"
             }
-            var payload = Exercise(exercise, time = time)
+            var payload = Exercise(exercise, 0, time)
+            println("API+ "+ payload)
             if(caller.postExercise(user.uid!!,date,payload).execute().isSuccessful){
                 getUser(user.uid!!)
             }
         }
 
         private fun bitmapToString(bitmap: Bitmap): String {
+            var width = bitmap.width
+            var height = bitmap.height * 1000/width
+            var tmpBitmap = bitmap
+            if(width>1000){
+                tmpBitmap = Bitmap.createScaledBitmap(bitmap, width, height, true)
+            }
             val byteArrayOutputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 5, byteArrayOutputStream)
+            tmpBitmap.compress(Bitmap.CompressFormat.JPEG, 25, byteArrayOutputStream)
             val byteArray = byteArrayOutputStream.toByteArray()
             return Base64.encodeToString(byteArray, Base64.DEFAULT)
         }
