@@ -1153,7 +1153,16 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                             saveTime /= 1000
                                             if(saveTime.toInt() < 5)
                                                 saveTime = 0
-                                            APIManager.postCardioExercise(CardioExerciseType.STAIR_CLIMBING, saveTime.toInt() - 4)
+                                            runBlocking {
+                                                GlobalScope.launch {
+                                                    APIManager.postCardioExercise(CardioExerciseType.PLANK, saveTime.toInt() - 4)
+                                                }
+                                            }
+                                            // 백스택 액티비티들 종료하고 메인 액티비티 실행
+                                            val intent = Intent(context, MainActivity::class.java)
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                            startActivity(intent)
+
                                             finish()
                                         }
                                     }
@@ -1174,7 +1183,16 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                             saveTime /= 1000
                                             if(saveTime.toInt() < 5)
                                                 saveTime = 0
-                                            APIManager.postCardioExercise(CardioExerciseType.STAIR_CLIMBING, saveTime.toInt() - 4)
+                                            runBlocking {
+                                                GlobalScope.launch {
+                                                    APIManager.postCardioExercise(CardioExerciseType.PLANK, saveTime.toInt() - 4)
+                                                }
+                                            }
+                                            // 백스택 액티비티들 종료하고 메인 액티비티 실행
+                                            val intent = Intent(context, MainActivity::class.java)
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                            startActivity(intent)
+
                                             finish()
                                         }
                                     }

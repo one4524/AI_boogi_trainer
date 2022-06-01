@@ -2,6 +2,8 @@ package com.example.boogi_trainer
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
@@ -21,6 +23,9 @@ import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.PolylineOverlay
 import com.naver.maps.map.util.FusedLocationSource
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
@@ -33,6 +38,8 @@ class RunningActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var naverMap: NaverMap
 
     private lateinit var binding: ActivityRunningBinding
+
+    private lateinit var context : Context
 
     // 뒤로가기 버튼을 누른 시각을 저장하는 속성
     var initTime = 0L
@@ -61,7 +68,7 @@ class RunningActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        context = this
         binding = ActivityRunningBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -225,12 +232,26 @@ class RunningActivity : AppCompatActivity(), OnMapReadyCallback {
             saveTime /= 1000
             Log.d("savetime", saveTime.toString())
             if(runningName == "runningMachine"){
-                APIManager.postCardioExercise(CardioExerciseType.RUNNING_MACHINE, saveTime.toInt())
+                runBlocking {
+                    println("여기가 런닝0")
+                    GlobalScope.launch {
+                        println("여기가 런닝")
+                        APIManager.postCardioExercise(CardioExerciseType.RUNNING_MACHINE, saveTime.toInt())
+                    }
+                }
             }
             else{
-                APIManager.postCardioExercise(CardioExerciseType.JOGGING, saveTime.toInt())
-            }
+                runBlocking {
+                    GlobalScope.launch {
+                        APIManager.postCardioExercise(CardioExerciseType.JOGGING, saveTime.toInt())
+                    }
+                }
 
+            }
+// 백스택 액티비티들 종료하고 메인 액티비티 실행
+            val intent = Intent(context, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
 
             finish()
         }
