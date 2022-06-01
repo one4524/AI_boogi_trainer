@@ -253,12 +253,13 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                         ) {
                             if(bool) {
                                 poseLabels?.sortedByDescending { it.second }?.let {
+                                    """
                                     runOnUiThread {
                                         tvClassificationValue1.text = getString(
                                             R.string.tfe_pe_tv_classification_value,
                                             convertPoseLabels(if (it.isNotEmpty()) it[0] else null)
                                         )
-                                    }
+                                    }"""
 
                                     """
                                 tvClassificationValue2.text = getString(
@@ -388,7 +389,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
                         when(it[0].first){
                             "bodyup_left" ->  {
-                                if(a_left<=100){
+                                if(a_left<=120){
                                     when (checkNumberTmp) {
                                         1 -> {checkNumberTmp = 2
                                             explain = "몸의 수평을 맞추세요"}
@@ -396,11 +397,11 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                     }
                                 }
                                 else{ if(checkNumberTmp==1){
-                                    explain = "너무 높아요"
-                                    checkNumberTmp = 2}}
+                                    explain = ""
+                                    checkNumberTmp = 1}}
                             }
                             "bodyup_right" -> {
-                                if(a_right<=100){
+                                if(a_right<=120){
                                     when (checkNumberTmp) {
                                         1 -> {checkNumberTmp = 2
                                             explain = "몸의 수평을 맞추세요"}
@@ -408,11 +409,11 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                     }
                                 }
                                 else{if(checkNumberTmp==1){
-                                    explain = "너무 높아요"
-                                    checkNumberTmp = 2}}
+                                    explain = ""
+                                    checkNumberTmp = 1}}
                             }
                             "handup_left" -> {
-                                if(a_left<=100 && inputVector_x[6] > inputVector_x[10]){
+                                if(a_left<=120 && inputVector_x[6] > inputVector_x[10]){
                                     explain = "손을 가슴 높이에 맞추세요"
                                     when (checkNumberTmp) {
                                         1 -> {checkNumberTmp = 2}
@@ -420,11 +421,11 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                     }
                                 }
                                 else{if(checkNumberTmp==1){
-                                    explain = "너무 높아요"
-                                    checkNumberTmp = 2}}
+                                    explain = ""
+                                    checkNumberTmp = 1}}
                             }
                             "handup_right" -> {
-                                if(a_right<=100 && inputVector_x[5] < inputVector_x[9]){
+                                if(a_right<=120 && inputVector_x[5] < inputVector_x[9]){
                                     explain = "손을 가슴 높이에 맞추세요"
                                     when (checkNumberTmp) {
                                         1 -> {checkNumberTmp = 2}
@@ -432,11 +433,11 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                     }
                                 }
                                 else{if(checkNumberTmp==1){
-                                    explain = "너무 높아요"
-                                    checkNumberTmp = 2}}
+                                    explain = ""
+                                    checkNumberTmp = 1}}
                             }
                             "hipup_left" -> {
-                                if(a_left<=100){
+                                if(a_left<=120){
                                     when (checkNumberTmp) {
                                         1 -> {checkNumberTmp = 2
                                             explain = "엉덩이를 낮추세요"}
@@ -446,7 +447,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                 else{explain = "너무 높아요"}
                             }
                             "hipup_right" -> {
-                                if(a_right<=100){
+                                if(a_right<=120){
                                     when (checkNumberTmp) {
                                         1 -> {checkNumberTmp = 2
                                             explain = "엉덩이를 낮추세요"}
@@ -454,12 +455,12 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                     }
                                 }
                                 else{if(checkNumberTmp==1){
-                                    explain = "너무 높아요"
-                                    checkNumberTmp = 2}}
+                                    explain = ""
+                                    checkNumberTmp = 1}}
 
                             }
                             "set_left" -> {
-                                if(a_left>140) {
+                                if(a_left>150) {
                                     when (checkNumberTmp) {
                                         0 -> {
                                             checkNumberTmp = 1
@@ -480,7 +481,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                 }else{}
                             }
                             "set_right" -> {
-                                if(a_right>140) {
+                                if(a_right>150) {
                                     when (checkNumberTmp) {
                                         0 -> {
                                             checkNumberTmp = 1
@@ -501,7 +502,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                 }else{}
                             }
                             "success_left" -> {
-                                if(a_left<=100){
+                                if(a_left<=120 || a_right<=120){
                                     when (checkNumberTmp) {
                                         1, 2 -> {
                                             checkNumberTmp = 3
@@ -516,7 +517,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
                             }
                             "success_right" -> {
-                                if(a_right<=100) {
+                                if(a_right<=120 || a_left<=120) {
                                     when (checkNumberTmp) {
                                         1, 2 -> {
                                             checkNumberTmp = 3
@@ -650,7 +651,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                             "success_left" -> {
                                 when (checkNumberTmp) {
                                     1 -> {
-                                        if(a_left < 90) {
+                                        if(a_left < 130 || a_right < 130) {
                                             explain = numList[exerciseNum]
                                             checkNumberTmp = 2
                                         }else{
@@ -664,7 +665,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                             "success_right" -> {
                                 when (checkNumberTmp) {
                                     1 -> {
-                                        if(a_right < 90) {
+                                        if(a_right < 130 || a_left < 130) {
                                             explain = numList[exerciseNum]
                                             checkNumberTmp = 2
                                         }else{
@@ -1241,7 +1242,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                         when(it[0].first){
                             "set" -> {
                                 squatNum++
-                                if(a_left>170 && a_right>170 && squatNum > 4) {
+                                if(a_left>170 || a_right>170 && squatNum > 2) {
                                     squatNum = 0
                                     when (checkNumberTmp) {
                                         0 -> {
@@ -1254,7 +1255,7 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                         }
                                         4 -> {
                                             checkNumberTmp = 0
-                                            speakOut()
+                                            //speakOut()
                                         }
                                         else -> {
                                         }
@@ -1262,57 +1263,33 @@ class PoseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                                 }   // if
                             }
                             "narrow" -> {
-                                if (a_left < 120 && a_right < 120) {
-                                    when (checkNumberTmp) {
-                                        1, 2 -> {
-                                            checkNumberTmp = 2
-                                            explain = "무릎을 넓히세요"
-                                        }
-                                        else -> {
-                                        }
-                                    } // when end
-
-                                } else{
-                                    if (checkNumberTmp == 1) {
-                                        explain = "너무 높아요"
-                                        checkNumberTmp = 4
+                                when (checkNumberTmp) {
+                                    1, 2 -> {
+                                        checkNumberTmp = 2
+                                        explain = "무릎을 넓히세요"
                                     }
-                                }
+                                    else -> {
+                                    }
+                                } // when end
 
                             }
                             "wide" -> {
-                                if (a_left < 120 && a_right < 120) {
-                                    when (checkNumberTmp) {
-                                        1, 2 -> {
-                                            checkNumberTmp = 2
-                                            explain = "무릎을 좁히세요"
-                                        }
-                                        else -> {
-                                        }
-                                    } // when end
-
-                                } else{
-                                    if (checkNumberTmp == 1) {
-                                        explain = "너무 높아요"
-                                        checkNumberTmp = 4
+                                when (checkNumberTmp) {
+                                    1, 2 -> {
+                                        checkNumberTmp = 2
+                                        explain = "무릎을 좁히세요"
                                     }
-                                }
-
+                                    else -> {
+                                    }
+                                } // when end
                             }
                             "success" -> {
-                                if (a_left < 115 && a_right < 115) {
-                                    when (checkNumberTmp) {
-                                        1, 2 -> {
-                                            checkNumberTmp = 3
-                                            explain = numList[exerciseNum]
-                                        }
-                                        else -> {
-                                        }
-                                    } // when end
-                                } else{
-                                    if (checkNumberTmp == 1) {
-                                        explain = "너무 높아요"
-                                        checkNumberTmp = 4
+                                when (checkNumberTmp) {
+                                    1 -> {
+                                        checkNumberTmp = 3
+                                        explain = numList[exerciseNum]
+                                    }
+                                    else -> {
                                     }
                                 }
 
