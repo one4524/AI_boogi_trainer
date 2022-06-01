@@ -2,6 +2,7 @@ package com.example.boogi_trainer.repository
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.os.Build
 import android.util.Base64
 import androidx.annotation.RequiresApi
@@ -176,7 +177,7 @@ class APIManager {
 
         private fun bitmapToString(bitmap: Bitmap): String {
             val byteArrayOutputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 10, byteArrayOutputStream)
             val byteArray = byteArrayOutputStream.toByteArray()
             return Base64.encodeToString(byteArray, Base64.DEFAULT)
         }
@@ -198,11 +199,17 @@ class APIManager {
         }
 
         fun getLogImage(mealType: MealType): Bitmap {
-            return when (mealType) {
+            var matrix = Matrix()
+            matrix.setRotate(90F); //90도 회전
+            var srcBitmap : Bitmap = when (mealType) {
                 MealType.BREAKFAST -> stringToBitmap(todayLog.breakfastImage!!)
                 MealType.LUNCH -> stringToBitmap(todayLog.lunchImage!!)
                 MealType.DINNER -> stringToBitmap(todayLog.dinnerImage!!)
             }
+            var dscBitmap = Bitmap.createBitmap(srcBitmap, 0, 0, srcBitmap.getWidth(), srcBitmap.getHeight(), matrix, true);
+            srcBitmap.recycle(); //bitmap은 더이상 필요 없음으로 메모리에서 free시킨다.
+
+            return dscBitmap
         }
     }
 }
