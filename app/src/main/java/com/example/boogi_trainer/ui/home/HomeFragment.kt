@@ -46,6 +46,24 @@ class HomeFragment : Fragment() {
         // 오늘 소비한 칼로리 표시
         val burnedKcal = APIManager.todayLog.dietInfo?.burnedKcal
         binding.exerciseKcal.text = burnedKcal.toString()
+        // 소모해야되는 칼로리 표시
+        val needKcal = burnedKcal?.let { foodKcal?.minus(it) } ?: 0
+        binding.textNeedKcal.text = needKcal.toString()
+        // 칼로리 소모하려면 러닝 몇 분 해야되는지 표시
+        val runKcal = (needKcal.toDouble() / 0.16) / 60
+        if (runKcal > 0) {
+            binding.textNeedRunningTime.text = runKcal.toInt().toString()
+        }
+        // 칼로리 소모하려면 조깅 몇 분 해야되는지 표시
+        val squartKcal = (needKcal.toDouble() / 0.13) / 60
+        if (squartKcal > 0) {
+            binding.textSquart.text = squartKcal.toInt().toString()
+        }
+        // 칼로리 소모하려면 플랭크 몇 분 해야되는지 표시
+        val pushupKcal = (needKcal.toDouble() / 0.15) / 60
+        if (pushupKcal > 0) {
+            binding.textPushup.text = pushupKcal.toInt().toString()
+        }
         return root
     }
 
