@@ -177,7 +177,7 @@ class APIManager {
 
         private fun bitmapToString(bitmap: Bitmap): String {
             val byteArrayOutputStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 10, byteArrayOutputStream)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 5, byteArrayOutputStream)
             val byteArray = byteArrayOutputStream.toByteArray()
             return Base64.encodeToString(byteArray, Base64.DEFAULT)
         }
