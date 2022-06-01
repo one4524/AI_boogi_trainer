@@ -117,12 +117,15 @@ class MyPageFragment : Fragment() {
             if (exercise.exercise == "덤벨컬")
                 dumbbellcurl += exercise.reps!!
             if (exercise.exercise == "런닝머신")
-                running_machine += (exercise.time!!/60)
+                running_machine += exercise.time!!
             if (exercise.exercise == "조깅")
-                jogging += (exercise.time!!/60)
+                jogging += exercise.time!!
             if (exercise.exercise == "플랭크")
-                plank += (exercise.time!!/60)
+                plank += exercise.time!!
         }
+        running_machine /= 60
+        plank /= 60
+        jogging/=60
 
 
 
@@ -194,12 +197,17 @@ class MyPageFragment : Fragment() {
                         if (exercise.exercise == "덤벨컬")
                             dumbbellcurl += exercise.reps!!
                         if (exercise.exercise == "런닝머신")
-                            running_machine += (exercise.time!!/60)
+                            running_machine += exercise.time!!
                         if (exercise.exercise == "조깅")
-                            jogging += (exercise.time!!/60)
+                            jogging += exercise.time!!
                         if (exercise.exercise == "플랭크")
-                            plank += (exercise.time!!/60)
+                            plank += exercise.time!!
                     }
+
+                    running_machine /= 60
+                    plank /= 60
+                    jogging/=60
+
                     binding.intakeKcal.text = log.dietInfo?.intakeKcal.toString()
                     binding.burnedKcal.text = log.dietInfo?.burnedKcal.toString()
                     binding.pushUpCount.text = pushUp.toString()
